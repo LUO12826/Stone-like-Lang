@@ -28,6 +28,38 @@ public class Language {
         put("return", TokenType.TokenReturn);
     }};
 
+    public static Map<String, TokenType> symbolMap = new HashMap<String, TokenType>() {{
+
+        put("+", TokenType.TokenAdd);
+        put("-", TokenType.TokenSub);
+        put("*", TokenType.TokenMul);
+        put("/", TokenType.TokenDiv);
+        put("=", TokenType.TokenAssign);
+        put("==", TokenType.TokenEqual);
+        put("!=", TokenType.TokenNotEqual);
+        put("<", TokenType.TokenLess);
+        put("<=", TokenType.TokenLessEqual);
+        put(">", TokenType.TokenGreater);
+        put(">=", TokenType.TokenGreaterEqual);
+        put("!", TokenType.TokenNot);
+        put("&&", TokenType.TokenAnd);
+        put("||", TokenType.TokenOr);
+
+        put("(", TokenType.TokenLeftParen);
+        put(")", TokenType.TokenRightParen);
+        put("{", TokenType.TokenLeftBarce);
+        put("}", TokenType.TokenRightBrace);
+        put("[", TokenType.TokenLeftBracket);
+        put("]", TokenType.TokenRightBracket);
+        put(";", TokenType.TokenSemicolon);
+        put(",", TokenType.TokenComma);
+
+        put("\n", TokenType.TokenNewline);
+        put("\r\n", TokenType.TokenNewline);
+
+    }};
+
+
     public static List<String> stringLiteralTable = new ArrayList<>();
 
     public static List<Double> numberLiteralTable = new ArrayList<>();

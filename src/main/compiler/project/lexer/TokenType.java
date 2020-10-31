@@ -50,4 +50,8 @@ public enum TokenType {
     private TokenType(String str) {
         this.str = str;
     }
+
+    public String getStirng() {
+        return str;
+    }
 }
