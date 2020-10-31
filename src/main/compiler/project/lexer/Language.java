@@ -1,13 +1,6 @@
 package compiler.project.lexer;
 
-<<<<<<< HEAD
 import java.util.*;
-=======
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
->>>>>>> lhz
 
 /**
  * @author: 骆荟州
@@ -31,7 +24,6 @@ public class Language {
         put("else", TokenType.TokenElse);
         put("while", TokenType.TokenWhile);
         put("var", TokenType.TokenVar);
-<<<<<<< HEAD
         put("const", TokenType.TokenConst);
         put("return", TokenType.TokenReturn);
     }};
@@ -74,9 +66,4 @@ public class Language {
             System.out.println(i + "\t" + symbolTable.get(i).getName() + "\t" + symbolTable.get(i).getLine());
         }
     }
-=======
-        put("const", TokenType.TokenVar);
-        put("return", TokenType.TokenReturn);
-    }};
->>>>>>> lhz
 }
