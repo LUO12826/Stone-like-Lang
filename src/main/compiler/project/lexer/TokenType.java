@@ -5,7 +5,7 @@ package compiler.project.lexer;
  * @createTime: 2020/10/30 11:03 下午
  * @updateTime:
  */
-public enum Token {
+public enum TokenType {
 
     TokenFunc("func"),
     TokenIf("if"),
@@ -42,14 +42,8 @@ public enum Token {
     TokenID("<id>");
 
     private String str;
-    public Object value;
-    public int line;
-    public int col;
 
-    private Token(String str) {
+    private TokenType(String str) {
         this.str = str;
     }
-
-    public String getString() { return str; }
-
 }

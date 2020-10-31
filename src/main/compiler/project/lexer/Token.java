@@ -6,4 +6,14 @@ package compiler.project.lexer;
  * @updateTime:
  */
 public class Token {
+
+    public TokenType tokenType;
+    public Object value;
+    public int line;
+    public int col;
+
+
+    public Token(TokenType tokenType) {
+        this.tokenType = tokenType;
+    }
 }
