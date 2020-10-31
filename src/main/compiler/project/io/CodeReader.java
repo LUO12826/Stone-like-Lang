@@ -42,4 +42,9 @@ public class CodeReader {
         }
         return c;
     }
+
+    public char nextBeforeNotSpaceChar() {
+        nextNotSpaceChar();
+        return retract();
+    }
 }

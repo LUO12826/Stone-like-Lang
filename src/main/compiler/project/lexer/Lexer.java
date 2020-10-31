@@ -78,6 +78,9 @@ public class Lexer {
                 }
             }
             else {
+                if(c == '\0') {
+                    state = State.DONE_STATE;
+                }
                 switch (state) {
                     case START_STATE:
                         break;
@@ -102,6 +105,7 @@ public class Lexer {
 
         tempWord.setLength(0);
         reader.retract();
+        reader.nextBeforeNotSpaceChar();
         return token;
     }
 
