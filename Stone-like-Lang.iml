@@ -3,10 +3,26 @@
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
     <content url="file://$MODULE_DIR$">
+<<<<<<< HEAD
+=======
+      <sourceFolder url="file://$MODULE_DIR$/src/test" isTestSource="true" />
+>>>>>>> lhz
       <sourceFolder url="file://$MODULE_DIR$/src/main" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+<<<<<<< HEAD
     <orderEntry type="library" name="commons-io-2.4" level="project" />
+=======
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/commons-io-2.4.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+>>>>>>> lhz
   </component>
 </module>
