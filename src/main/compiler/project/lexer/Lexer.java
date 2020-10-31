@@ -1,5 +1,7 @@
 package compiler.project.lexer;
 
+import compiler.project.io.CodeReader;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -25,27 +27,95 @@ public class Lexer {
         ERROR_STATE        // 错误状态
     }
 
-    private String codeString;
-
-    private long currentIndex = 0;
-
-    private long codeLength = 0;
+    private StringBuilder tempWord = new StringBuilder();
 
     private int line = 1;
 
+    private int col = 0;
+
     private State state = State.START_STATE;
 
-    public Lexer(String code) {
-        this.codeString = code;
-        this.codeLength = codeString.length();
+    private CodeReader reader;
+
+    public Lexer(CodeReader reader) {
+        this.reader = reader;
     }
 
     public Token nextToken() {
 
-        while (true) {
-            switch (state) {
+        Token token = new Token(TokenType.TokenEOF);
+        char c;
 
+        while (state != State.DONE_STATE) {
+            c = reader.nextChar();
+            if(isDigit(c)) {
+                switch (state) {
+                    case START_STATE:
+                        break;
+                    case ID_STATE:
+                        break;
+                    case STRING_STATE:
+                        break;
+                    case NUMBER_STATE:
+                        break;
+                    default:
+
+                }
             }
+            else if(isLetter(c)) {
+                switch (state) {
+                    case START_STATE:
+                        state = State.ID_STATE;
+                        break;
+                    case ID_STATE:
+                        break;
+                    case STRING_STATE:
+                        break;
+                    case NUMBER_STATE:
+                        break;
+                    default:
+
+                }
+            }
+            else {
+                switch (state) {
+                    case START_STATE:
+                        break;
+                    case ID_STATE:
+                        state = State.DONE_STATE;
+                        String word = tempWord.toString();
+                        TokenType type = Language.keywordMap.get(word);
+                        token = type == null ? new Token(TokenType.TokenID, word) : new Token(type);
+                        token.setLineCol(line, col);
+                        break;
+                    case STRING_STATE:
+                        break;
+                    case NUMBER_STATE:
+                        break;
+                    default:
+
+                }
+            }
+
+            tempWord.append(c);
         }
+
+        tempWord.setLength(0);
+        reader.retract();
+        return token;
     }
+
+    private boolean isLetter(char c) {
+        return Character.isLetter(c);
+    }
+
+
+    private boolean isDigit(char c) {
+        return Character.isDigit(c);
+    }
+
+    private boolean isCharExceptDquoteNewline(char c) {
+        return c == '"' || c == '\r' || c == '\n';
+    }
+
 }

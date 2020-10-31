@@ -16,4 +16,15 @@ public class Token {
     public Token(TokenType tokenType) {
         this.tokenType = tokenType;
     }
+
+    public Token(TokenType tokenType, Object value) {
+        this.tokenType = tokenType;
+        this.value = value;
+    }
+
+    public void setLineCol(int line, int col) {
+        this.line = line;
+        this.col = col;
+    }
+
 }

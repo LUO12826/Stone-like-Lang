@@ -6,7 +6,9 @@ import javax.script.ScriptEngineManager;
 import compiler.project.lexer.Token;
 import org.apache.commons.io.*;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 
 public class Main {
 
@@ -17,6 +19,7 @@ public class Main {
 
 //        String filePath = "/Users/luohuizhou/Desktop/compile.java";
 //        String fileContent = FileUtils.readFileToString(new File(filePath), "UTF-8");
+
 //        System.out.println(fileContent);
 //        char c = fileContent.toCharArray()[5];
 //        System.out.println((int)c);
