@@ -27,4 +27,13 @@ public class Token {
         this.col = col;
     }
 
+    @Override
+    public String toString() {
+        return "Token{" +
+                "tokenType=" + tokenType +
+                ", value=" + value +
+                ", line=" + line +
+                ", col=" + col +
+                '}';
+    }
 }
