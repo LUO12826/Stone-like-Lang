@@ -10,6 +10,12 @@ import java.util.Map;
  * @createTime: 2020/10/31 5:07 下午
  * @updateTime:
  */
+
+/**
+ * 代码读取器，通过其nextChar()方法可以遍历源码字符串。
+ * 主要被词法分析器使用。
+ * 在初始阶段，currentIndex指向-1，即第一个字符之前。
+ */
 public class CodeReader {
 
     private String codeString;
@@ -24,7 +30,7 @@ public class CodeReader {
 
     private Map<Integer, Integer> colNumMap = new HashMap<>();
 
-
+    //当currentIndex指向一行的末端时，此值为true
     private boolean lineEnd = false;
 
     public CodeReader(File file) throws Exception {
@@ -37,6 +43,12 @@ public class CodeReader {
         this.codeLength = codeString.length();
     }
 
+    /**
+     * 获取源码中的下一个字符。
+     * currentIndex在代码字符串末端时，调用此方法会使currentIndex == codeLength，
+     * 即指向最后一个字符之后，但返回'\0'。此后调用此方法会返回'\0'，但currentIndex不再增加。
+     * @return 下一个字符。
+     */
     public char nextChar() {
         if(currentIndex < codeLength - 1) {
             char c = codeString.charAt(++currentIndex);
@@ -64,6 +76,12 @@ public class CodeReader {
         }
     }
 
+    /**
+     * 获取源码中的上一个字符。
+     * 当currentIndex指向第一个字符时，调用retract()方法会使currentIndex指向-1，但返回第一个字符。
+     * 此后调用retract()不会使currentIndex减少，但始终返回第一个字符。
+     * @return 上一个字符。
+     */
     public char retract() {
         if(currentIndex >= 0) {
             currentIndex--;
@@ -85,34 +103,57 @@ public class CodeReader {
         }
     }
 
+    /**
+     * 获取源码中的下一个非空白字符。
+     * 此处换行符不算空字符。
+     * @return 下一个非空白字符。
+     */
     public char nextNotSpaceChar() {
         char c = nextChar();
-        while (c == ' ') {
+        while (c == ' ' || c == '\t') {
             c = nextChar();
         }
         return c;
     }
 
+    /**
+     * 将指针定位到下一个非空白符前。
+     * 此处换行符不算空字符。
+     */
     public char nextBeforeNotSpaceChar() {
         nextNotSpaceChar();
         return retract();
     }
 
+    /**
+     * 获取源码中的下一个字符，但指针不前进。
+     * @return 下一个字符。
+     */
     public char peek() {
         return currentIndex >= codeLength - 1? '\0' : codeString.charAt(currentIndex + 1);
     }
 
+    /**
+     * 获取currentIndex所指字符的行号。
+     */
     public int getLine() {
         return line;
     }
 
+    /**
+     * 获取currentIndex所指字符的列号。
+     */
     public int getCol() {
         return col;
     }
 
+    /**
+     * 重置CodeReader的状态。
+     */
     public void reset() {
         currentIndex = -1;
         line = 1;
         col = 0;
+        colNumMap.clear();
     }
 }
