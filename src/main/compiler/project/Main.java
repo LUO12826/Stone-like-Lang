@@ -1,5 +1,8 @@
 package compiler.project;
 
+import compiler.project.antlrtest.CodeGenVisitor;
+import compiler.project.antlrtest.TinyScriptLexer;
+import compiler.project.antlrtest.TinyScriptParser;
 import compiler.project.exception.LexerException;
 import compiler.project.io.CodeReader;
 import compiler.project.lexer.Language;
@@ -11,20 +14,53 @@ import compiler.project.vm.MemorySegment;
 import compiler.project.vm.VMInstructionType;
 import compiler.project.vm.VirtualMachine;
 import javafx.beans.binding.ObjectExpression;
+import org.antlr.v4.runtime.CharStream;
+import org.antlr.v4.runtime.CharStreams;
+import org.antlr.v4.runtime.CommonTokenStream;
 
 import java.io.File;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
 
+    static PrintStream ps = System.out;
+
     public static void main(String[] args) throws Exception {
-        test2();
+        test3();
+    }
+
+    static void test3() throws Exception {
+
+        CharStream s = CharStreams.fromFileName("/Users/luohuizhou/Desktop/tiny.txt");
+        TinyScriptLexer lexer = new TinyScriptLexer(s);
+        CommonTokenStream tokens = new CommonTokenStream(lexer);
+        TinyScriptParser parser = new TinyScriptParser(tokens);
+        parser.setBuildParseTree(true);
+        TinyScriptParser.ProgramContext tree = parser.program();
+        CodeGenVisitor visitor = new CodeGenVisitor();
+        visitor.visit(tree);
+
+        List<IntermediateCode> codes = visitor.codes;
+        codes.add(new IntermediateCode(VMInstructionType.halt));
+        ps.println("----------------------中间代码-----------------------");
+        codes.forEach(code -> {
+            if(code == null) {
+                System.out.println("null");
+                return;
+            }
+            System.out.println(code.toString());
+        });
+
+        VirtualMachine vm = new VirtualMachine(codes);
+        ps.println("----------------------执行结果-----------------------");
+        vm.execute();
     }
 
     static void test2() {
         List<IntermediateCode> codes = new ArrayList<IntermediateCode>() {{
-
+            //似乎我们设计的时候数字全都用double类型来作为内部实现，所以这里数字要写成double形式。
             add(new IntermediateCode(VMInstructionType.push, MemorySegment.CONSTANT, 1.0));
             add(new IntermediateCode(VMInstructionType.push, MemorySegment.CONSTANT, 2.0));
             add(new IntermediateCode(VMInstructionType.push, MemorySegment.CONSTANT, 3.0));

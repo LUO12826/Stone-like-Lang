@@ -6,9 +6,20 @@ package compiler.project.vm;
  * @updateTime:
  */
 public enum MemorySegment {
-    LOCAL,
-    STATIC,
-    ARGUMENT,
-    CONSTANT,
+    LOCAL("LOCAL"),
+    STATIC("STATIC"),
+    ARGUMENT("ARGUMENT"),
+    CONSTANT("CONSTANT"),
+    NULL("NULL"),
     ;
+
+    private String string;
+
+    public String getString() {
+        return string;
+    }
+
+    MemorySegment(String string) {
+        this.string = string;
+    }
 }

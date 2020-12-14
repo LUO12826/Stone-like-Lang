@@ -28,13 +28,28 @@ public class IntermediateCode {
         this.op1 = op1;
     }
 
+    public IntermediateCode(VMInstructionType type, MemorySegment segment) {
+        this.instructionType = type;
+        this.segment = segment;
+    }
+
     public IntermediateCode(VMInstructionType type, Object op1) {
         this.instructionType = type;
         this.op1 = op1;
+        this.segment = MemorySegment.LOCAL;
     }
 
     public IntermediateCode(VMInstructionType type) {
         this.instructionType = type;
+        this.segment = MemorySegment.LOCAL;
     }
 
+    @Override
+    public String toString() {
+
+        String op1s = op1 != null ? op1.toString() : "";
+        String op2s = op2 != null ? op2.toString() : "";
+        String seg = segment != null ? segment.getString() : "";
+        return instructionType.getString() + "    " + op1s + "    " + op2s + seg;
+    }
 }
