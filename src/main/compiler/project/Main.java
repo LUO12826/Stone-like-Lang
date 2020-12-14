@@ -6,13 +6,40 @@ import compiler.project.lexer.Language;
 import compiler.project.lexer.Lexer;
 import compiler.project.lexer.Token;
 import compiler.project.lexer.TokenType;
+import compiler.project.vm.IntermediateCode;
+import compiler.project.vm.MemorySegment;
+import compiler.project.vm.VMInstructionType;
+import compiler.project.vm.VirtualMachine;
+import javafx.beans.binding.ObjectExpression;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
 
     public static void main(String[] args) throws Exception {
-//        ScriptEngine engine = new ScriptEngineManager().getEngineByName("nashorn");
+        test2();
+    }
+
+    static void test2() {
+        List<IntermediateCode> codes = new ArrayList<IntermediateCode>() {{
+
+            add(new IntermediateCode(VMInstructionType.push, MemorySegment.CONSTANT, 1.0));
+            add(new IntermediateCode(VMInstructionType.push, MemorySegment.CONSTANT, 2.0));
+            add(new IntermediateCode(VMInstructionType.push, MemorySegment.CONSTANT, 3.0));
+            add(new IntermediateCode(VMInstructionType.mul));
+            add(new IntermediateCode(VMInstructionType.add));
+            add(new IntermediateCode(VMInstructionType.print));
+            add(new IntermediateCode(VMInstructionType.halt));
+        }};
+
+        VirtualMachine vm = new VirtualMachine(codes);
+        vm.execute();
+    }
+
+    static void test1() throws Exception {
+        //        ScriptEngine engine = new ScriptEngineManager().getEngineByName("nashorn");
 //        engine.eval("print('Hello World!');var a = 1 + 1;");
 
 
@@ -43,6 +70,5 @@ public class Main {
 //        char c = fileContent.toCharArray()[5];
 //        System.out.println((int)c);
 //        System.out.println(c);
-
     }
 }
