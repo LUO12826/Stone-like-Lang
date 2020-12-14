@@ -32,12 +32,18 @@ public class VirtualMachine {
     private int argumentAddr;
 
     private int staticSegmentAddr;
-
+    /**
+     * 中间代码序列
+     */
     private List<IntermediateCode> codes;
-
+    /**
+     * 当前pc指向的代码
+     */
     private IntermediateCode currentCode;
+    /**
+     * 内存
+     */
     private Object[] memory = new Object[MEM_SIZE];
-
 
     public VirtualMachine(List<IntermediateCode> codes) {
         this.codes = codes;
@@ -236,7 +242,7 @@ public class VirtualMachine {
 
     private void init() {
         sp = 255;
-        frameBottomAddr = sp;
+        frameBottomAddr = sp + 1;
         pc = 0;
     }
 }

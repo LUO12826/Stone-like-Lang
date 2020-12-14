@@ -24,7 +24,7 @@ public class Main {
 
     static void test2() {
         List<IntermediateCode> codes = new ArrayList<IntermediateCode>() {{
-
+            //似乎我们设计的时候数字全都用double类型来作为内部实现，所以这里数字要写成double形式。
             add(new IntermediateCode(VMInstructionType.push, MemorySegment.CONSTANT, 1.0));
             add(new IntermediateCode(VMInstructionType.push, MemorySegment.CONSTANT, 2.0));
             add(new IntermediateCode(VMInstructionType.push, MemorySegment.CONSTANT, 3.0));
