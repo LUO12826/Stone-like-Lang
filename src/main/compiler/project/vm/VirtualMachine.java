@@ -94,11 +94,12 @@ public class VirtualMachine {
                 case jump:
                     executeJump();
                     break;
-                case jumpc:
-                    executeJumpC();
+                case jumpe:
+                    executeJumpE();
                     break;
                 case print:
                     executePrint();
+                    break;
                 case halt:
                     return;
             }
@@ -209,16 +210,18 @@ public class VirtualMachine {
     }
 
     void executePop() {
-        Object op1 = memory[sp];
+        Object val = memory[sp];
         switch(currentCode.segment) {
             case LOCAL:
-                memory[frameBottomAddr + (int)op1] = op1;
+                memory[frameBottomAddr + (int)currentCode.op1] = val;
                 break;
             case ARGUMENT:
-                memory[argumentAddr + (int)op1] = op1;
+                memory[argumentAddr + (int)currentCode.op1] = val;
                 break;
             case STATIC:
-                memory[staticSegmentAddr + (int)op1] = op1;
+                memory[staticSegmentAddr + (int)currentCode.op1] = val;
+                break;
+            case NULL:
                 break;
         }
         sp--;
@@ -236,13 +239,13 @@ public class VirtualMachine {
 
     }
 
-    void executeJumpC() {
+    void executeJumpE() {
 
     }
 
     private void init() {
-        sp = 255;
-        frameBottomAddr = sp + 1;
+        sp = 127;
+        frameBottomAddr = 2048;
         pc = 0;
     }
 }
