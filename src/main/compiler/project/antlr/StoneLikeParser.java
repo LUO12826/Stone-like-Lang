@@ -1,4 +1,6 @@
-// Generated from StoneLike.g4 by ANTLR 4.8
+package compiler.project.antlr;// Generated from StoneLike.g4 by ANTLR 4.8
+import compiler.project.antlr.StoneLikeListener;
+import compiler.project.antlr.StoneLikeVisitor;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
@@ -210,7 +212,7 @@ public class StoneLikeParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_statement; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof StoneLikeListener ) ((StoneLikeListener)listener).enterStatement(this);
+			if ( listener instanceof StoneLikeListener) ((StoneLikeListener)listener).enterStatement(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
@@ -218,7 +220,7 @@ public class StoneLikeParser extends Parser {
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof StoneLikeVisitor ) return ((StoneLikeVisitor<? extends T>)visitor).visitStatement(this);
+			if ( visitor instanceof StoneLikeVisitor) return ((StoneLikeVisitor<? extends T>)visitor).visitStatement(this);
 			else return visitor.visitChildren(this);
 		}
 	}
