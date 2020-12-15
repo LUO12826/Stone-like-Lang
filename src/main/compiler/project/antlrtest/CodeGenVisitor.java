@@ -1,6 +1,5 @@
 package compiler.project.antlrtest;
 
-import com.sun.org.apache.bcel.internal.classfile.Code;
 import compiler.project.vm.IntermediateCode;
 import compiler.project.vm.MemorySegment;
 import compiler.project.vm.VMInstructionType;
@@ -31,7 +30,9 @@ public class CodeGenVisitor extends TinyScriptBaseVisitor<Object> {
     @Override
     public Object visitProgram(TinyScriptParser.ProgramContext ctx) {
         ps.println("visitProgram");
-        return super.visitProgram(ctx);
+        visitChildren(ctx);
+        codes.add(new IntermediateCode(VMInstructionType.halt));
+        return null;
     }
 
     @Override
@@ -43,7 +44,18 @@ public class CodeGenVisitor extends TinyScriptBaseVisitor<Object> {
     @Override
     public Object visitIfStatement(TinyScriptParser.IfStatementContext ctx) {
         ps.println("visitIfStatement");
-        return super.visitIfStatement(ctx);
+
+        visit(ctx.quoteExpr());
+        IntermediateCode c = new IntermediateCode(VMInstructionType.jne);
+        codes.add(c);
+        IntermediateCode b = new IntermediateCode(VMInstructionType.pop, MemorySegment.NULL);
+        codes.add(b);
+        visit(ctx.blockStatement(0));
+        c.op1 = codes.size();
+        if(ctx.getChildCount() > 3) {
+            visit((ctx.blockStatement(1)));
+        }
+        return null;
     }
 
     @Override

@@ -43,7 +43,6 @@ public class Main {
         visitor.visit(tree);
 
         List<IntermediateCode> codes = visitor.codes;
-        codes.add(new IntermediateCode(VMInstructionType.halt));
         ps.println("----------------------中间代码-----------------------");
         codes.forEach(code -> {
             if(code == null) {

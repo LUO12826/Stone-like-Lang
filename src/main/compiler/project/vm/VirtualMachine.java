@@ -91,11 +91,14 @@ public class VirtualMachine {
                 case ret:
                     executeReturn();
                     break;
-                case jump:
+                case j:
                     executeJump();
                     break;
-                case jumpe:
-                    executeJumpE();
+                case je:
+                    executeJumpEqual();
+                    break;
+                case jne:
+                    executeJumpNotEqual();
                     break;
                 case print:
                     executePrint();
@@ -236,11 +239,21 @@ public class VirtualMachine {
     }
 
     void executeJump() {
-
+        pc = (int)currentCode.op1;
     }
 
-    void executeJumpE() {
+    void executeJumpEqual() {
+        boolean equalOrNot = (double) memory[sp] != 0;
+        if(equalOrNot) {
+            pc = (int)currentCode.op1;
+        }
+    }
 
+    void executeJumpNotEqual() {
+        boolean equalOrNot = (double) memory[sp] != 0;
+        if(!equalOrNot) {
+            pc = (int)currentCode.op1;
+        }
     }
 
     private void init() {
