@@ -17,8 +17,9 @@ public enum VMInstructionType {
     not("not"),     //逻辑取反
     push("push"),   //入栈
     pop("pop"),     //弹栈
-    jump("jump"),   //无条件跳转
-    jumpe("jumpe"), //相等则跳转
+    j("j"),   //无条件跳转
+    je("je"), //相等则跳转
+    jne("jne"), //不相等则跳转
     gt("gt"),       // 大于
     lt("lt"),       // 小于
     ge("ge"),       // 大于或等于
