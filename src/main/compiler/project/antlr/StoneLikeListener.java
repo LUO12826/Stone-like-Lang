@@ -1,4 +1,5 @@
-package compiler.project.antlr;// Generated from StoneLike.g4 by ANTLR 4.8
+// Generated from StoneLike.g4 by ANTLR 4.9
+package compiler.project.antlr;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**
@@ -7,15 +8,35 @@ import org.antlr.v4.runtime.tree.ParseTreeListener;
  */
 public interface StoneLikeListener extends ParseTreeListener {
 	/**
-	 * Enter a parse tree produced by {@link StoneLikeParser#statements}.
+	 * Enter a parse tree produced by {@link StoneLikeParser#program}.
 	 * @param ctx the parse tree
 	 */
-	void enterStatements(StoneLikeParser.StatementsContext ctx);
+	void enterProgram(StoneLikeParser.ProgramContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link StoneLikeParser#statements}.
+	 * Exit a parse tree produced by {@link StoneLikeParser#program}.
 	 * @param ctx the parse tree
 	 */
-	void exitStatements(StoneLikeParser.StatementsContext ctx);
+	void exitProgram(StoneLikeParser.ProgramContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link StoneLikeParser#globalStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterGlobalStatement(StoneLikeParser.GlobalStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link StoneLikeParser#globalStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitGlobalStatement(StoneLikeParser.GlobalStatementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link StoneLikeParser#functionBlockStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterFunctionBlockStatement(StoneLikeParser.FunctionBlockStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link StoneLikeParser#functionBlockStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitFunctionBlockStatement(StoneLikeParser.FunctionBlockStatementContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link StoneLikeParser#statement}.
 	 * @param ctx the parse tree
@@ -36,6 +57,16 @@ public interface StoneLikeListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitExpression(StoneLikeParser.ExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link StoneLikeParser#arrayExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterArrayExpression(StoneLikeParser.ArrayExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link StoneLikeParser#arrayExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitArrayExpression(StoneLikeParser.ArrayExpressionContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link StoneLikeParser#expressionList}.
 	 * @param ctx the parse tree
@@ -97,15 +128,15 @@ public interface StoneLikeListener extends ParseTreeListener {
 	 */
 	void exitFactor(StoneLikeParser.FactorContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link StoneLikeParser#declaration}.
+	 * Enter a parse tree produced by {@link StoneLikeParser#valueDeclaration}.
 	 * @param ctx the parse tree
 	 */
-	void enterDeclaration(StoneLikeParser.DeclarationContext ctx);
+	void enterValueDeclaration(StoneLikeParser.ValueDeclarationContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link StoneLikeParser#declaration}.
+	 * Exit a parse tree produced by {@link StoneLikeParser#valueDeclaration}.
 	 * @param ctx the parse tree
 	 */
-	void exitDeclaration(StoneLikeParser.DeclarationContext ctx);
+	void exitValueDeclaration(StoneLikeParser.ValueDeclarationContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link StoneLikeParser#variableDeclaration}.
 	 * @param ctx the parse tree
@@ -247,13 +278,23 @@ public interface StoneLikeListener extends ParseTreeListener {
 	 */
 	void exitCallStatement(StoneLikeParser.CallStatementContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link StoneLikeParser#codeBlock}.
+	 * Enter a parse tree produced by {@link StoneLikeParser#commonCodeBlock}.
 	 * @param ctx the parse tree
 	 */
-	void enterCodeBlock(StoneLikeParser.CodeBlockContext ctx);
+	void enterCommonCodeBlock(StoneLikeParser.CommonCodeBlockContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link StoneLikeParser#codeBlock}.
+	 * Exit a parse tree produced by {@link StoneLikeParser#commonCodeBlock}.
 	 * @param ctx the parse tree
 	 */
-	void exitCodeBlock(StoneLikeParser.CodeBlockContext ctx);
+	void exitCommonCodeBlock(StoneLikeParser.CommonCodeBlockContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link StoneLikeParser#functionBlock}.
+	 * @param ctx the parse tree
+	 */
+	void enterFunctionBlock(StoneLikeParser.FunctionBlockContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link StoneLikeParser#functionBlock}.
+	 * @param ctx the parse tree
+	 */
+	void exitFunctionBlock(StoneLikeParser.FunctionBlockContext ctx);
 }
