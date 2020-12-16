@@ -10,6 +10,7 @@ public enum MemorySegment {
     STATIC("STATIC"),
     ARGUMENT("ARGUMENT"),
     CONSTANT("CONSTANT"),
+    HEAP("HEAP"),
     NULL("NULL"),
     ;
 

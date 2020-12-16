@@ -1,5 +1,5 @@
-package compiler.project.antlr;// Generated from StoneLike.g4 by ANTLR 4.8
-
+// Generated from StoneLike.g4 by ANTLR 4.9
+package compiler.project.antlr;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
@@ -15,13 +15,37 @@ public class StoneLikeBaseListener implements StoneLikeListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterStatements(StoneLikeParser.StatementsContext ctx) { }
+	@Override public void enterProgram(StoneLikeParser.ProgramContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitStatements(StoneLikeParser.StatementsContext ctx) { }
+	@Override public void exitProgram(StoneLikeParser.ProgramContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterGlobalStatement(StoneLikeParser.GlobalStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitGlobalStatement(StoneLikeParser.GlobalStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterFunctionBlockStatement(StoneLikeParser.FunctionBlockStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFunctionBlockStatement(StoneLikeParser.FunctionBlockStatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -46,6 +70,18 @@ public class StoneLikeBaseListener implements StoneLikeListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitExpression(StoneLikeParser.ExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterArrayExpression(StoneLikeParser.ArrayExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitArrayExpression(StoneLikeParser.ArrayExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -123,13 +159,13 @@ public class StoneLikeBaseListener implements StoneLikeListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterDeclaration(StoneLikeParser.DeclarationContext ctx) { }
+	@Override public void enterValueDeclaration(StoneLikeParser.ValueDeclarationContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitDeclaration(StoneLikeParser.DeclarationContext ctx) { }
+	@Override public void exitValueDeclaration(StoneLikeParser.ValueDeclarationContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -303,13 +339,25 @@ public class StoneLikeBaseListener implements StoneLikeListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterCodeBlock(StoneLikeParser.CodeBlockContext ctx) { }
+	@Override public void enterCommonCodeBlock(StoneLikeParser.CommonCodeBlockContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitCodeBlock(StoneLikeParser.CodeBlockContext ctx) { }
+	@Override public void exitCommonCodeBlock(StoneLikeParser.CommonCodeBlockContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterFunctionBlock(StoneLikeParser.FunctionBlockContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFunctionBlock(StoneLikeParser.FunctionBlockContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

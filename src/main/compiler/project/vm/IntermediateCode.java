@@ -15,7 +15,7 @@ public class IntermediateCode {
 
     public MemorySegment segment;
 
-    public IntermediateCode(VMInstructionType type, Object op1, Object op2, MemorySegment segment) {
+    public IntermediateCode(VMInstructionType type, MemorySegment segment, Object op1, Object op2) {
         this.instructionType = type;
         this.op1 = op1;
         this.op2 = op2;
@@ -26,22 +26,26 @@ public class IntermediateCode {
         this.instructionType = type;
         this.segment = segment;
         this.op1 = op1;
+        this.op2 = -1;
     }
 
     public IntermediateCode(VMInstructionType type, MemorySegment segment) {
         this.instructionType = type;
         this.segment = segment;
+        this.op2 = -1;
     }
 
     public IntermediateCode(VMInstructionType type, Object op1) {
+        this.segment = MemorySegment.LOCAL;
         this.instructionType = type;
         this.op1 = op1;
-        this.segment = MemorySegment.LOCAL;
+        this.op2 = -1;
     }
 
     public IntermediateCode(VMInstructionType type) {
         this.instructionType = type;
         this.segment = MemorySegment.LOCAL;
+        this.op2 = -1;
     }
 
     @Override

@@ -1,4 +1,6 @@
-package compiler.project.antlr;// Generated from StoneLike.g4 by ANTLR 4.8
+// Generated from StoneLike.g4 by ANTLR 4.9
+package compiler.project.antlr;
+import compiler.project.antlr.StoneLikeParser;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
 /**
@@ -10,11 +12,23 @@ import org.antlr.v4.runtime.tree.ParseTreeVisitor;
  */
 public interface StoneLikeVisitor<T> extends ParseTreeVisitor<T> {
 	/**
-	 * Visit a parse tree produced by {@link StoneLikeParser#statements}.
+	 * Visit a parse tree produced by {@link StoneLikeParser#program}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitStatements(StoneLikeParser.StatementsContext ctx);
+	T visitProgram(StoneLikeParser.ProgramContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link StoneLikeParser#globalStatement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitGlobalStatement(StoneLikeParser.GlobalStatementContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link StoneLikeParser#functionBlockStatement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFunctionBlockStatement(StoneLikeParser.FunctionBlockStatementContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link StoneLikeParser#statement}.
 	 * @param ctx the parse tree
@@ -27,6 +41,12 @@ public interface StoneLikeVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitExpression(StoneLikeParser.ExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link StoneLikeParser#arrayExpression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitArrayExpression(StoneLikeParser.ArrayExpressionContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link StoneLikeParser#expressionList}.
 	 * @param ctx the parse tree
@@ -64,11 +84,11 @@ public interface StoneLikeVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitFactor(StoneLikeParser.FactorContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link StoneLikeParser#declaration}.
+	 * Visit a parse tree produced by {@link StoneLikeParser#valueDeclaration}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitDeclaration(StoneLikeParser.DeclarationContext ctx);
+	T visitValueDeclaration(StoneLikeParser.ValueDeclarationContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link StoneLikeParser#variableDeclaration}.
 	 * @param ctx the parse tree
@@ -154,9 +174,15 @@ public interface StoneLikeVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitCallStatement(StoneLikeParser.CallStatementContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link StoneLikeParser#codeBlock}.
+	 * Visit a parse tree produced by {@link StoneLikeParser#commonCodeBlock}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitCodeBlock(StoneLikeParser.CodeBlockContext ctx);
+	T visitCommonCodeBlock(StoneLikeParser.CommonCodeBlockContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link StoneLikeParser#functionBlock}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFunctionBlock(StoneLikeParser.FunctionBlockContext ctx);
 }

@@ -2,19 +2,40 @@ grammar StoneLike;
 
 import StoneLikeLex;
 
-statements
-	: statement (';')? (statements)?
+program
+	: (globalStatement(';')*)*
 	;
+
+globalStatement
+	: callStatement
+	| expression
+	| valueDeclaration
+	| functionDeclaration
+	| assignStatement
+	| whileStatement
+	| ifStatement
+	;
+
+functionBlockStatement
+    : callStatement
+    | expression
+    | valueDeclaration
+    | assignStatement
+    | whileStatement
+    | ifStatement
+    | returnStatement
+    ;
+
 
 statement
 	: callStatement
 	| expression
-	| declaration                                                   
-	| assignStatement                                               
-	| whileStatement                                                                                              
-	| ifStatement                                                                                                   
-	| returnStatement
-	;	
+	| valueDeclaration
+	| assignStatement
+	| whileStatement
+	| ifStatement
+	;
+
 
 expression
 	: expression '&&' boolExpression
@@ -23,22 +44,25 @@ expression
 	| boolExpression
 	;
 
+arrayExpression
+    : '[' expression ( ',' expression )* ']'
+    ;
+
 expressionList
-	: expressionList ',' expression 
-	| expression
+	: (expression | arrayExpression) (',' (expression | arrayExpression) )*
 	;
 
 boolExpression
-	: additiveExpression relationalOperator additiveExpression 
+	: additiveExpression relationalOperator additiveExpression
 	| additiveExpression
 	;
 
 relationalOperator
-	: '<=' 	
-	| '>=' 	
-	| '==' 	
-	| '<' 	
-	| '>' 	
+	: '<='
+	| '>='
+	| '=='
+	| '<'
+	| '>'
 	| '!='
 	;
 
@@ -62,10 +86,11 @@ factor
 	| callStatement
 	;
 
-declaration
+
+
+valueDeclaration
 	: variableDeclaration
 	| constantDeclaration
-	| functionDeclaration
 	;
 
 variableDeclaration
@@ -77,50 +102,47 @@ constantDeclaration
 	;
 
 functionDeclaration
-	: 'func' Identifier parameterClause codeBlock
+	: 'func' Identifier parameterClause functionBlock
 	;
 
 initializerList
-	: initializer
-	| initializer ',' initializerList
+	: initializer (','initializer)*
 	;
 
 initializer
 	: Identifier '=' expression
-	| Identifier '[' expression ']' '=' '[' expression ( ',' expression )* ']'
+	| Identifier '=' arrayExpression
 	;
 
 parameterClause
-	: '(' ')' 
+	: '(' ')'
 	| '(' parameterList ')'
 	;
 
 parameterList
-	: Identifier 
-	| Identifier '['']'
-	| Identifier ',' parameterList
-	| Identifier '['']' ',' parameterList
+	: Identifier (','Identifier)*
 	;
 
 assignStatement
 	: leftValue '=' expression
+	| Identifier '=' arrayExpression
 	;
 
 leftValue
-	: Identifier 
+	: Identifier
 	| Identifier '[' expression ']'
 	;
 
 whileStatement
-	: 'while' expression codeBlock
+	: 'while' expression commonCodeBlock
 	;
 
 ifStatement
-	: 'if' expression codeBlock ( elseClause )*
+	: 'if' expression commonCodeBlock ( elseClause )*
 	;
 
 elseClause
-	: 'else' codeBlock 	
+	: 'else' commonCodeBlock
 	| 'else' ifStatement
 	;
 
@@ -134,6 +156,10 @@ callStatement
 	| Identifier '(' ')'
 	;
 
-codeBlock
-	: '{' (statements)? '}'
+commonCodeBlock
+	: '{' (statement(';')*)* '}'
 	;
+
+functionBlock
+    : '{' (functionBlockStatement(';')*)* '}'
+    ;
