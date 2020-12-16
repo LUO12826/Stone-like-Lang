@@ -1,0 +1,12 @@
+﻿func add(a, b){
+    return a + b
+}
+
+var i = 10, j = 15
+var sum = add(i, j)
+
+/* 
+* Expected Output:
+* 25
+* program exit
+*/

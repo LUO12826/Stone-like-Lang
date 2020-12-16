@@ -1,0 +1,12 @@
+﻿var a = 3
+while a != 0 {
+    a = a - 1
+}
+
+/* 
+* Expected Output:
+* 2
+* 1
+* 0
+* program exit
+*/

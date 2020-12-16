@@ -1,0 +1,10 @@
+﻿var str = "12343jfa
+var a = str
+
+/* 
+* Expected Output:
+* ErrorCode: 102,
+* ErrorType: MISS_DQOUTE, 
+* ErrorMessage: "双引号未闭合", 
+* ErrorLine: Line 1.
+*/

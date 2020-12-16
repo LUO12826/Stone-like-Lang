@@ -1,0 +1,12 @@
+﻿var a = -10
+if a > 0 {
+	a = a
+}else{
+	a = -a
+}
+
+/* 
+* Expected Output:
+* 10
+* program exit
+*/
