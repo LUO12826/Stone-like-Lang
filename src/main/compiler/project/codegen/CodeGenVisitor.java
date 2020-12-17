@@ -7,6 +7,7 @@ import compiler.project.vm.Executable;
 import compiler.project.vm.IntermediateCode;
 import compiler.project.vm.MemorySegment;
 import compiler.project.vm.VMInstructionType;
+import org.antlr.v4.runtime.tree.ParseTree;
 
 import java.io.PrintStream;
 import java.util.ArrayList;
@@ -26,24 +27,33 @@ public class CodeGenVisitor extends StoneLikeBaseVisitor<Object> {
 
     PrintStream ps = System.out;
 
+    /** 编译生成的代码 */
     public List<IntermediateCode> codes = new ArrayList<IntermediateCode>();
 
+    /** 存放代码中出现的字面量的数据段 */
     public List<Object> dataSegment = new ArrayList<>();
 
+    /** 指示数据段当前下标 */
     private int valueLiteralIndex = -1;
 
+    /** 是否在声明变量的语句中 */
     private boolean inVarDeclareMode = false;
 
+    /** 是否在声明常量的语句中 */
     private boolean inConstDeclareMode = false;
 
+    /** 始终指向全局作用域 */
     private Scope globalScope;
 
+    /** 指向当前作用域 */
     private Scope currentScope;
 
+    /** 获取可执行文件，包括数据段和代码段 */
     public Executable getExecutable() {
         return new Executable(dataSegment, codes);
     }
 
+    /** 向数据段中插入内容 */
     private int addValueLiteral(Object obj) {
         valueLiteralIndex++;
         dataSegment.add(obj);
@@ -54,6 +64,17 @@ public class CodeGenVisitor extends StoneLikeBaseVisitor<Object> {
     public Object visitProgram(StoneLikeParser.ProgramContext ctx) {
         globalScope = new Scope(null);
         currentScope = globalScope;
+        IntermediateCode c = new IntermediateCode(VMInstructionType.j);
+        codes.add(c);
+
+        //下面是编译函数的部分，但函数功能还没完成。
+
+//        ctx.children.forEach(child -> {
+//            if(child.getChildCount() == 1 && child.getChild(0) instanceof StoneLikeParser.FunctionDeclarationContext) {
+//                visit(child.getChild(0));
+//            }
+//        });
+        c.op1 = codes.size();
         visitChildren(ctx);
         codes.add(new IntermediateCode(VMInstructionType.halt));
         return null;
@@ -67,6 +88,104 @@ public class CodeGenVisitor extends StoneLikeBaseVisitor<Object> {
     @Override
     public Object visitFunctionBlockStatement(StoneLikeParser.FunctionBlockStatementContext ctx) {
         return super.visitFunctionBlockStatement(ctx);
+    }
+
+    @Override
+    public Object visitCallStatement(StoneLikeParser.CallStatementContext ctx) {
+        String name = ctx.Identifier().getText();
+        return super.visitCallStatement(ctx);
+    }
+
+    @Override
+    public Object visitExpressionList(StoneLikeParser.ExpressionListContext ctx) {
+        return super.visitExpressionList(ctx);
+    }
+
+    @Override
+    public Object visitCommonCodeBlock(StoneLikeParser.CommonCodeBlockContext ctx) {
+        return super.visitCommonCodeBlock(ctx);
+    }
+
+    @Override
+    public Object visitFunctionDeclaration(StoneLikeParser.FunctionDeclarationContext ctx) {
+        currentScope = new Scope(currentScope);
+        String[] paras = (String[])visit(ctx.parameterClause());
+        int paraNum = paras == null ? 0 : paras.length;
+        String name = ctx.Identifier().getText();
+
+        FunctionSignature fs = new FunctionSignature(name, paraNum);
+        if(globalScope.functionSymbolRedundant(fs)) {
+            throw new FatalError("重复定义函数。");
+        }
+        FunctionSymbol s = new FunctionSymbol(name, currentScope, paraNum, codes.size());
+        globalScope.defineFunctionSymbol(s);
+
+        //将参数从运算栈上转移到栈帧中。
+        if(paraNum > 0) {
+            for(int i = 0; i < paraNum; i++) {
+                ValueSymbol vs = new ValueSymbol(paras[i], false);
+                int ra = currentScope.defineValueSymbol(vs).relativeMemoryAddress;
+                codes.add(new IntermediateCode(VMInstructionType.pop, MemorySegment.LOCAL, ra));
+            }
+        }
+        visit(ctx.functionBlock());
+        return null;
+    }
+
+    @Override
+    public Object visitFunctionBlock(StoneLikeParser.FunctionBlockContext ctx) {
+        int childCount = ctx.getChildCount();
+        if(childCount == 2) {
+            codes.add(new IntermediateCode(VMInstructionType.ret));
+            return null;
+        }
+        for(int i = 0; i < childCount; i++) {
+            ParseTree node = ctx.getChild(i);
+            if(node instanceof StoneLikeParser.ReturnStatementContext) {
+                ParseTree nextNode = ctx.getChild(i + 1);
+
+                if(nextNode instanceof StoneLikeParser.ExpressionContext
+                        || nextNode instanceof StoneLikeParser.CallStatementContext
+                        || nextNode instanceof StoneLikeParser.ArrayExpressionContext
+                ) {
+                    visit(nextNode);
+                }
+                codes.add(new IntermediateCode(VMInstructionType.ret));
+                return null;
+            }
+            visit(node);
+        }
+        //如果没有编写return语句，补一条返回指令。
+        codes.add(new IntermediateCode(VMInstructionType.ret));
+        return null;
+    }
+
+    @Override
+    public Object visitReturnStatement(StoneLikeParser.ReturnStatementContext ctx) {
+        return null;
+    }
+
+    @Override
+    public Object visitParameterClause(StoneLikeParser.ParameterClauseContext ctx) {
+        if(ctx.parameterList() == null) {
+            return null;
+        }
+        return visit(ctx.parameterList());
+    }
+
+    @Override
+    public Object visitParameterList(StoneLikeParser.ParameterListContext ctx) {
+        int paraNum = (ctx.getChildCount() + 1) / 2;
+        String[] paras = new String[paraNum];
+        for(int i = 0; i < paraNum; i++) {
+            paras[i] = ctx.getChild(2 * i).getText();
+        }
+        return paras;
+    }
+
+    @Override
+    public Object visitInitializerList(StoneLikeParser.InitializerListContext ctx) {
+        return super.visitInitializerList(ctx);
     }
 
     @Override
@@ -129,11 +248,6 @@ public class CodeGenVisitor extends StoneLikeBaseVisitor<Object> {
         }
         codes.add(new IntermediateCode(VMInstructionType.push, MemorySegment.STATIC, 0));
         return null;
-    }
-
-    @Override
-    public Object visitExpressionList(StoneLikeParser.ExpressionListContext ctx) {
-        return super.visitExpressionList(ctx);
     }
 
     /*
@@ -237,7 +351,6 @@ public class CodeGenVisitor extends StoneLikeBaseVisitor<Object> {
     }
 
     /*
-
     factor
 	: Identifier
 	| Identifier '[' expression ']'
@@ -314,15 +427,6 @@ public class CodeGenVisitor extends StoneLikeBaseVisitor<Object> {
         return null;
     }
 
-    @Override
-    public Object visitFunctionDeclaration(StoneLikeParser.FunctionDeclarationContext ctx) {
-        return super.visitFunctionDeclaration(ctx);
-    }
-
-    @Override
-    public Object visitInitializerList(StoneLikeParser.InitializerListContext ctx) {
-        return super.visitInitializerList(ctx);
-    }
 
     /*
     initializer
@@ -349,15 +453,6 @@ public class CodeGenVisitor extends StoneLikeBaseVisitor<Object> {
         return null;
     }
 
-    @Override
-    public Object visitParameterClause(StoneLikeParser.ParameterClauseContext ctx) {
-        return super.visitParameterClause(ctx);
-    }
-
-    @Override
-    public Object visitParameterList(StoneLikeParser.ParameterListContext ctx) {
-        return super.visitParameterList(ctx);
-    }
 
     /*
     assignStatement
@@ -367,7 +462,7 @@ public class CodeGenVisitor extends StoneLikeBaseVisitor<Object> {
      */
     @Override
     public Object visitAssignStatement(StoneLikeParser.AssignStatementContext ctx) {
-
+        //好多冗余代码，得简化一下
 
         //对应于Identifier '=' arrayExpression的情况
         if(ctx.Identifier() != null) {
@@ -452,23 +547,4 @@ public class CodeGenVisitor extends StoneLikeBaseVisitor<Object> {
         return super.visitElseClause(ctx);
     }
 
-    @Override
-    public Object visitReturnStatement(StoneLikeParser.ReturnStatementContext ctx) {
-        return super.visitReturnStatement(ctx);
-    }
-
-    @Override
-    public Object visitCallStatement(StoneLikeParser.CallStatementContext ctx) {
-        return super.visitCallStatement(ctx);
-    }
-
-    @Override
-    public Object visitCommonCodeBlock(StoneLikeParser.CommonCodeBlockContext ctx) {
-        return super.visitCommonCodeBlock(ctx);
-    }
-
-    @Override
-    public Object visitFunctionBlock(StoneLikeParser.FunctionBlockContext ctx) {
-        return super.visitFunctionBlock(ctx);
-    }
 }

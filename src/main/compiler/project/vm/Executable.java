@@ -5,6 +5,9 @@ import java.util.List;
  * @author: 骆荟州
  * @createTime: 2020/12/16 8:49 上午
  * @updateTime:
+ *
+ * StoneLike虚拟机的可执行文件
+ * 包括代码段和数据段
  */
 public class Executable {
 

@@ -334,7 +334,7 @@ public class CodeGenVisitor extends TinyScriptBaseVisitor<Object> {
         ps.println("visitNumericLiteral");
         String s = ctx.Decimal().getText();
         IntermediateCode c =
-                new IntermediateCode(VMInstructionType.push, MemorySegment.CONSTANT, new Double(s));
+                new IntermediateCode(VMInstructionType.push, MemorySegment.CONSTANT, new Integer(s));
         codes.add(c);
 
         return null;
