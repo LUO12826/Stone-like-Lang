@@ -9,6 +9,18 @@ import java.util.List;
  */
 public class StoneLikeVM {
 
+    public enum StoneLikeRuntimeException {
+        TypeError("运行时类型不匹配"),
+        ArrayOutOfBounds("数组下标越界"),
+        SegmentFault("指令目标段错误");
+
+        private String message;
+
+        public String getMessage() { return message; }
+
+        StoneLikeRuntimeException(String message) { this.message = message; }
+    }
+
     private final static int MEM_SIZE = 65536;
 
     /**栈指针*/
@@ -20,10 +32,11 @@ public class StoneLikeVM {
     /**当前函数栈帧底地址*/
     private int frameBottomAddr;
 
-    /**当前函数参数起始地址*/
+    /**参数段起始地址*/
     private int argumentAddr;
 
-    private int staticSegmentAddr = 0;
+    /**静态段起始地址*/
+    private int staticSegmentAddr;
 
     /**数据段*/
     private List<Object> dataSegment;
@@ -37,15 +50,18 @@ public class StoneLikeVM {
     /** 内存 */
     private final Object[] memory = new Object[MEM_SIZE];
 
-    public StoneLikeVM(List<IntermediateCode> codes) {
-        this.codes = codes;
-        init();
-    }
-
     public StoneLikeVM(Executable e) {
         this.dataSegment = e.dataSegment;
         this.codes = e.codeSegment;
         init();
+    }
+
+    //初始化虚拟机的各个寄存器。
+    private void init() {
+        sp = 127;
+        frameBottomAddr = 2048;
+        staticSegmentAddr = 0;
+        pc = 0;
     }
 
     public void execute() throws StoneLikeVMException {
@@ -135,7 +151,7 @@ public class StoneLikeVM {
             sp--;
         }
         catch(ClassCastException e) {
-            throw new StoneLikeVMException("运行时类型不匹配");
+            handleRuntimeException(StoneLikeRuntimeException.TypeError);
         }
 
 
@@ -173,7 +189,7 @@ public class StoneLikeVM {
             sp--;
         }
         catch(ClassCastException e) {
-            throw new StoneLikeVMException("运行时类型不匹配");
+            handleRuntimeException(StoneLikeRuntimeException.TypeError);
         }
 
     }
@@ -200,7 +216,7 @@ public class StoneLikeVM {
             sp--;
         }
         catch(ClassCastException e) {
-            throw new StoneLikeVMException("运行时类型不匹配");
+            handleRuntimeException(StoneLikeRuntimeException.TypeError);
         }
 
     }
@@ -208,34 +224,34 @@ public class StoneLikeVM {
     void executePush() throws StoneLikeVMException {
         sp++;
         try {
-            Object op1 = currentCode.op1;
+            int op1 = currentCode.op1;
             switch(currentCode.segment) {
                 case CONSTANT:
-                    memory[sp] = dataSegment.get((int)currentCode.op1);
+                    memory[sp] = dataSegment.get(currentCode.op1);
                     break;
                 case LOCAL:
-                    memory[sp] = memory[frameBottomAddr + (int)op1];
+                    memory[sp] = memory[frameBottomAddr + op1];
                     break;
                 case ARGUMENT:
-                    memory[sp] = memory[argumentAddr + (int)op1];
+                    memory[sp] = memory[argumentAddr + op1];
                     break;
                 case STATIC:
-                    memory[sp] = memory[staticSegmentAddr + (int)op1];
+                    memory[sp] = memory[staticSegmentAddr + op1];
                     break;
                 case HEAP:
                     //在数组寻址时，把push指令的操作数认为是数组在栈帧中的地址，把操作数栈顶部元素认为是数组下标。
                     sp--;
                     int offset = (int)(double)memory[sp];
-                    Object[] arr = (Object[])memory[frameBottomAddr + (int)op1];
+                    Object[] arr = (Object[])memory[frameBottomAddr + op1];
                     memory[sp] = arr[offset];
                     break;
             }
         }
         catch(ClassCastException e) {
-            throw new StoneLikeVMException("运行时类型不匹配");
+            handleRuntimeException(StoneLikeRuntimeException.TypeError);
         }
         catch(ArrayIndexOutOfBoundsException idxe) {
-            throw new StoneLikeVMException("数组下标越界");
+            handleRuntimeException(StoneLikeRuntimeException.ArrayOutOfBounds);
         }
     }
 
@@ -245,14 +261,14 @@ public class StoneLikeVM {
             int offset;
             switch(currentCode.segment) {
                 case LOCAL:
-                    memory[frameBottomAddr + (int)currentCode.op1] = val;
+                    memory[frameBottomAddr + currentCode.op1] = val;
                     break;
                 case ARGUMENT:
-                    memory[argumentAddr + (int)currentCode.op1] = val;
+                    memory[argumentAddr + currentCode.op1] = val;
                     break;
                 case STATIC:
-                    int addr = staticSegmentAddr + (int)currentCode.op1;
-                    offset = (int)currentCode.op2;
+                    int addr = staticSegmentAddr + currentCode.op1;
+                    offset = currentCode.op2;
                     if(offset != -1) {
                         Object[] arr = (Object[])memory[addr];
                         arr[offset] = val;
@@ -266,25 +282,20 @@ public class StoneLikeVM {
                 case HEAP:
                     //在数组寻址时，把pop指令的操作数认为是数组在栈帧中的地址，把操作数栈顶部元素认为是数组下标，第二个元素认为是要弹出的值。
                     offset = (int)(double)memory[sp];
-                    Object[] arr = (Object[])memory[frameBottomAddr + (int)currentCode.op1];
+                    Object[] arr = (Object[])memory[frameBottomAddr + currentCode.op1];
                     arr[offset] = memory[sp - 1];
                     sp--;
                     break;
                 default:
-                    throw new StoneLikeVMException("pop指令目标段错误");
+                    handleRuntimeException(StoneLikeRuntimeException.SegmentFault);
             }
             sp--;
         }
         catch(ArrayIndexOutOfBoundsException idxe) {
-            System.out.println("程序计数器:" + pc);
-            System.out.println("代码:" + currentCode.toString());
-            throw new StoneLikeVMException("数组下标越界");
-
+            handleRuntimeException(StoneLikeRuntimeException.ArrayOutOfBounds);
         }
         catch(ClassCastException e) {
-            System.out.println("程序计数器:" + pc);
-            System.out.println("代码:" + currentCode.toString());
-            throw new StoneLikeVMException("运行时类型不匹配");
+            handleRuntimeException(StoneLikeRuntimeException.TypeError);
         }
 
     }
@@ -298,26 +309,33 @@ public class StoneLikeVM {
     }
 
     void executeJump() {
-        pc = (int)currentCode.op1;
+        pc = currentCode.op1;
     }
 
     void executeJumpEqual() {
         boolean equalOrNot = (double) memory[sp] != 0;
         if(equalOrNot) {
-            pc = (int)currentCode.op1;
+            pc = currentCode.op1;
         }
     }
 
     void executeJumpNotEqual() {
         boolean equalOrNot = (double) memory[sp] != 0;
         if(!equalOrNot) {
-            pc = (int)currentCode.op1;
+            pc = currentCode.op1;
         }
     }
 
-    private void init() {
-        sp = 127;
-        frameBottomAddr = 2048;
-        pc = 0;
+    void handleRuntimeException(StoneLikeRuntimeException e) throws StoneLikeVMException {
+        System.out.println("程序计数器(下一条要执行的代码):" + pc);
+        System.out.println("当前执行的代码:" + currentCode.toString());
+        switch(e) {
+            case TypeError:
+            case SegmentFault:
+            case ArrayOutOfBounds:
+                throw new StoneLikeVMException(e.getMessage());
+        }
     }
+
 }
+

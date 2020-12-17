@@ -33,7 +33,7 @@ public class Scope {
     /** 本作用域值符号表 */
     private Map<String, ValueSymbol> valueSymbols = new HashMap<>();
 
-    private Map<String, FunctionSymbol> functionSymbols = new HashMap<>();
+    private Map<FunctionSignature, FunctionSymbol> functionSymbols = new HashMap<>();
 
     /** 值符号 序号 */
     private int valueSymbolNum = 1;
@@ -58,7 +58,7 @@ public class Scope {
 
     public boolean defineFunctionSymbol(FunctionSymbol symbol) {
         if(type == Type.GLOBAL) {
-            functionSymbols.put(symbol.name, symbol);
+            functionSymbols.put(new FunctionSignature(symbol.name, symbol.parameterNum), symbol);
             return true;
         }
         return false;
@@ -77,8 +77,8 @@ public class Scope {
         return symbol != null;
     }
 
-    public boolean functionSymbolRedundant(String name) {
-        FunctionSymbol symbol = functionSymbols.get(name);
+    public boolean functionSymbolRedundant(FunctionSignature fs) {
+        FunctionSymbol symbol = functionSymbols.get(fs);
         return symbol != null;
     }
 
