@@ -1,4 +1,4 @@
-// Generated from StoneLike.g4 by ANTLR 4.9
+// Generated from /Users/luohuizhou/Documents/javaProject/Stone-like-Lang/src/main/compiler/project/g4/StoneLike.g4 by ANTLR 4.9
 package compiler.project.antlr;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
@@ -17,26 +17,6 @@ public interface StoneLikeListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitProgram(StoneLikeParser.ProgramContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link StoneLikeParser#globalStatement}.
-	 * @param ctx the parse tree
-	 */
-	void enterGlobalStatement(StoneLikeParser.GlobalStatementContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link StoneLikeParser#globalStatement}.
-	 * @param ctx the parse tree
-	 */
-	void exitGlobalStatement(StoneLikeParser.GlobalStatementContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link StoneLikeParser#functionBlockStatement}.
-	 * @param ctx the parse tree
-	 */
-	void enterFunctionBlockStatement(StoneLikeParser.FunctionBlockStatementContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link StoneLikeParser#functionBlockStatement}.
-	 * @param ctx the parse tree
-	 */
-	void exitFunctionBlockStatement(StoneLikeParser.FunctionBlockStatementContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link StoneLikeParser#statement}.
 	 * @param ctx the parse tree
@@ -278,23 +258,13 @@ public interface StoneLikeListener extends ParseTreeListener {
 	 */
 	void exitCallStatement(StoneLikeParser.CallStatementContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link StoneLikeParser#commonCodeBlock}.
+	 * Enter a parse tree produced by {@link StoneLikeParser#codeBlock}.
 	 * @param ctx the parse tree
 	 */
-	void enterCommonCodeBlock(StoneLikeParser.CommonCodeBlockContext ctx);
+	void enterCodeBlock(StoneLikeParser.CodeBlockContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link StoneLikeParser#commonCodeBlock}.
+	 * Exit a parse tree produced by {@link StoneLikeParser#codeBlock}.
 	 * @param ctx the parse tree
 	 */
-	void exitCommonCodeBlock(StoneLikeParser.CommonCodeBlockContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link StoneLikeParser#functionBlock}.
-	 * @param ctx the parse tree
-	 */
-	void enterFunctionBlock(StoneLikeParser.FunctionBlockContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link StoneLikeParser#functionBlock}.
-	 * @param ctx the parse tree
-	 */
-	void exitFunctionBlock(StoneLikeParser.FunctionBlockContext ctx);
+	void exitCodeBlock(StoneLikeParser.CodeBlockContext ctx);
 }

@@ -15,6 +15,7 @@ import compiler.project.lexer.TokenType;
 import compiler.project.vm.*;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
+import org.antlr.v4.runtime.CodePointCharStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 
 import java.io.File;
@@ -25,7 +26,13 @@ public class Main {
     static PrintStream ps = System.out;
 
     public static void main(String[] args) throws Exception {
-        test4();
+        //test4();
+        int b = 3;
+        while(b > 0) {
+            b--;
+            int a = 4;
+        }
+
     }
 
     static void test4() throws Exception {

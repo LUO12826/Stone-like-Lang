@@ -1,6 +1,5 @@
-// Generated from StoneLike.g4 by ANTLR 4.9
+// Generated from /Users/luohuizhou/Documents/javaProject/Stone-like-Lang/src/main/compiler/project/g4/StoneLike.g4 by ANTLR 4.9
 package compiler.project.antlr;
-import compiler.project.antlr.StoneLikeParser;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
 /**
@@ -17,18 +16,6 @@ public interface StoneLikeVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitProgram(StoneLikeParser.ProgramContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link StoneLikeParser#globalStatement}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitGlobalStatement(StoneLikeParser.GlobalStatementContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link StoneLikeParser#functionBlockStatement}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitFunctionBlockStatement(StoneLikeParser.FunctionBlockStatementContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link StoneLikeParser#statement}.
 	 * @param ctx the parse tree
@@ -174,15 +161,9 @@ public interface StoneLikeVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitCallStatement(StoneLikeParser.CallStatementContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link StoneLikeParser#commonCodeBlock}.
+	 * Visit a parse tree produced by {@link StoneLikeParser#codeBlock}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitCommonCodeBlock(StoneLikeParser.CommonCodeBlockContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link StoneLikeParser#functionBlock}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitFunctionBlock(StoneLikeParser.FunctionBlockContext ctx);
+	T visitCodeBlock(StoneLikeParser.CodeBlockContext ctx);
 }

@@ -81,16 +81,6 @@ public class CodeGenVisitor extends StoneLikeBaseVisitor<Object> {
     }
 
     @Override
-    public Object visitGlobalStatement(StoneLikeParser.GlobalStatementContext ctx) {
-        return super.visitGlobalStatement(ctx);
-    }
-
-    @Override
-    public Object visitFunctionBlockStatement(StoneLikeParser.FunctionBlockStatementContext ctx) {
-        return super.visitFunctionBlockStatement(ctx);
-    }
-
-    @Override
     public Object visitCallStatement(StoneLikeParser.CallStatementContext ctx) {
         String name = ctx.Identifier().getText();
         return super.visitCallStatement(ctx);
@@ -99,11 +89,6 @@ public class CodeGenVisitor extends StoneLikeBaseVisitor<Object> {
     @Override
     public Object visitExpressionList(StoneLikeParser.ExpressionListContext ctx) {
         return super.visitExpressionList(ctx);
-    }
-
-    @Override
-    public Object visitCommonCodeBlock(StoneLikeParser.CommonCodeBlockContext ctx) {
-        return super.visitCommonCodeBlock(ctx);
     }
 
     @Override
@@ -128,36 +113,13 @@ public class CodeGenVisitor extends StoneLikeBaseVisitor<Object> {
                 codes.add(new IntermediateCode(VMInstructionType.pop, MemorySegment.LOCAL, ra));
             }
         }
-        visit(ctx.functionBlock());
+        visit(ctx.codeBlock());
         return null;
     }
 
     @Override
-    public Object visitFunctionBlock(StoneLikeParser.FunctionBlockContext ctx) {
-        int childCount = ctx.getChildCount();
-        if(childCount == 2) {
-            codes.add(new IntermediateCode(VMInstructionType.ret));
-            return null;
-        }
-        for(int i = 0; i < childCount; i++) {
-            ParseTree node = ctx.getChild(i);
-            if(node instanceof StoneLikeParser.ReturnStatementContext) {
-                ParseTree nextNode = ctx.getChild(i + 1);
-
-                if(nextNode instanceof StoneLikeParser.ExpressionContext
-                        || nextNode instanceof StoneLikeParser.CallStatementContext
-                        || nextNode instanceof StoneLikeParser.ArrayExpressionContext
-                ) {
-                    visit(nextNode);
-                }
-                codes.add(new IntermediateCode(VMInstructionType.ret));
-                return null;
-            }
-            visit(node);
-        }
-        //如果没有编写return语句，补一条返回指令。
-        codes.add(new IntermediateCode(VMInstructionType.ret));
-        return null;
+    public Object visitCodeBlock(StoneLikeParser.CodeBlockContext ctx) {
+        return super.visitCodeBlock(ctx);
     }
 
     @Override
@@ -516,7 +478,7 @@ public class CodeGenVisitor extends StoneLikeBaseVisitor<Object> {
         IntermediateCode c = new IntermediateCode(VMInstructionType.jne);
         codes.add(c);
         codes.add(new IntermediateCode(VMInstructionType.pop, MemorySegment.NULL));
-        visit(ctx.commonCodeBlock());
+        visit(ctx.codeBlock());
         IntermediateCode d = new IntermediateCode(VMInstructionType.j);
         codes.add(d);
         c.op1 = codes.size();
@@ -531,12 +493,12 @@ public class CodeGenVisitor extends StoneLikeBaseVisitor<Object> {
         IntermediateCode c = new IntermediateCode(VMInstructionType.jne);
         codes.add(c);
         codes.add(new IntermediateCode(VMInstructionType.pop, MemorySegment.NULL));
-        visit(ctx.commonCodeBlock());
+        visit(ctx.codeBlock());
         IntermediateCode d = new IntermediateCode(VMInstructionType.j);
         codes.add(d);
         c.op1 = codes.size();
-        if(ctx.elseClause() != null && ctx.elseClause().size() > 0) {
-            ctx.elseClause().forEach(this::visit);
+        if(ctx.elseClause() != null) {
+            visit(ctx.elseClause());
         }
         d.op1 = codes.size();
         return null;

@@ -1,5 +1,6 @@
-// Generated from StoneLike.g4 by ANTLR 4.9
+// Generated from /Users/luohuizhou/Documents/javaProject/Stone-like-Lang/src/main/compiler/project/g4/StoneLike.g4 by ANTLR 4.9
 package compiler.project.antlr;
+
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
@@ -22,30 +23,6 @@ public class StoneLikeBaseListener implements StoneLikeListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitProgram(StoneLikeParser.ProgramContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterGlobalStatement(StoneLikeParser.GlobalStatementContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitGlobalStatement(StoneLikeParser.GlobalStatementContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterFunctionBlockStatement(StoneLikeParser.FunctionBlockStatementContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitFunctionBlockStatement(StoneLikeParser.FunctionBlockStatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -339,25 +316,13 @@ public class StoneLikeBaseListener implements StoneLikeListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterCommonCodeBlock(StoneLikeParser.CommonCodeBlockContext ctx) { }
+	@Override public void enterCodeBlock(StoneLikeParser.CodeBlockContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitCommonCodeBlock(StoneLikeParser.CommonCodeBlockContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterFunctionBlock(StoneLikeParser.FunctionBlockContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitFunctionBlock(StoneLikeParser.FunctionBlockContext ctx) { }
+	@Override public void exitCodeBlock(StoneLikeParser.CodeBlockContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
