@@ -99,11 +99,11 @@ public class Scope {
         return s;
     }
 
-    public FunctionSymbol resolveFunctionSymbol(String name) {
+    public FunctionSymbol resolveFunctionSymbol(FunctionSignature signature) {
         if(type == Type.LOCAL) {
             return null;
         }
-        return functionSymbols.get(name);
+        return functionSymbols.get(signature);
     }
 
 }

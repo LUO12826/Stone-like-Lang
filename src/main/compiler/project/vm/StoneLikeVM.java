@@ -315,12 +315,31 @@ public class StoneLikeVM {
 
     }
 
-    void executeCall() {
-
+    void executeCall() throws StoneLikeVMException {
+        try{
+            int temp = frameBottomAddr;
+            // 分配空间
+            frameBottomAddr += currentCode.op2;
+            // 保存返回地址
+            memory[frameBottomAddr] = pc;
+            // 保存当前函数帧的指针
+            memory[frameBottomAddr+1] = temp;
+            // 跳转函数
+            pc = currentCode.op1;
+        }catch(ClassCastException e) {
+            handleRuntimeException(StoneLikeRuntimeException.TypeError);
+        }
     }
 
-    void executeReturn() {
-
+    void executeReturn() throws StoneLikeVMException{
+        try{
+            // 恢复pc为返回地址
+            pc = (int)memory[frameBottomAddr];
+            // 释放栈帧
+            frameBottomAddr = (int)memory[frameBottomAddr+1];
+        }catch(ClassCastException e) {
+            handleRuntimeException(StoneLikeRuntimeException.TypeError);
+        }
     }
 
     void executeJump() {

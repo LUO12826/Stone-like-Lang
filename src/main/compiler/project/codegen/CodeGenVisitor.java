@@ -6,6 +6,7 @@ import compiler.project.vm.Executable;
 import compiler.project.vm.IntermediateCode;
 import compiler.project.vm.MemorySegment;
 import compiler.project.vm.VMInstructionType;
+import org.antlr.v4.runtime.tree.ParseTree;
 
 import java.io.PrintStream;
 import java.util.ArrayList;
@@ -65,23 +66,60 @@ public class CodeGenVisitor extends StoneLikeBaseVisitor<Object> {
         IntermediateCode c = new IntermediateCode(VMInstructionType.j);
         codes.add(c);
 
-        //下面是编译函数的部分，但函数功能还没完成。
+        // 先编译一遍，生成函数声明
+        ctx.children.forEach(child -> {
+            if(child.getChild(0) instanceof StoneLikeParser.FunctionDeclarationContext) {
+                visit(child.getChild(0));
+            }
+        });
 
-//        ctx.children.forEach(child -> {
-//            if(child.getChildCount() == 1 && child.getChild(0) instanceof StoneLikeParser.FunctionDeclarationContext) {
-//                visit(child.getChild(0));
-//            }
-//        });
+        // 编完函数后的起始地址
         c.op1 = codes.size();
-        visitChildren(ctx);
+        // 访问每个非函数声明
+        ctx.children.forEach(child -> {
+            if(!(child.getChild(0) instanceof StoneLikeParser.FunctionDeclarationContext)) {
+                visit(child.getChild(0));
+            }
+        });
+
         codes.add(new IntermediateCode(VMInstructionType.halt));
         return null;
     }
 
     @Override
     public Object visitCallStatement(StoneLikeParser.CallStatementContext ctx) {
+        // 获取函数名
         String name = ctx.Identifier().getText();
-        return super.visitCallStatement(ctx);
+        Symbol s;
+        if(ctx.expressionList()==null){
+            // 获取参数个数
+            int parameterNumber = 0;
+            s = globalScope.resolveFunctionSymbol(new FunctionSignature(name, parameterNumber));
+
+            // 判断函数是否已定义
+            if(s == null){
+                throw new FatalError("使用了未定义的函数或参数数量不匹配:" + ctx.Identifier().getText());
+            }
+
+        }else{
+            // 获取参数个数
+            int parameterNumber=(ctx.expressionList().children.size()+1)/2;
+
+            s = globalScope.resolveFunctionSymbol(new FunctionSignature(name, parameterNumber));
+
+            // 判断函数是否已定义
+            if(s == null){
+                throw new FatalError("使用了未定义的函数或参数数量不匹配:" + ctx.Identifier().getText());
+            }
+
+            // 将参数逆序放置栈中
+            visit(ctx.expressionList());
+        }
+
+        // 生成中间代码
+        FunctionSymbol functionSymbol = (FunctionSymbol)s;
+        codes.add(new IntermediateCode(VMInstructionType.call, functionSymbol.codeAddress, currentScope.getValueSymbolNum()));
+        return null;
     }
 
     @Override
@@ -91,6 +129,7 @@ public class CodeGenVisitor extends StoneLikeBaseVisitor<Object> {
 
     @Override
     public Object visitFunctionDeclaration(StoneLikeParser.FunctionDeclarationContext ctx) {
+        Scope temp = currentScope;
         currentScope = new Scope(currentScope);
         String[] paras = (String[])visit(ctx.parameterClause());
         int paraNum = paras == null ? 0 : paras.length;
@@ -112,6 +151,21 @@ public class CodeGenVisitor extends StoneLikeBaseVisitor<Object> {
             }
         }
         visit(ctx.codeBlock());
+
+        // 判断函数是否有return语句
+        for(ParseTree context: ctx.codeBlock().children){
+            // 有则直接返回
+            if(context.getChild(0) instanceof StoneLikeParser.ReturnStatementContext){
+                // 恢复作用域
+                currentScope = temp;
+                return null;
+            }
+        }
+
+        // 生成返回指令
+        codes.add(new IntermediateCode(VMInstructionType.ret));
+        // 恢复作用域
+        currentScope = temp;
         return null;
     }
 
@@ -122,6 +176,12 @@ public class CodeGenVisitor extends StoneLikeBaseVisitor<Object> {
 
     @Override
     public Object visitReturnStatement(StoneLikeParser.ReturnStatementContext ctx) {
+        // 存在返回值将返回值置于栈顶
+        if(ctx.expression() != null){
+            visit(ctx.expression());
+        }
+        // 生成返回指令
+        codes.add(new IntermediateCode(VMInstructionType.ret));
         return null;
     }
 
@@ -347,7 +407,7 @@ public class CodeGenVisitor extends StoneLikeBaseVisitor<Object> {
                     }
                 }
                 else if(ctx.callStatement() != null) {
-
+                    visit(ctx.callStatement());
                 }
                 break;
             case 2:

@@ -39,6 +39,12 @@ public class IntermediateCode {
         this.segment = segment;
     }
 
+    public IntermediateCode(VMInstructionType type, int op1, int op2) {
+        this.instructionType = type;
+        this.op1 = op1;
+        this.op2 = op2;
+    }
+
     public IntermediateCode(VMInstructionType type, int op1) {
         this.segment = MemorySegment.LOCAL;
         this.instructionType = type;

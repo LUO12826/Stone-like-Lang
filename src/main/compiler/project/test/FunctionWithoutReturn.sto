@@ -1,0 +1,13 @@
+func add(){
+    var i = 10, j = 15
+    var sum = i + j
+    sum
+}
+
+add()
+
+/*
+* Expected Output:
+* 25
+* program exit
+*/

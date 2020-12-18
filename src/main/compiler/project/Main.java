@@ -31,7 +31,7 @@ public class Main {
     }
 
     static void test4() throws Exception {
-        CharStream s = CharStreams.fromFileName("E:\\Francis\\Documents\\JavaWorkplace\\Stone-like-Lang\\src\\main\\compiler\\project\\test\\ArrayOperation.sto");
+        CharStream s = CharStreams.fromFileName("E:\\Francis\\Documents\\JavaWorkplace\\Stone-like-Lang\\src\\main\\compiler\\project\\test\\QuickSort.sto");
         StoneLikeLexer lexer = new StoneLikeLexer(s);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         StoneLikeParser parser = new StoneLikeParser(tokens);

@@ -1,12 +1,25 @@
+var i = 10, j = 15
+var sum = div(10, j)
+sum
+
 func add(a, b){
     return a + b
 }
 
-var i = 10, j = 15
-var sum = add(i, j)
+func sub(a, b){
+    return a - b
+}
+
+func mul(a, b){
+    return add(a, b) * sub(a, b)
+}
+
+func div(a, b){
+    return mul(a, b) / sub(a, b)
+}
 
 /* 
 * Expected Output:
-* 25
+* -25
 * program exit
 */
