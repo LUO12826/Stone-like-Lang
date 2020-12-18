@@ -246,6 +246,13 @@ public class StoneLikeVM {
                     Object[] arr = (Object[])memory[frameBottomAddr + op1];
                     memory[sp] = arr[offset];
                     break;
+                case GLOBAL_HEAP:
+                    //在数组寻址时，把push指令的操作数认为是数组在栈帧中的地址，把操作数栈顶部元素认为是数组下标。
+                    sp--;
+                    int offsetGlobal = (int)(double)memory[sp];
+                    Object[] arrGlobal = (Object[])memory[globalAddr + op1];
+                    memory[sp] = arrGlobal[offsetGlobal];
+                    break;
             }
         }
         catch(ClassCastException e) {
