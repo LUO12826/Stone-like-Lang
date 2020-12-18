@@ -113,7 +113,11 @@ public class CodeGenVisitor extends StoneLikeBaseVisitor<Object> {
             }
 
             // 将参数逆序放置栈中
-            visit(ctx.expressionList());
+            int length=ctx.expressionList().children.size();
+            for(int i=length-1;i>=0;i-=2){
+                visit(ctx.expressionList().children.get(i));
+            }
+
         }
 
         // 生成中间代码
