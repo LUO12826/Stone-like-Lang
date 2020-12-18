@@ -1,10 +1,13 @@
-// Generated from /Users/luohuizhou/Documents/javaProject/Stone-like-Lang/src/main/compiler/project/g4/StoneLike.g4 by ANTLR 4.9
+// Generated from E:/Francis/Documents/JavaWorkplace/Stone-like-Lang/src/main/compiler/project/g4\StoneLike.g4 by ANTLR 4.9
 package compiler.project.antlr;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
+import org.antlr.v4.runtime.misc.*;
 import org.antlr.v4.runtime.tree.*;
 import java.util.List;
+import java.util.Iterator;
+import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class StoneLikeParser extends Parser {
@@ -14,28 +17,28 @@ public class StoneLikeParser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		If=1, Else=2, While=3, Return=4, Var=5, Const=6, Func=7, Add=8, Sub=9,
-		Mul=10, Div=11, Assign=12, Equal=13, NotEqual=14, Less=15, LessEqual=16,
-		Greater=17, GreaterEqual=18, Not=19, And=20, Or=21, LeftParen=22, RightParen=23,
-		LeftBarce=24, RightBrace=25, LeftBracket=26, RightBracket=27, Semicolon=28,
-		Comma=29, Dquote=30, Identifier=31, NumberLiteral=32, StringLiteral=33,
+		If=1, Else=2, While=3, Return=4, Var=5, Const=6, Func=7, Add=8, Sub=9, 
+		Mul=10, Div=11, Assign=12, Equal=13, NotEqual=14, Less=15, LessEqual=16, 
+		Greater=17, GreaterEqual=18, Not=19, And=20, Or=21, LeftParen=22, RightParen=23, 
+		LeftBarce=24, RightBrace=25, LeftBracket=26, RightBracket=27, Semicolon=28, 
+		Comma=29, Dquote=30, Identifier=31, NumberLiteral=32, StringLiteral=33, 
 		Alpha=34, Digit=35, Whitespce=36, Comment=37;
 	public static final int
-		RULE_program = 0, RULE_statement = 1, RULE_expression = 2, RULE_arrayExpression = 3,
-		RULE_expressionList = 4, RULE_boolExpression = 5, RULE_relationalOperator = 6,
-		RULE_additiveExpression = 7, RULE_term = 8, RULE_factor = 9, RULE_valueDeclaration = 10,
-		RULE_variableDeclaration = 11, RULE_constantDeclaration = 12, RULE_functionDeclaration = 13,
-		RULE_initializerList = 14, RULE_initializer = 15, RULE_parameterClause = 16,
-		RULE_parameterList = 17, RULE_assignStatement = 18, RULE_leftValue = 19,
-		RULE_whileStatement = 20, RULE_ifStatement = 21, RULE_elseClause = 22,
+		RULE_program = 0, RULE_statement = 1, RULE_expression = 2, RULE_arrayExpression = 3, 
+		RULE_expressionList = 4, RULE_boolExpression = 5, RULE_relationalOperator = 6, 
+		RULE_additiveExpression = 7, RULE_term = 8, RULE_factor = 9, RULE_valueDeclaration = 10, 
+		RULE_variableDeclaration = 11, RULE_constantDeclaration = 12, RULE_functionDeclaration = 13, 
+		RULE_initializerList = 14, RULE_initializer = 15, RULE_parameterClause = 16, 
+		RULE_parameterList = 17, RULE_assignStatement = 18, RULE_leftValue = 19, 
+		RULE_whileStatement = 20, RULE_ifStatement = 21, RULE_elseClause = 22, 
 		RULE_returnStatement = 23, RULE_callStatement = 24, RULE_codeBlock = 25;
 	private static String[] makeRuleNames() {
 		return new String[] {
-			"program", "statement", "expression", "arrayExpression", "expressionList",
-			"boolExpression", "relationalOperator", "additiveExpression", "term",
-			"factor", "valueDeclaration", "variableDeclaration", "constantDeclaration",
-			"functionDeclaration", "initializerList", "initializer", "parameterClause",
-			"parameterList", "assignStatement", "leftValue", "whileStatement", "ifStatement",
+			"program", "statement", "expression", "arrayExpression", "expressionList", 
+			"boolExpression", "relationalOperator", "additiveExpression", "term", 
+			"factor", "valueDeclaration", "variableDeclaration", "constantDeclaration", 
+			"functionDeclaration", "initializerList", "initializer", "parameterClause", 
+			"parameterList", "assignStatement", "leftValue", "whileStatement", "ifStatement", 
 			"elseClause", "returnStatement", "callStatement", "codeBlock"
 		};
 	}
@@ -43,20 +46,20 @@ public class StoneLikeParser extends Parser {
 
 	private static String[] makeLiteralNames() {
 		return new String[] {
-			null, "'if'", "'else'", "'while'", "'return'", "'var'", "'const'", "'func'",
-			"'+'", "'-'", "'*'", "'/'", "'='", "'=='", "'!='", "'<'", "'<='", "'>'",
-			"'>='", "'!'", "'&&'", "'||'", "'('", "')'", "'{'", "'}'", "'['", "']'",
+			null, "'if'", "'else'", "'while'", "'return'", "'var'", "'const'", "'func'", 
+			"'+'", "'-'", "'*'", "'/'", "'='", "'=='", "'!='", "'<'", "'<='", "'>'", 
+			"'>='", "'!'", "'&&'", "'||'", "'('", "')'", "'{'", "'}'", "'['", "']'", 
 			"';'", "','", "'\"'"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
-			null, "If", "Else", "While", "Return", "Var", "Const", "Func", "Add",
-			"Sub", "Mul", "Div", "Assign", "Equal", "NotEqual", "Less", "LessEqual",
-			"Greater", "GreaterEqual", "Not", "And", "Or", "LeftParen", "RightParen",
-			"LeftBarce", "RightBrace", "LeftBracket", "RightBracket", "Semicolon",
-			"Comma", "Dquote", "Identifier", "NumberLiteral", "StringLiteral", "Alpha",
+			null, "If", "Else", "While", "Return", "Var", "Const", "Func", "Add", 
+			"Sub", "Mul", "Div", "Assign", "Equal", "NotEqual", "Less", "LessEqual", 
+			"Greater", "GreaterEqual", "Not", "And", "Or", "LeftParen", "RightParen", 
+			"LeftBarce", "RightBrace", "LeftBracket", "RightBracket", "Semicolon", 
+			"Comma", "Dquote", "Identifier", "NumberLiteral", "StringLiteral", "Alpha", 
 			"Digit", "Whitespce", "Comment"
 		};
 	}
@@ -126,14 +129,6 @@ public class StoneLikeParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_program; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof StoneLikeListener ) ((StoneLikeListener)listener).enterProgram(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof StoneLikeListener ) ((StoneLikeListener)listener).exitProgram(this);
-		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof StoneLikeVisitor ) return ((StoneLikeVisitor<? extends T>)visitor).visitProgram(this);
@@ -218,14 +213,6 @@ public class StoneLikeParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_statement; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof StoneLikeListener ) ((StoneLikeListener)listener).enterStatement(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof StoneLikeListener ) ((StoneLikeListener)listener).exitStatement(this);
-		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof StoneLikeVisitor ) return ((StoneLikeVisitor<? extends T>)visitor).visitStatement(this);
@@ -327,14 +314,6 @@ public class StoneLikeParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_expression; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof StoneLikeListener ) ((StoneLikeListener)listener).enterExpression(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof StoneLikeListener ) ((StoneLikeListener)listener).exitExpression(this);
-		}
-		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof StoneLikeVisitor ) return ((StoneLikeVisitor<? extends T>)visitor).visitExpression(this);
 			else return visitor.visitChildren(this);
@@ -417,7 +396,7 @@ public class StoneLikeParser extends Parser {
 						}
 						break;
 					}
-					}
+					} 
 				}
 				setState(90);
 				_errHandler.sync(this);
@@ -453,14 +432,6 @@ public class StoneLikeParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_arrayExpression; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof StoneLikeListener ) ((StoneLikeListener)listener).enterArrayExpression(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof StoneLikeListener ) ((StoneLikeListener)listener).exitArrayExpression(this);
-		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof StoneLikeVisitor ) return ((StoneLikeVisitor<? extends T>)visitor).visitArrayExpression(this);
@@ -531,14 +502,6 @@ public class StoneLikeParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_expressionList; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof StoneLikeListener ) ((StoneLikeListener)listener).enterExpressionList(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof StoneLikeListener ) ((StoneLikeListener)listener).exitExpressionList(this);
-		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof StoneLikeVisitor ) return ((StoneLikeVisitor<? extends T>)visitor).visitExpressionList(this);
@@ -641,14 +604,6 @@ public class StoneLikeParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_boolExpression; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof StoneLikeListener ) ((StoneLikeListener)listener).enterBoolExpression(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof StoneLikeListener ) ((StoneLikeListener)listener).exitBoolExpression(this);
-		}
-		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof StoneLikeVisitor ) return ((StoneLikeVisitor<? extends T>)visitor).visitBoolExpression(this);
 			else return visitor.visitChildren(this);
@@ -705,14 +660,6 @@ public class StoneLikeParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_relationalOperator; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof StoneLikeListener ) ((StoneLikeListener)listener).enterRelationalOperator(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof StoneLikeListener ) ((StoneLikeListener)listener).exitRelationalOperator(this);
-		}
-		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof StoneLikeVisitor ) return ((StoneLikeVisitor<? extends T>)visitor).visitRelationalOperator(this);
 			else return visitor.visitChildren(this);
@@ -763,14 +710,6 @@ public class StoneLikeParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_additiveExpression; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof StoneLikeListener ) ((StoneLikeListener)listener).enterAdditiveExpression(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof StoneLikeListener ) ((StoneLikeListener)listener).exitAdditiveExpression(this);
-		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof StoneLikeVisitor ) return ((StoneLikeVisitor<? extends T>)visitor).visitAdditiveExpression(this);
@@ -826,7 +765,7 @@ public class StoneLikeParser extends Parser {
 					setState(130);
 					term(0);
 					}
-					}
+					} 
 				}
 				setState(135);
 				_errHandler.sync(this);
@@ -859,14 +798,6 @@ public class StoneLikeParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_term; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof StoneLikeListener ) ((StoneLikeListener)listener).enterTerm(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof StoneLikeListener ) ((StoneLikeListener)listener).exitTerm(this);
-		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof StoneLikeVisitor ) return ((StoneLikeVisitor<? extends T>)visitor).visitTerm(this);
@@ -922,7 +853,7 @@ public class StoneLikeParser extends Parser {
 					setState(141);
 					factor();
 					}
-					}
+					} 
 				}
 				setState(146);
 				_errHandler.sync(this);
@@ -963,14 +894,6 @@ public class StoneLikeParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_factor; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof StoneLikeListener ) ((StoneLikeListener)listener).enterFactor(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof StoneLikeListener ) ((StoneLikeListener)listener).exitFactor(this);
-		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof StoneLikeVisitor ) return ((StoneLikeVisitor<? extends T>)visitor).visitFactor(this);
@@ -1071,14 +994,6 @@ public class StoneLikeParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_valueDeclaration; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof StoneLikeListener ) ((StoneLikeListener)listener).enterValueDeclaration(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof StoneLikeListener ) ((StoneLikeListener)listener).exitValueDeclaration(this);
-		}
-		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof StoneLikeVisitor ) return ((StoneLikeVisitor<? extends T>)visitor).visitValueDeclaration(this);
 			else return visitor.visitChildren(this);
@@ -1131,14 +1046,6 @@ public class StoneLikeParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_variableDeclaration; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof StoneLikeListener ) ((StoneLikeListener)listener).enterVariableDeclaration(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof StoneLikeListener ) ((StoneLikeListener)listener).exitVariableDeclaration(this);
-		}
-		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof StoneLikeVisitor ) return ((StoneLikeVisitor<? extends T>)visitor).visitVariableDeclaration(this);
 			else return visitor.visitChildren(this);
@@ -1177,14 +1084,6 @@ public class StoneLikeParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_constantDeclaration; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof StoneLikeListener ) ((StoneLikeListener)listener).enterConstantDeclaration(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof StoneLikeListener ) ((StoneLikeListener)listener).exitConstantDeclaration(this);
-		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof StoneLikeVisitor ) return ((StoneLikeVisitor<? extends T>)visitor).visitConstantDeclaration(this);
@@ -1228,14 +1127,6 @@ public class StoneLikeParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_functionDeclaration; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof StoneLikeListener ) ((StoneLikeListener)listener).enterFunctionDeclaration(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof StoneLikeListener ) ((StoneLikeListener)listener).exitFunctionDeclaration(this);
-		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof StoneLikeVisitor ) return ((StoneLikeVisitor<? extends T>)visitor).visitFunctionDeclaration(this);
@@ -1285,14 +1176,6 @@ public class StoneLikeParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_initializerList; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof StoneLikeListener ) ((StoneLikeListener)listener).enterInitializerList(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof StoneLikeListener ) ((StoneLikeListener)listener).exitInitializerList(this);
-		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof StoneLikeVisitor ) return ((StoneLikeVisitor<? extends T>)visitor).visitInitializerList(this);
@@ -1352,14 +1235,6 @@ public class StoneLikeParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_initializer; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof StoneLikeListener ) ((StoneLikeListener)listener).enterInitializer(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof StoneLikeListener ) ((StoneLikeListener)listener).exitInitializer(this);
-		}
-		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof StoneLikeVisitor ) return ((StoneLikeVisitor<? extends T>)visitor).visitInitializer(this);
 			else return visitor.visitChildren(this);
@@ -1418,14 +1293,6 @@ public class StoneLikeParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_parameterClause; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof StoneLikeListener ) ((StoneLikeListener)listener).enterParameterClause(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof StoneLikeListener ) ((StoneLikeListener)listener).exitParameterClause(this);
-		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof StoneLikeVisitor ) return ((StoneLikeVisitor<? extends T>)visitor).visitParameterClause(this);
@@ -1487,14 +1354,6 @@ public class StoneLikeParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_parameterList; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof StoneLikeListener ) ((StoneLikeListener)listener).enterParameterList(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof StoneLikeListener ) ((StoneLikeListener)listener).exitParameterList(this);
-		}
-		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof StoneLikeVisitor ) return ((StoneLikeVisitor<? extends T>)visitor).visitParameterList(this);
 			else return visitor.visitChildren(this);
@@ -1547,7 +1406,6 @@ public class StoneLikeParser extends Parser {
 		public ExpressionContext expression() {
 			return getRuleContext(ExpressionContext.class,0);
 		}
-		public TerminalNode Identifier() { return getToken(StoneLikeParser.Identifier, 0); }
 		public ArrayExpressionContext arrayExpression() {
 			return getRuleContext(ArrayExpressionContext.class,0);
 		}
@@ -1555,14 +1413,6 @@ public class StoneLikeParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_assignStatement; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof StoneLikeListener ) ((StoneLikeListener)listener).enterAssignStatement(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof StoneLikeListener ) ((StoneLikeListener)listener).exitAssignStatement(this);
-		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof StoneLikeVisitor ) return ((StoneLikeVisitor<? extends T>)visitor).visitAssignStatement(this);
@@ -1574,7 +1424,7 @@ public class StoneLikeParser extends Parser {
 		AssignStatementContext _localctx = new AssignStatementContext(_ctx, getState());
 		enterRule(_localctx, 36, RULE_assignStatement);
 		try {
-			setState(218);
+			setState(219);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,19,_ctx) ) {
 			case 1:
@@ -1592,7 +1442,7 @@ public class StoneLikeParser extends Parser {
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(215);
-				match(Identifier);
+				leftValue();
 				setState(216);
 				match(Assign);
 				setState(217);
@@ -1624,14 +1474,6 @@ public class StoneLikeParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_leftValue; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof StoneLikeListener ) ((StoneLikeListener)listener).enterLeftValue(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof StoneLikeListener ) ((StoneLikeListener)listener).exitLeftValue(this);
-		}
-		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof StoneLikeVisitor ) return ((StoneLikeVisitor<? extends T>)visitor).visitLeftValue(this);
 			else return visitor.visitChildren(this);
@@ -1642,26 +1484,26 @@ public class StoneLikeParser extends Parser {
 		LeftValueContext _localctx = new LeftValueContext(_ctx, getState());
 		enterRule(_localctx, 38, RULE_leftValue);
 		try {
-			setState(226);
+			setState(227);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,20,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(220);
+				setState(221);
 				match(Identifier);
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(221);
-				match(Identifier);
 				setState(222);
-				match(LeftBracket);
+				match(Identifier);
 				setState(223);
-				expression(0);
+				match(LeftBracket);
 				setState(224);
+				expression(0);
+				setState(225);
 				match(RightBracket);
 				}
 				break;
@@ -1691,14 +1533,6 @@ public class StoneLikeParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_whileStatement; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof StoneLikeListener ) ((StoneLikeListener)listener).enterWhileStatement(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof StoneLikeListener ) ((StoneLikeListener)listener).exitWhileStatement(this);
-		}
-		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof StoneLikeVisitor ) return ((StoneLikeVisitor<? extends T>)visitor).visitWhileStatement(this);
 			else return visitor.visitChildren(this);
@@ -1711,11 +1545,11 @@ public class StoneLikeParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(228);
-			match(While);
 			setState(229);
-			expression(0);
+			match(While);
 			setState(230);
+			expression(0);
+			setState(231);
 			codeBlock();
 			}
 		}
@@ -1746,14 +1580,6 @@ public class StoneLikeParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_ifStatement; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof StoneLikeListener ) ((StoneLikeListener)listener).enterIfStatement(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof StoneLikeListener ) ((StoneLikeListener)listener).exitIfStatement(this);
-		}
-		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof StoneLikeVisitor ) return ((StoneLikeVisitor<? extends T>)visitor).visitIfStatement(this);
 			else return visitor.visitChildren(this);
@@ -1767,18 +1593,18 @@ public class StoneLikeParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(232);
-			match(If);
 			setState(233);
-			expression(0);
+			match(If);
 			setState(234);
+			expression(0);
+			setState(235);
 			codeBlock();
-			setState(236);
+			setState(237);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==Else) {
 				{
-				setState(235);
+				setState(236);
 				elseClause();
 				}
 			}
@@ -1809,14 +1635,6 @@ public class StoneLikeParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_elseClause; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof StoneLikeListener ) ((StoneLikeListener)listener).enterElseClause(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof StoneLikeListener ) ((StoneLikeListener)listener).exitElseClause(this);
-		}
-		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof StoneLikeVisitor ) return ((StoneLikeVisitor<? extends T>)visitor).visitElseClause(this);
 			else return visitor.visitChildren(this);
@@ -1827,24 +1645,24 @@ public class StoneLikeParser extends Parser {
 		ElseClauseContext _localctx = new ElseClauseContext(_ctx, getState());
 		enterRule(_localctx, 44, RULE_elseClause);
 		try {
-			setState(242);
+			setState(243);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,22,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(238);
-				match(Else);
 				setState(239);
+				match(Else);
+				setState(240);
 				codeBlock();
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(240);
-				match(Else);
 				setState(241);
+				match(Else);
+				setState(242);
 				ifStatement();
 				}
 				break;
@@ -1871,14 +1689,6 @@ public class StoneLikeParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_returnStatement; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof StoneLikeListener ) ((StoneLikeListener)listener).enterReturnStatement(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof StoneLikeListener ) ((StoneLikeListener)listener).exitReturnStatement(this);
-		}
-		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof StoneLikeVisitor ) return ((StoneLikeVisitor<? extends T>)visitor).visitReturnStatement(this);
 			else return visitor.visitChildren(this);
@@ -1889,22 +1699,22 @@ public class StoneLikeParser extends Parser {
 		ReturnStatementContext _localctx = new ReturnStatementContext(_ctx, getState());
 		enterRule(_localctx, 46, RULE_returnStatement);
 		try {
-			setState(247);
+			setState(248);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,23,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(244);
-				match(Return);
 				setState(245);
+				match(Return);
+				setState(246);
 				expression(0);
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(246);
+				setState(247);
 				match(Return);
 				}
 				break;
@@ -1933,14 +1743,6 @@ public class StoneLikeParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_callStatement; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof StoneLikeListener ) ((StoneLikeListener)listener).enterCallStatement(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof StoneLikeListener ) ((StoneLikeListener)listener).exitCallStatement(this);
-		}
-		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof StoneLikeVisitor ) return ((StoneLikeVisitor<? extends T>)visitor).visitCallStatement(this);
 			else return visitor.visitChildren(this);
@@ -1951,30 +1753,30 @@ public class StoneLikeParser extends Parser {
 		CallStatementContext _localctx = new CallStatementContext(_ctx, getState());
 		enterRule(_localctx, 48, RULE_callStatement);
 		try {
-			setState(257);
+			setState(258);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,24,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(249);
-				match(Identifier);
 				setState(250);
-				match(LeftParen);
+				match(Identifier);
 				setState(251);
-				expressionList();
+				match(LeftParen);
 				setState(252);
+				expressionList();
+				setState(253);
 				match(RightParen);
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(254);
-				match(Identifier);
 				setState(255);
-				match(LeftParen);
+				match(Identifier);
 				setState(256);
+				match(LeftParen);
+				setState(257);
 				match(RightParen);
 				}
 				break;
@@ -2009,14 +1811,6 @@ public class StoneLikeParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_codeBlock; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof StoneLikeListener ) ((StoneLikeListener)listener).enterCodeBlock(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof StoneLikeListener ) ((StoneLikeListener)listener).exitCodeBlock(this);
-		}
-		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof StoneLikeVisitor ) return ((StoneLikeVisitor<? extends T>)visitor).visitCodeBlock(this);
 			else return visitor.visitChildren(this);
@@ -2030,37 +1824,37 @@ public class StoneLikeParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(259);
+			setState(260);
 			match(LeftBarce);
-			setState(269);
+			setState(270);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << If) | (1L << While) | (1L << Return) | (1L << Var) | (1L << Const) | (1L << Func) | (1L << Sub) | (1L << Not) | (1L << LeftParen) | (1L << Identifier) | (1L << NumberLiteral) | (1L << StringLiteral))) != 0)) {
 				{
 				{
-				setState(260);
+				setState(261);
 				statement();
-				setState(264);
+				setState(265);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				while (_la==Semicolon) {
 					{
 					{
-					setState(261);
+					setState(262);
 					match(Semicolon);
 					}
 					}
-					setState(266);
+					setState(267);
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 				}
 				}
 				}
-				setState(271);
+				setState(272);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
-			setState(272);
+			setState(273);
 			match(RightBrace);
 			}
 		}
@@ -2111,7 +1905,7 @@ public class StoneLikeParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\'\u0115\4\2\t\2\4"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\'\u0116\4\2\t\2\4"+
 		"\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t"+
 		"\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
 		"\4\23\t\23\4\24\t\24\4\25\t\25\4\26\t\26\4\27\t\27\4\30\t\30\4\31\t\31"+
@@ -2127,35 +1921,35 @@ public class StoneLikeParser extends Parser {
 		"\7\20\u00b9\n\20\f\20\16\20\u00bc\13\20\3\21\3\21\3\21\3\21\3\21\3\21"+
 		"\5\21\u00c4\n\21\3\22\3\22\3\22\3\22\3\22\3\22\5\22\u00cc\n\22\3\23\3"+
 		"\23\3\23\7\23\u00d1\n\23\f\23\16\23\u00d4\13\23\3\24\3\24\3\24\3\24\3"+
-		"\24\3\24\3\24\5\24\u00dd\n\24\3\25\3\25\3\25\3\25\3\25\3\25\5\25\u00e5"+
-		"\n\25\3\26\3\26\3\26\3\26\3\27\3\27\3\27\3\27\5\27\u00ef\n\27\3\30\3\30"+
-		"\3\30\3\30\5\30\u00f5\n\30\3\31\3\31\3\31\5\31\u00fa\n\31\3\32\3\32\3"+
-		"\32\3\32\3\32\3\32\3\32\3\32\5\32\u0104\n\32\3\33\3\33\3\33\7\33\u0109"+
-		"\n\33\f\33\16\33\u010c\13\33\7\33\u010e\n\33\f\33\16\33\u0111\13\33\3"+
-		"\33\3\33\3\33\2\5\6\20\22\34\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \""+
-		"$&(*,.\60\62\64\2\5\3\2\17\24\3\2\n\13\3\2\f\r\2\u0120\2?\3\2\2\2\4J\3"+
-		"\2\2\2\6P\3\2\2\2\b]\3\2\2\2\nj\3\2\2\2\f{\3\2\2\2\16}\3\2\2\2\20\177"+
-		"\3\2\2\2\22\u008a\3\2\2\2\24\u00a4\3\2\2\2\26\u00a8\3\2\2\2\30\u00aa\3"+
-		"\2\2\2\32\u00ad\3\2\2\2\34\u00b0\3\2\2\2\36\u00b5\3\2\2\2 \u00c3\3\2\2"+
-		"\2\"\u00cb\3\2\2\2$\u00cd\3\2\2\2&\u00dc\3\2\2\2(\u00e4\3\2\2\2*\u00e6"+
-		"\3\2\2\2,\u00ea\3\2\2\2.\u00f4\3\2\2\2\60\u00f9\3\2\2\2\62\u0103\3\2\2"+
-		"\2\64\u0105\3\2\2\2\66:\5\4\3\2\679\7\36\2\28\67\3\2\2\29<\3\2\2\2:8\3"+
-		"\2\2\2:;\3\2\2\2;>\3\2\2\2<:\3\2\2\2=\66\3\2\2\2>A\3\2\2\2?=\3\2\2\2?"+
-		"@\3\2\2\2@\3\3\2\2\2A?\3\2\2\2BK\5\62\32\2CK\5\6\4\2DK\5\26\f\2EK\5\34"+
-		"\17\2FK\5&\24\2GK\5*\26\2HK\5,\27\2IK\5\60\31\2JB\3\2\2\2JC\3\2\2\2JD"+
-		"\3\2\2\2JE\3\2\2\2JF\3\2\2\2JG\3\2\2\2JH\3\2\2\2JI\3\2\2\2K\5\3\2\2\2"+
-		"LM\b\4\1\2MN\7\25\2\2NQ\5\6\4\6OQ\5\f\7\2PL\3\2\2\2PO\3\2\2\2QZ\3\2\2"+
-		"\2RS\f\5\2\2ST\7\26\2\2TY\5\6\4\6UV\f\4\2\2VW\7\27\2\2WY\5\6\4\5XR\3\2"+
-		"\2\2XU\3\2\2\2Y\\\3\2\2\2ZX\3\2\2\2Z[\3\2\2\2[\7\3\2\2\2\\Z\3\2\2\2]^"+
-		"\7\34\2\2^c\5\6\4\2_`\7\37\2\2`b\5\6\4\2a_\3\2\2\2be\3\2\2\2ca\3\2\2\2"+
-		"cd\3\2\2\2df\3\2\2\2ec\3\2\2\2fg\7\35\2\2g\t\3\2\2\2hk\5\6\4\2ik\5\b\5"+
-		"\2jh\3\2\2\2ji\3\2\2\2ks\3\2\2\2lo\7\37\2\2mp\5\6\4\2np\5\b\5\2om\3\2"+
-		"\2\2on\3\2\2\2pr\3\2\2\2ql\3\2\2\2ru\3\2\2\2sq\3\2\2\2st\3\2\2\2t\13\3"+
-		"\2\2\2us\3\2\2\2vw\5\20\t\2wx\5\16\b\2xy\5\20\t\2y|\3\2\2\2z|\5\20\t\2"+
-		"{v\3\2\2\2{z\3\2\2\2|\r\3\2\2\2}~\t\2\2\2~\17\3\2\2\2\177\u0080\b\t\1"+
-		"\2\u0080\u0081\5\22\n\2\u0081\u0087\3\2\2\2\u0082\u0083\f\4\2\2\u0083"+
-		"\u0084\t\3\2\2\u0084\u0086\5\22\n\2\u0085\u0082\3\2\2\2\u0086\u0089\3"+
-		"\2\2\2\u0087\u0085\3\2\2\2\u0087\u0088\3\2\2\2\u0088\21\3\2\2\2\u0089"+
+		"\24\3\24\3\24\3\24\5\24\u00de\n\24\3\25\3\25\3\25\3\25\3\25\3\25\5\25"+
+		"\u00e6\n\25\3\26\3\26\3\26\3\26\3\27\3\27\3\27\3\27\5\27\u00f0\n\27\3"+
+		"\30\3\30\3\30\3\30\5\30\u00f6\n\30\3\31\3\31\3\31\5\31\u00fb\n\31\3\32"+
+		"\3\32\3\32\3\32\3\32\3\32\3\32\3\32\5\32\u0105\n\32\3\33\3\33\3\33\7\33"+
+		"\u010a\n\33\f\33\16\33\u010d\13\33\7\33\u010f\n\33\f\33\16\33\u0112\13"+
+		"\33\3\33\3\33\3\33\2\5\6\20\22\34\2\4\6\b\n\f\16\20\22\24\26\30\32\34"+
+		"\36 \"$&(*,.\60\62\64\2\5\3\2\17\24\3\2\n\13\3\2\f\r\2\u0121\2?\3\2\2"+
+		"\2\4J\3\2\2\2\6P\3\2\2\2\b]\3\2\2\2\nj\3\2\2\2\f{\3\2\2\2\16}\3\2\2\2"+
+		"\20\177\3\2\2\2\22\u008a\3\2\2\2\24\u00a4\3\2\2\2\26\u00a8\3\2\2\2\30"+
+		"\u00aa\3\2\2\2\32\u00ad\3\2\2\2\34\u00b0\3\2\2\2\36\u00b5\3\2\2\2 \u00c3"+
+		"\3\2\2\2\"\u00cb\3\2\2\2$\u00cd\3\2\2\2&\u00dd\3\2\2\2(\u00e5\3\2\2\2"+
+		"*\u00e7\3\2\2\2,\u00eb\3\2\2\2.\u00f5\3\2\2\2\60\u00fa\3\2\2\2\62\u0104"+
+		"\3\2\2\2\64\u0106\3\2\2\2\66:\5\4\3\2\679\7\36\2\28\67\3\2\2\29<\3\2\2"+
+		"\2:8\3\2\2\2:;\3\2\2\2;>\3\2\2\2<:\3\2\2\2=\66\3\2\2\2>A\3\2\2\2?=\3\2"+
+		"\2\2?@\3\2\2\2@\3\3\2\2\2A?\3\2\2\2BK\5\62\32\2CK\5\6\4\2DK\5\26\f\2E"+
+		"K\5\34\17\2FK\5&\24\2GK\5*\26\2HK\5,\27\2IK\5\60\31\2JB\3\2\2\2JC\3\2"+
+		"\2\2JD\3\2\2\2JE\3\2\2\2JF\3\2\2\2JG\3\2\2\2JH\3\2\2\2JI\3\2\2\2K\5\3"+
+		"\2\2\2LM\b\4\1\2MN\7\25\2\2NQ\5\6\4\6OQ\5\f\7\2PL\3\2\2\2PO\3\2\2\2QZ"+
+		"\3\2\2\2RS\f\5\2\2ST\7\26\2\2TY\5\6\4\6UV\f\4\2\2VW\7\27\2\2WY\5\6\4\5"+
+		"XR\3\2\2\2XU\3\2\2\2Y\\\3\2\2\2ZX\3\2\2\2Z[\3\2\2\2[\7\3\2\2\2\\Z\3\2"+
+		"\2\2]^\7\34\2\2^c\5\6\4\2_`\7\37\2\2`b\5\6\4\2a_\3\2\2\2be\3\2\2\2ca\3"+
+		"\2\2\2cd\3\2\2\2df\3\2\2\2ec\3\2\2\2fg\7\35\2\2g\t\3\2\2\2hk\5\6\4\2i"+
+		"k\5\b\5\2jh\3\2\2\2ji\3\2\2\2ks\3\2\2\2lo\7\37\2\2mp\5\6\4\2np\5\b\5\2"+
+		"om\3\2\2\2on\3\2\2\2pr\3\2\2\2ql\3\2\2\2ru\3\2\2\2sq\3\2\2\2st\3\2\2\2"+
+		"t\13\3\2\2\2us\3\2\2\2vw\5\20\t\2wx\5\16\b\2xy\5\20\t\2y|\3\2\2\2z|\5"+
+		"\20\t\2{v\3\2\2\2{z\3\2\2\2|\r\3\2\2\2}~\t\2\2\2~\17\3\2\2\2\177\u0080"+
+		"\b\t\1\2\u0080\u0081\5\22\n\2\u0081\u0087\3\2\2\2\u0082\u0083\f\4\2\2"+
+		"\u0083\u0084\t\3\2\2\u0084\u0086\5\22\n\2\u0085\u0082\3\2\2\2\u0086\u0089"+
+		"\3\2\2\2\u0087\u0085\3\2\2\2\u0087\u0088\3\2\2\2\u0088\21\3\2\2\2\u0089"+
 		"\u0087\3\2\2\2\u008a\u008b\b\n\1\2\u008b\u008c\5\24\13\2\u008c\u0092\3"+
 		"\2\2\2\u008d\u008e\f\4\2\2\u008e\u008f\t\4\2\2\u008f\u0091\5\24\13\2\u0090"+
 		"\u008d\3\2\2\2\u0091\u0094\3\2\2\2\u0092\u0090\3\2\2\2\u0092\u0093\3\2"+
@@ -2181,27 +1975,28 @@ public class StoneLikeParser extends Parser {
 		"\u00cd\u00d2\7!\2\2\u00ce\u00cf\7\37\2\2\u00cf\u00d1\7!\2\2\u00d0\u00ce"+
 		"\3\2\2\2\u00d1\u00d4\3\2\2\2\u00d2\u00d0\3\2\2\2\u00d2\u00d3\3\2\2\2\u00d3"+
 		"%\3\2\2\2\u00d4\u00d2\3\2\2\2\u00d5\u00d6\5(\25\2\u00d6\u00d7\7\16\2\2"+
-		"\u00d7\u00d8\5\6\4\2\u00d8\u00dd\3\2\2\2\u00d9\u00da\7!\2\2\u00da\u00db"+
-		"\7\16\2\2\u00db\u00dd\5\b\5\2\u00dc\u00d5\3\2\2\2\u00dc\u00d9\3\2\2\2"+
-		"\u00dd\'\3\2\2\2\u00de\u00e5\7!\2\2\u00df\u00e0\7!\2\2\u00e0\u00e1\7\34"+
-		"\2\2\u00e1\u00e2\5\6\4\2\u00e2\u00e3\7\35\2\2\u00e3\u00e5\3\2\2\2\u00e4"+
-		"\u00de\3\2\2\2\u00e4\u00df\3\2\2\2\u00e5)\3\2\2\2\u00e6\u00e7\7\5\2\2"+
-		"\u00e7\u00e8\5\6\4\2\u00e8\u00e9\5\64\33\2\u00e9+\3\2\2\2\u00ea\u00eb"+
-		"\7\3\2\2\u00eb\u00ec\5\6\4\2\u00ec\u00ee\5\64\33\2\u00ed\u00ef\5.\30\2"+
-		"\u00ee\u00ed\3\2\2\2\u00ee\u00ef\3\2\2\2\u00ef-\3\2\2\2\u00f0\u00f1\7"+
-		"\4\2\2\u00f1\u00f5\5\64\33\2\u00f2\u00f3\7\4\2\2\u00f3\u00f5\5,\27\2\u00f4"+
-		"\u00f0\3\2\2\2\u00f4\u00f2\3\2\2\2\u00f5/\3\2\2\2\u00f6\u00f7\7\6\2\2"+
-		"\u00f7\u00fa\5\6\4\2\u00f8\u00fa\7\6\2\2\u00f9\u00f6\3\2\2\2\u00f9\u00f8"+
-		"\3\2\2\2\u00fa\61\3\2\2\2\u00fb\u00fc\7!\2\2\u00fc\u00fd\7\30\2\2\u00fd"+
-		"\u00fe\5\n\6\2\u00fe\u00ff\7\31\2\2\u00ff\u0104\3\2\2\2\u0100\u0101\7"+
-		"!\2\2\u0101\u0102\7\30\2\2\u0102\u0104\7\31\2\2\u0103\u00fb\3\2\2\2\u0103"+
-		"\u0100\3\2\2\2\u0104\63\3\2\2\2\u0105\u010f\7\32\2\2\u0106\u010a\5\4\3"+
-		"\2\u0107\u0109\7\36\2\2\u0108\u0107\3\2\2\2\u0109\u010c\3\2\2\2\u010a"+
-		"\u0108\3\2\2\2\u010a\u010b\3\2\2\2\u010b\u010e\3\2\2\2\u010c\u010a\3\2"+
-		"\2\2\u010d\u0106\3\2\2\2\u010e\u0111\3\2\2\2\u010f\u010d\3\2\2\2\u010f"+
-		"\u0110\3\2\2\2\u0110\u0112\3\2\2\2\u0111\u010f\3\2\2\2\u0112\u0113\7\33"+
-		"\2\2\u0113\65\3\2\2\2\35:?JPXZcjos{\u0087\u0092\u00a4\u00a8\u00ba\u00c3"+
-		"\u00cb\u00d2\u00dc\u00e4\u00ee\u00f4\u00f9\u0103\u010a\u010f";
+		"\u00d7\u00d8\5\6\4\2\u00d8\u00de\3\2\2\2\u00d9\u00da\5(\25\2\u00da\u00db"+
+		"\7\16\2\2\u00db\u00dc\5\b\5\2\u00dc\u00de\3\2\2\2\u00dd\u00d5\3\2\2\2"+
+		"\u00dd\u00d9\3\2\2\2\u00de\'\3\2\2\2\u00df\u00e6\7!\2\2\u00e0\u00e1\7"+
+		"!\2\2\u00e1\u00e2\7\34\2\2\u00e2\u00e3\5\6\4\2\u00e3\u00e4\7\35\2\2\u00e4"+
+		"\u00e6\3\2\2\2\u00e5\u00df\3\2\2\2\u00e5\u00e0\3\2\2\2\u00e6)\3\2\2\2"+
+		"\u00e7\u00e8\7\5\2\2\u00e8\u00e9\5\6\4\2\u00e9\u00ea\5\64\33\2\u00ea+"+
+		"\3\2\2\2\u00eb\u00ec\7\3\2\2\u00ec\u00ed\5\6\4\2\u00ed\u00ef\5\64\33\2"+
+		"\u00ee\u00f0\5.\30\2\u00ef\u00ee\3\2\2\2\u00ef\u00f0\3\2\2\2\u00f0-\3"+
+		"\2\2\2\u00f1\u00f2\7\4\2\2\u00f2\u00f6\5\64\33\2\u00f3\u00f4\7\4\2\2\u00f4"+
+		"\u00f6\5,\27\2\u00f5\u00f1\3\2\2\2\u00f5\u00f3\3\2\2\2\u00f6/\3\2\2\2"+
+		"\u00f7\u00f8\7\6\2\2\u00f8\u00fb\5\6\4\2\u00f9\u00fb\7\6\2\2\u00fa\u00f7"+
+		"\3\2\2\2\u00fa\u00f9\3\2\2\2\u00fb\61\3\2\2\2\u00fc\u00fd\7!\2\2\u00fd"+
+		"\u00fe\7\30\2\2\u00fe\u00ff\5\n\6\2\u00ff\u0100\7\31\2\2\u0100\u0105\3"+
+		"\2\2\2\u0101\u0102\7!\2\2\u0102\u0103\7\30\2\2\u0103\u0105\7\31\2\2\u0104"+
+		"\u00fc\3\2\2\2\u0104\u0101\3\2\2\2\u0105\63\3\2\2\2\u0106\u0110\7\32\2"+
+		"\2\u0107\u010b\5\4\3\2\u0108\u010a\7\36\2\2\u0109\u0108\3\2\2\2\u010a"+
+		"\u010d\3\2\2\2\u010b\u0109\3\2\2\2\u010b\u010c\3\2\2\2\u010c\u010f\3\2"+
+		"\2\2\u010d\u010b\3\2\2\2\u010e\u0107\3\2\2\2\u010f\u0112\3\2\2\2\u0110"+
+		"\u010e\3\2\2\2\u0110\u0111\3\2\2\2\u0111\u0113\3\2\2\2\u0112\u0110\3\2"+
+		"\2\2\u0113\u0114\7\33\2\2\u0114\65\3\2\2\2\35:?JPXZcjos{\u0087\u0092\u00a4"+
+		"\u00a8\u00ba\u00c3\u00cb\u00d2\u00dd\u00e5\u00ef\u00f5\u00fa\u0104\u010b"+
+		"\u0110";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

@@ -106,7 +106,7 @@ parameterList
 
 assignStatement
 	: leftValue '=' expression
-	| Identifier '=' arrayExpression
+	| leftValue '=' arrayExpression
 	;
 
 leftValue

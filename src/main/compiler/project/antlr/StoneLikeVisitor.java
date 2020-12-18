@@ -1,4 +1,4 @@
-// Generated from /Users/luohuizhou/Documents/javaProject/Stone-like-Lang/src/main/compiler/project/g4/StoneLike.g4 by ANTLR 4.9
+// Generated from E:/Francis/Documents/JavaWorkplace/Stone-like-Lang/src/main/compiler/project/g4\StoneLike.g4 by ANTLR 4.9
 package compiler.project.antlr;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 

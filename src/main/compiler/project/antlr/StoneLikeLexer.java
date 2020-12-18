@@ -1,4 +1,4 @@
-// Generated from /Users/luohuizhou/Documents/javaProject/Stone-like-Lang/src/main/compiler/project/g4/StoneLike.g4 by ANTLR 4.9
+// Generated from E:/Francis/Documents/JavaWorkplace/Stone-like-Lang/src/main/compiler/project/g4\StoneLike.g4 by ANTLR 4.9
 package compiler.project.antlr;
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
@@ -17,11 +17,11 @@ public class StoneLikeLexer extends Lexer {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		If=1, Else=2, While=3, Return=4, Var=5, Const=6, Func=7, Add=8, Sub=9,
-		Mul=10, Div=11, Assign=12, Equal=13, NotEqual=14, Less=15, LessEqual=16,
-		Greater=17, GreaterEqual=18, Not=19, And=20, Or=21, LeftParen=22, RightParen=23,
-		LeftBarce=24, RightBrace=25, LeftBracket=26, RightBracket=27, Semicolon=28,
-		Comma=29, Dquote=30, Identifier=31, NumberLiteral=32, StringLiteral=33,
+		If=1, Else=2, While=3, Return=4, Var=5, Const=6, Func=7, Add=8, Sub=9, 
+		Mul=10, Div=11, Assign=12, Equal=13, NotEqual=14, Less=15, LessEqual=16, 
+		Greater=17, GreaterEqual=18, Not=19, And=20, Or=21, LeftParen=22, RightParen=23, 
+		LeftBarce=24, RightBrace=25, LeftBracket=26, RightBracket=27, Semicolon=28, 
+		Comma=29, Dquote=30, Identifier=31, NumberLiteral=32, StringLiteral=33, 
 		Alpha=34, Digit=35, Whitespce=36, Comment=37;
 	public static String[] channelNames = {
 		"DEFAULT_TOKEN_CHANNEL", "HIDDEN"
@@ -33,11 +33,11 @@ public class StoneLikeLexer extends Lexer {
 
 	private static String[] makeRuleNames() {
 		return new String[] {
-			"If", "Else", "While", "Return", "Var", "Const", "Func", "Add", "Sub",
-			"Mul", "Div", "Assign", "Equal", "NotEqual", "Less", "LessEqual", "Greater",
-			"GreaterEqual", "Not", "And", "Or", "LeftParen", "RightParen", "LeftBarce",
-			"RightBrace", "LeftBracket", "RightBracket", "Semicolon", "Comma", "Dquote",
-			"Identifier", "NumberLiteral", "StringLiteral", "Alpha", "Digit", "Whitespce",
+			"If", "Else", "While", "Return", "Var", "Const", "Func", "Add", "Sub", 
+			"Mul", "Div", "Assign", "Equal", "NotEqual", "Less", "LessEqual", "Greater", 
+			"GreaterEqual", "Not", "And", "Or", "LeftParen", "RightParen", "LeftBarce", 
+			"RightBrace", "LeftBracket", "RightBracket", "Semicolon", "Comma", "Dquote", 
+			"Identifier", "NumberLiteral", "StringLiteral", "Alpha", "Digit", "Whitespce", 
 			"Comment"
 		};
 	}
@@ -45,20 +45,20 @@ public class StoneLikeLexer extends Lexer {
 
 	private static String[] makeLiteralNames() {
 		return new String[] {
-			null, "'if'", "'else'", "'while'", "'return'", "'var'", "'const'", "'func'",
-			"'+'", "'-'", "'*'", "'/'", "'='", "'=='", "'!='", "'<'", "'<='", "'>'",
-			"'>='", "'!'", "'&&'", "'||'", "'('", "')'", "'{'", "'}'", "'['", "']'",
+			null, "'if'", "'else'", "'while'", "'return'", "'var'", "'const'", "'func'", 
+			"'+'", "'-'", "'*'", "'/'", "'='", "'=='", "'!='", "'<'", "'<='", "'>'", 
+			"'>='", "'!'", "'&&'", "'||'", "'('", "')'", "'{'", "'}'", "'['", "']'", 
 			"';'", "','", "'\"'"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
-			null, "If", "Else", "While", "Return", "Var", "Const", "Func", "Add",
-			"Sub", "Mul", "Div", "Assign", "Equal", "NotEqual", "Less", "LessEqual",
-			"Greater", "GreaterEqual", "Not", "And", "Or", "LeftParen", "RightParen",
-			"LeftBarce", "RightBrace", "LeftBracket", "RightBracket", "Semicolon",
-			"Comma", "Dquote", "Identifier", "NumberLiteral", "StringLiteral", "Alpha",
+			null, "If", "Else", "While", "Return", "Var", "Const", "Func", "Add", 
+			"Sub", "Mul", "Div", "Assign", "Equal", "NotEqual", "Less", "LessEqual", 
+			"Greater", "GreaterEqual", "Not", "And", "Or", "LeftParen", "RightParen", 
+			"LeftBarce", "RightBrace", "LeftBracket", "RightBracket", "Semicolon", 
+			"Comma", "Dquote", "Identifier", "NumberLiteral", "StringLiteral", "Alpha", 
 			"Digit", "Whitespce", "Comment"
 		};
 	}

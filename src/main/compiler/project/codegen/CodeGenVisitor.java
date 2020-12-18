@@ -1,13 +1,11 @@
 package compiler.project.codegen;
 
 import com.sun.tools.javac.util.FatalError;
-import compiler.project.antlr.StoneLikeBaseVisitor;
-import compiler.project.antlr.StoneLikeParser;
+import compiler.project.antlr.*;
 import compiler.project.vm.Executable;
 import compiler.project.vm.IntermediateCode;
 import compiler.project.vm.MemorySegment;
 import compiler.project.vm.VMInstructionType;
-import org.antlr.v4.runtime.tree.ParseTree;
 
 import java.io.PrintStream;
 import java.util.ArrayList;
@@ -197,18 +195,18 @@ public class CodeGenVisitor extends StoneLikeBaseVisitor<Object> {
     ;
      */
     @Override
-    public Object visitArrayExpression(StoneLikeParser.ArrayExpressionContext ctx) {
+    public Object  visitArrayExpression(StoneLikeParser.ArrayExpressionContext ctx) {
         int elementNum = ctx.getChildCount() / 2;
         int idx = addValueLiteral(new Object[elementNum]);
         codes.add(new IntermediateCode(VMInstructionType.push, MemorySegment.CONSTANT, idx));
-        codes.add(new IntermediateCode(VMInstructionType.pop, MemorySegment.STATIC, 0));
+        codes.add(new IntermediateCode(VMInstructionType.pop, MemorySegment.TEMP, 0));
         for(int i = 1; i < ctx.getChildCount(); i += 2) {
             visit(ctx.getChild(i));
         }
         for(int i = elementNum - 1; i >= 0; i--) {
-            codes.add(new IntermediateCode(VMInstructionType.pop, MemorySegment.STATIC, 0, i));
+            codes.add(new IntermediateCode(VMInstructionType.pop, MemorySegment.TEMP, 0, i));
         }
-        codes.add(new IntermediateCode(VMInstructionType.push, MemorySegment.STATIC, 0));
+        codes.add(new IntermediateCode(VMInstructionType.push, MemorySegment.TEMP, 0));
         return null;
     }
 
@@ -341,7 +339,12 @@ public class CodeGenVisitor extends StoneLikeBaseVisitor<Object> {
                     if(s == null) {
                         throw new FatalError("使用了未定义的变量:" + ctx.Identifier().getText());
                     }
-                    codes.add(new IntermediateCode(VMInstructionType.push, s.relativeMemoryAddress));
+                    int ra=s.relativeMemoryAddress;
+                    if(s.scope.getScopeType()== Scope.Type.GLOBAL){
+                        codes.add(new IntermediateCode(VMInstructionType.push, MemorySegment.GLOBAL, ra));
+                    }else {
+                        codes.add(new IntermediateCode(VMInstructionType.push, MemorySegment.LOCAL, ra));
+                    }
                 }
                 else if(ctx.callStatement() != null) {
 
@@ -361,7 +364,12 @@ public class CodeGenVisitor extends StoneLikeBaseVisitor<Object> {
                     return null;
                 }
                 visit(ctx.getChild(2));
-                codes.add(new IntermediateCode(VMInstructionType.push, MemorySegment.HEAP, s.relativeMemoryAddress));
+                int ra=s.relativeMemoryAddress;
+                if(s.scope.getScopeType()== Scope.Type.GLOBAL){
+                    codes.add(new IntermediateCode(VMInstructionType.push, MemorySegment.GLOBAL_HEAP, ra));
+                }else {
+                    codes.add(new IntermediateCode(VMInstructionType.push, MemorySegment.LOCAL_HEAP, ra));
+                }
                 break;
         }
 
@@ -427,35 +435,49 @@ public class CodeGenVisitor extends StoneLikeBaseVisitor<Object> {
         //好多冗余代码，得简化一下
 
         //对应于Identifier '=' arrayExpression的情况
-        if(ctx.Identifier() != null) {
-            ValueSymbol s = currentScope.resolveValueSymbol(ctx.Identifier().getText());
-            if(s == null) {
-                throw new FatalError("使用了未定义的变量:" + ctx.Identifier().getText());
-            }
-            int ra = s.relativeMemoryAddress;
-            visit(ctx.getChild(2));
-            codes.add(new IntermediateCode(VMInstructionType.pop, ra));
-        }
+//        if(ctx.leftValue() != null) {
+//            ValueSymbol s = currentScope.resolveValueSymbol(ctx.leftValue().getText());
+//            if(s == null) {
+//                throw new FatalError("使用了未定义的变量:" + ctx.leftValue().getText());
+//            }
+//
+//            int ra = s.relativeMemoryAddress;
+//            visit(ctx.getChild(2));
+//            if(s.scope.getScopeType()== Scope.Type.GLOBAL){
+//                codes.add(new IntermediateCode(VMInstructionType.pop, MemorySegment.GLOBAL, ra));
+//            }else{
+//                codes.add(new IntermediateCode(VMInstructionType.pop, MemorySegment.LOCAL, ra));
+//            }
+//
+//        }
         //leftValue:Identifier '=' expression的情况
-        else if(ctx.getChild(0).getChildCount() == 1) {
+        if(ctx.getChild(0).getChildCount() == 1) {
             ValueSymbol s = currentScope.resolveValueSymbol(ctx.leftValue().getText());
             if(s == null) {
-                throw new FatalError("使用了未定义的变量:" + ctx.Identifier().getText());
+                throw new FatalError("使用了未定义的变量:" + ctx.leftValue().getText());
             }
             int ra = s.relativeMemoryAddress;
             visit(ctx.getChild(2));
-            codes.add(new IntermediateCode(VMInstructionType.pop, ra));
+            if(s.scope.getScopeType()== Scope.Type.GLOBAL){
+                codes.add(new IntermediateCode(VMInstructionType.pop, MemorySegment.GLOBAL, ra));
+            }else {
+                codes.add(new IntermediateCode(VMInstructionType.pop, MemorySegment.LOCAL, ra));
+            }
         }
         //对应于leftValue:Identifier '[' expression ']' '=' expression的情况
         else {
             ValueSymbol s = currentScope.resolveValueSymbol(ctx.leftValue().getChild(0).getText());
             if(s == null) {
-                throw new FatalError("使用了未定义的变量:" + ctx.Identifier().getText());
+                throw new FatalError("使用了未定义的变量:" + ctx.leftValue().getText());
             }
             int ra = s.relativeMemoryAddress;
             visit(ctx.getChild(2));
             visit(ctx.getChild(0));
-            codes.add(new IntermediateCode(VMInstructionType.pop, MemorySegment.HEAP, ra));
+            if(s.scope.getScopeType()== Scope.Type.GLOBAL){
+                codes.add(new IntermediateCode(VMInstructionType.pop, MemorySegment.GLOBAL_HEAP, ra));
+            }else {
+                codes.add(new IntermediateCode(VMInstructionType.pop, MemorySegment.LOCAL_HEAP, ra));
+            }
         }
         return null;
     }

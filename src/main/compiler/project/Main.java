@@ -1,10 +1,6 @@
 package compiler.project;
 
-import compiler.project.antlr.StoneLikeLexer;
-import compiler.project.antlr.StoneLikeParser;
-
-import compiler.project.antlrtest.TinyScriptLexer;
-import compiler.project.antlrtest.TinyScriptParser;
+import compiler.project.antlr.*;
 import compiler.project.codegen.CodeGenVisitor;
 import compiler.project.exception.LexerException;
 import compiler.project.io.CodeReader;
@@ -15,7 +11,6 @@ import compiler.project.lexer.TokenType;
 import compiler.project.vm.*;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
-import org.antlr.v4.runtime.CodePointCharStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 
 import java.io.File;
@@ -26,7 +21,7 @@ public class Main {
     static PrintStream ps = System.out;
 
     public static void main(String[] args) throws Exception {
-        //test4();
+        test4();
         int b = 3;
         while(b > 0) {
             b--;
@@ -36,7 +31,7 @@ public class Main {
     }
 
     static void test4() throws Exception {
-        CharStream s = CharStreams.fromFileName("/Users/luohuizhou/Desktop/stone.txt");
+        CharStream s = CharStreams.fromFileName("E:\\Francis\\Documents\\JavaWorkplace\\Stone-like-Lang\\src\\main\\compiler\\project\\test\\IfElse.sto");
         StoneLikeLexer lexer = new StoneLikeLexer(s);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         StoneLikeParser parser = new StoneLikeParser(tokens);

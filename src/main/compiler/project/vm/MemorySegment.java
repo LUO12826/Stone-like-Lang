@@ -16,11 +16,12 @@ package compiler.project.vm;
  */
 public enum MemorySegment {
 
+    GLOBAL("GLOBAL"),
     LOCAL("LOCAL"),
-    STATIC("STATIC"),
-    ARGUMENT("ARGUMENT"),
+    TEMP("TEMP"),
     CONSTANT("CONSTANT"),
-    HEAP("HEAP"),
+    LOCAL_HEAP("LOCAL_HEAP"),
+    GLOBAL_HEAP("GLOBAL_HEAP"),
     NULL("NULL"),
     ;
 

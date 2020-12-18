@@ -32,11 +32,11 @@ public class StoneLikeVM {
     /**当前函数栈帧底地址*/
     private int frameBottomAddr;
 
-    /**参数段起始地址*/
-    private int argumentAddr;
+    /**全局段起始地址*/
+    private int globalAddr;
 
-    /**静态段起始地址*/
-    private int staticSegmentAddr;
+    /**临时段起始地址*/
+    private int tempSegmentAddr;
 
     /**数据段*/
     private List<Object> dataSegment;
@@ -60,7 +60,8 @@ public class StoneLikeVM {
     private void init() {
         sp = 127;
         frameBottomAddr = 2048;
-        staticSegmentAddr = 0;
+        tempSegmentAddr = 0;
+        globalAddr = 2048;
         pc = 0;
     }
 
@@ -232,13 +233,13 @@ public class StoneLikeVM {
                 case LOCAL:
                     memory[sp] = memory[frameBottomAddr + op1];
                     break;
-                case ARGUMENT:
-                    memory[sp] = memory[argumentAddr + op1];
+                case GLOBAL:
+                    memory[sp] = memory[globalAddr + op1];
                     break;
-                case STATIC:
-                    memory[sp] = memory[staticSegmentAddr + op1];
+                case TEMP:
+                    memory[sp] = memory[tempSegmentAddr + op1];
                     break;
-                case HEAP:
+                case LOCAL_HEAP:
                     //在数组寻址时，把push指令的操作数认为是数组在栈帧中的地址，把操作数栈顶部元素认为是数组下标。
                     sp--;
                     int offset = (int)(double)memory[sp];
@@ -263,11 +264,11 @@ public class StoneLikeVM {
                 case LOCAL:
                     memory[frameBottomAddr + currentCode.op1] = val;
                     break;
-                case ARGUMENT:
-                    memory[argumentAddr + currentCode.op1] = val;
+                case GLOBAL:
+                    memory[globalAddr + currentCode.op1] = val;
                     break;
-                case STATIC:
-                    int addr = staticSegmentAddr + currentCode.op1;
+                case TEMP:
+                    int addr = tempSegmentAddr + currentCode.op1;
                     offset = currentCode.op2;
                     if(offset != -1) {
                         Object[] arr = (Object[])memory[addr];
@@ -279,11 +280,18 @@ public class StoneLikeVM {
                     break;
                 case NULL:
                     break;
-                case HEAP:
+                case LOCAL_HEAP:
                     //在数组寻址时，把pop指令的操作数认为是数组在栈帧中的地址，把操作数栈顶部元素认为是数组下标，第二个元素认为是要弹出的值。
                     offset = (int)(double)memory[sp];
                     Object[] arr = (Object[])memory[frameBottomAddr + currentCode.op1];
                     arr[offset] = memory[sp - 1];
+                    sp--;
+                    break;
+                case GLOBAL_HEAP:
+                    //在数组寻址时，把pop指令的操作数认为是数组在栈帧中的地址，把操作数栈顶部元素认为是数组下标，第二个元素认为是要弹出的值。
+                    offset = (int)(double)memory[sp];
+                    Object[] arrGlobal = (Object[])memory[globalAddr + currentCode.op1];
+                    arrGlobal[offset] = memory[sp - 1];
                     sp--;
                     break;
                 default:
