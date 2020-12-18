@@ -3,10 +3,10 @@ grammar StoneLike;
 import StoneLikeLex;
 
 program
-	: (globalStatement(';')*)*
+	: (statement(';')*)*
 	;
 
-globalStatement
+statement
 	: callStatement
 	| expression
 	| valueDeclaration
@@ -14,33 +14,14 @@ globalStatement
 	| assignStatement
 	| whileStatement
 	| ifStatement
-	;
-
-functionBlockStatement
-    : callStatement
-    | expression
-    | valueDeclaration
-    | assignStatement
-    | whileStatement
-    | ifStatement
-    | returnStatement
-    ;
-
-
-statement
-	: callStatement
-	| expression
-	| valueDeclaration
-	| assignStatement
-	| whileStatement
-	| ifStatement
+	| returnStatement
 	;
 
 
 expression
-	: expression '&&' boolExpression
-	| expression '||' boolExpression
-	| '!' expression
+    : '!' expression
+	| expression '&&' expression
+	| expression '||' expression
 	| boolExpression
 	;
 
@@ -102,7 +83,7 @@ constantDeclaration
 	;
 
 functionDeclaration
-	: 'func' Identifier parameterClause functionBlock
+	: 'func' Identifier parameterClause codeBlock
 	;
 
 initializerList
@@ -134,21 +115,21 @@ leftValue
 	;
 
 whileStatement
-	: 'while' expression commonCodeBlock
+	: 'while' expression codeBlock
 	;
 
 ifStatement
-	: 'if' expression commonCodeBlock ( elseClause )*
+	: 'if' expression codeBlock ( elseClause )?
 	;
 
 elseClause
-	: 'else' commonCodeBlock
+	: 'else' codeBlock
 	| 'else' ifStatement
 	;
 
 returnStatement
-	: 'return'
-	| 'return' expression
+	: 'return' expression
+	| 'return'
 	;
 
 callStatement
@@ -156,10 +137,6 @@ callStatement
 	| Identifier '(' ')'
 	;
 
-commonCodeBlock
+codeBlock
 	: '{' (statement(';')*)* '}'
 	;
-
-functionBlock
-    : '{' (functionBlockStatement(';')*)* '}'
-    ;
