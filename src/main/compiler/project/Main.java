@@ -22,16 +22,21 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
         test4();
-        int b = 3;
-        while(b > 0) {
-            b--;
-            int a = 4;
-        }
-
     }
 
     static void test4() throws Exception {
-        CharStream s = CharStreams.fromFileName("/Users/luohuizhou/Desktop/stone.txt");
+
+        String osName = System.getProperty("os.name");
+        String path;
+        if (osName.startsWith("Mac OS")) {
+            path = "/Users/luohuizhou/Desktop/stone.txt";
+        } else if (osName.startsWith("Windows")) {
+            path = "E:\\Francis\\Documents\\JavaWorkplace\\Stone-like-Lang\\src\\main\\compiler\\project\\test\\ArrayOperation.sto";
+        } else {
+            path = null;
+        }
+
+        CharStream s = CharStreams.fromFileName(path);
         StoneLikeLexer lexer = new StoneLikeLexer(s);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         StoneLikeParser parser = new StoneLikeParser(tokens);
@@ -41,46 +46,24 @@ public class Main {
         visitor.visit(tree);
 
         Executable exe = visitor.getExecutable();
+        if(exe == null) {
+            return;
+        }
         ps.println("----------------------中间代码-----------------------");
+        final int[] i = {0};
         exe.codeSegment.forEach(code -> {
             if(code == null) {
                 System.out.println("null");
                 return;
             }
-            System.out.println(code.toString());
+            System.out.println(i[0] + "   " + code.toString());
+            i[0]++;
         });
 
         StoneLikeVM vm = new StoneLikeVM(exe);
         ps.println("----------------------执行结果-----------------------");
         vm.execute();
     }
-
-//    static void test3() throws Exception {
-//
-//        CharStream s = CharStreams.fromFileName("/Users/luohuizhou/Desktop/tiny.txt");
-//        TinyScriptLexer lexer = new TinyScriptLexer(s);
-//        CommonTokenStream tokens = new CommonTokenStream(lexer);
-//        TinyScriptParser parser = new TinyScriptParser(tokens);
-//        parser.setBuildParseTree(true);
-//        TinyScriptParser.ProgramContext tree = parser.program();
-//        CodeGenVisitor visitor = new CodeGenVisitor();
-//        visitor.visit(tree);
-//
-//        List<IntermediateCode> codes = visitor.codes;
-//        ps.println("----------------------中间代码-----------------------");
-//        codes.forEach(code -> {
-//            if(code == null) {
-//                System.out.println("null");
-//                return;
-//            }
-//            System.out.println(code.toString());
-//        });
-//
-//        VirtualMachine vm = new VirtualMachine(codes);
-//        ps.println("----------------------执行结果-----------------------");
-//        vm.execute();
-//    }
-
 
     static void test1() throws Exception {
 

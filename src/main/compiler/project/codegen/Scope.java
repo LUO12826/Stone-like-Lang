@@ -10,11 +10,13 @@ import java.util.Map;
  */
 public class Scope {
 
+    /** 作用域类型 */
     public enum Type {
         GLOBAL("GLOBAL"),
         LOCAL("LOCAL");
 
         private String name;
+
         public String getName() {
             return name;
         }
@@ -33,10 +35,11 @@ public class Scope {
     /** 本作用域值符号表 */
     private Map<String, ValueSymbol> valueSymbols = new HashMap<>();
 
+    /** 本作用域函数符号表 */
     private Map<FunctionSignature, FunctionSymbol> functionSymbols = new HashMap<>();
 
     /** 值符号 序号 */
-    private int valueSymbolNum = 1;
+    private int valueSymbolIndex = 2;
 
     public Scope(Scope superScope) {
         this.superScope = superScope;
@@ -50,9 +53,9 @@ public class Scope {
 
     public ValueSymbol defineValueSymbol(ValueSymbol symbol) {
         valueSymbols.put(symbol.name, symbol);
-        valueSymbolNum++;
+        valueSymbolIndex++;
         symbol.scope = this;
-        symbol.relativeMemoryAddress = valueSymbolNum;
+        symbol.relativeMemoryAddress = valueSymbolIndex;
         return symbol;
     }
 
@@ -69,7 +72,7 @@ public class Scope {
     }
 
     public int getValueSymbolNum() {
-        return valueSymbolNum + 1;
+        return valueSymbolIndex + 1;
     }
 
     public boolean valueSymbolRedundant(String name) {
@@ -84,7 +87,7 @@ public class Scope {
 
     public void removeValueSymbol(String name) {
         valueSymbols.remove(name);
-        valueSymbolNum--;
+        valueSymbolIndex--;
     }
 
     public void removeFunctionSymbol(String name) {

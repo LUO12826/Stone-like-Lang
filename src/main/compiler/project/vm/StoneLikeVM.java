@@ -12,9 +12,10 @@ public class StoneLikeVM {
     public enum StoneLikeRuntimeException {
         TypeError("运行时类型不匹配"),
         ArrayOutOfBounds("数组下标越界"),
-        SegmentFault("指令目标段错误");
+        SegmentFault("指令目标段错误"),
+        InternalError("解释器系统内部错误");
 
-        private String message;
+        private final String message;
 
         public String getMessage() { return message; }
 
@@ -41,10 +42,10 @@ public class StoneLikeVM {
     private int tempSegmentAddr;
 
     /**数据段*/
-    private List<Object> dataSegment;
+    private final List<Object> dataSegment;
 
     /**中间代码序列*/
-    private List<IntermediateCode> codes;
+    private final List<IntermediateCode> codes;
 
     /**当前pc指向的代码*/
     private IntermediateCode currentCode;
@@ -182,7 +183,9 @@ public class StoneLikeVM {
         catch(ClassCastException e) {
             handleRuntimeException(StoneLikeRuntimeException.TypeError);
         }
-
+        catch(NullPointerException pte) {
+            handleRuntimeException(StoneLikeRuntimeException.InternalError);
+        }
 
     }
 
@@ -255,7 +258,7 @@ public class StoneLikeVM {
         try {
             int op1 = currentCode.op1;
             switch(currentCode.segment) {
-                case CONSTANT:
+                case DATA:
                     memory[sp] = dataSegment.get(currentCode.op1);
                     break;
                 case LOCAL:
@@ -266,6 +269,9 @@ public class StoneLikeVM {
                     break;
                 case TEMP:
                     memory[sp] = memory[tempSegmentAddr + op1];
+                    break;
+                case CONSTANT:
+                    memory[sp] = op1;
                     break;
                 case LOCAL_HEAP:
                     //在数组寻址时，把push指令的操作数认为是数组在栈帧中的地址，把操作数栈顶部元素认为是数组下标。
@@ -288,6 +294,9 @@ public class StoneLikeVM {
         }
         catch(ArrayIndexOutOfBoundsException idxe) {
             handleRuntimeException(StoneLikeRuntimeException.ArrayOutOfBounds);
+        }
+        catch(NullPointerException pte) {
+            handleRuntimeException(StoneLikeRuntimeException.InternalError);
         }
     }
 
@@ -343,15 +352,25 @@ public class StoneLikeVM {
 
     }
 
+    /**
+     * 执行call指令。当前call指令实际上有3个操作数，
+     * 跳转地址，需要的栈空间以及参数个数。参数个数通过栈顶传递。
+     */
     void executeCall() throws StoneLikeVMException {
         try{
+            int paraNum = (int)memory[sp];
+
             int temp = frameBottomAddr;
             // 分配空间
-            frameBottomAddr += currentCode.op2;
+            frameBottomAddr += currentCode.op2 + 1;
             // 保存返回地址
             memory[frameBottomAddr] = pc;
             // 保存当前函数帧的指针
             memory[frameBottomAddr+1] = temp;
+            //保存sp
+            memory[frameBottomAddr+2] = sp - paraNum;
+            //由于栈顶元素被用于表示数组个数，这里需要弹出这个元素，避免影响函数传参
+            sp--;
             // 跳转函数
             pc = currentCode.op1;
         }catch(ClassCastException e) {
@@ -363,18 +382,20 @@ public class StoneLikeVM {
         try{
             // 恢复pc为返回地址
             pc = (int)memory[frameBottomAddr];
+            //暂存sp
+            int returnSp = (int)memory[frameBottomAddr + 2];
             // 释放栈帧
-            frameBottomAddr = (int)memory[frameBottomAddr+1];
-            memory[127] = memory[sp];
-            sp = 127;
+            frameBottomAddr = (int)memory[frameBottomAddr + 1];
+            //转移sp处的数据
+            memory[returnSp] = memory[sp];
+            //恢复sp
+            sp = returnSp;
         }catch(ClassCastException e) {
             handleRuntimeException(StoneLikeRuntimeException.TypeError);
         }
     }
 
-    void executeJump() {
-        pc = currentCode.op1;
-    }
+    void executeJump() { pc = currentCode.op1; }
 
     void executeJumpEqual() {
         boolean equalOrNot = (double) memory[sp] != 0;
@@ -399,6 +420,7 @@ public class StoneLikeVM {
             case TypeError:
             case SegmentFault:
             case ArrayOutOfBounds:
+            case InternalError:
                 throw new StoneLikeVMException(e.getMessage());
         }
     }

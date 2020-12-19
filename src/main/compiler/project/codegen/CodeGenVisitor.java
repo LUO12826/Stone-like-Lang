@@ -47,9 +47,15 @@ public class CodeGenVisitor extends StoneLikeBaseVisitor<Object> {
     /** 指向当前作用域 */
     private Scope currentScope;
 
+    /** 编译是否成功 */
+    private boolean compileSucceed = false;
+
     /** 获取可执行文件，包括数据段和代码段 */
     public Executable getExecutable() {
-        return new Executable(dataSegment, codes);
+        if(compileSucceed) {
+            return new Executable(dataSegment, codes);
+        }
+        return null;
     }
 
     /** 向数据段中插入内容 */
@@ -59,6 +65,7 @@ public class CodeGenVisitor extends StoneLikeBaseVisitor<Object> {
         return valueLiteralIndex;
     }
 
+    /** 导入库函数 */
     private void importLibrary(StoneLikeLibraryFunction libFunc) {
         int loc = codes.size();
         globalScope.defineFunctionSymbol(new FunctionSymbol
@@ -90,6 +97,7 @@ public class CodeGenVisitor extends StoneLikeBaseVisitor<Object> {
         });
 
         codes.add(new IntermediateCode(VMInstructionType.halt));
+        compileSucceed = true;
         return null;
     }
 
@@ -97,39 +105,38 @@ public class CodeGenVisitor extends StoneLikeBaseVisitor<Object> {
     public Object visitCallStatement(StoneLikeParser.CallStatementContext ctx) {
         // 获取函数名
         String name = ctx.Identifier().getText();
-        Symbol s;
-        if(ctx.expressionList()==null){
+        FunctionSymbol s;
+        if(ctx.expressionList() == null) {
             // 获取参数个数
             int parameterNumber = 0;
             s = globalScope.resolveFunctionSymbol(new FunctionSignature(name, parameterNumber));
 
             // 判断函数是否已定义
-            if(s == null){
+            if(s == null) {
                 throw new FatalError("使用了未定义的函数或参数数量不匹配:" + ctx.Identifier().getText());
             }
 
-        }else{
+        } else {
             // 获取参数个数
-            int parameterNumber=(ctx.expressionList().children.size()+1)/2;
+            int parameterNumber = (ctx.expressionList().children.size() + 1) / 2;
 
             s = globalScope.resolveFunctionSymbol(new FunctionSignature(name, parameterNumber));
 
             // 判断函数是否已定义
-            if(s == null){
+            if(s == null) {
                 throw new FatalError("使用了未定义的函数或参数数量不匹配:" + ctx.Identifier().getText());
             }
 
             // 将参数逆序放置栈中
-            int length=ctx.expressionList().children.size();
-            for(int i=length-1;i>=0;i-=2){
+            int length = ctx.expressionList().children.size();
+            for(int i = length - 1; i >= 0; i -= 2) {
                 visit(ctx.expressionList().children.get(i));
             }
-
         }
 
         // 生成中间代码
-        FunctionSymbol functionSymbol = (FunctionSymbol)s;
-        codes.add(new IntermediateCode(VMInstructionType.call, functionSymbol.codeAddress, currentScope.getValueSymbolNum()));
+        codes.add(new IntermediateCode(VMInstructionType.push, MemorySegment.CONSTANT, s.parameterNum));
+        codes.add(new IntermediateCode(VMInstructionType.call, s.codeAddress, currentScope.getValueSymbolNum()));
         return null;
     }
 
@@ -163,7 +170,7 @@ public class CodeGenVisitor extends StoneLikeBaseVisitor<Object> {
         }
         visit(ctx.codeBlock());
 
-        // 判断函数是否有return语句
+        // 判断函数是否有return语句（还是留着了，感觉少一点ret也好)
         for(ParseTree context: ctx.codeBlock().children){
             // 有则直接返回
             if(context.getChild(0) instanceof StoneLikeParser.ReturnStatementContext){
@@ -269,7 +276,7 @@ public class CodeGenVisitor extends StoneLikeBaseVisitor<Object> {
     public Object  visitArrayExpression(StoneLikeParser.ArrayExpressionContext ctx) {
         int elementNum = ctx.getChildCount() / 2;
         int idx = addValueLiteral(new Object[elementNum]);
-        codes.add(new IntermediateCode(VMInstructionType.push, MemorySegment.CONSTANT, idx));
+        codes.add(new IntermediateCode(VMInstructionType.push, MemorySegment.DATA, idx));
         codes.add(new IntermediateCode(VMInstructionType.pop, MemorySegment.TEMP, 0));
         for(int i = 1; i < ctx.getChildCount(); i += 2) {
             visit(ctx.getChild(i));
@@ -399,11 +406,11 @@ public class CodeGenVisitor extends StoneLikeBaseVisitor<Object> {
             case 1:
                 if(ctx.NumberLiteral() != null) {
                     int idx = addValueLiteral(new Double(ctx.NumberLiteral().getText()));
-                    codes.add(new IntermediateCode(VMInstructionType.push, MemorySegment.CONSTANT, idx));
+                    codes.add(new IntermediateCode(VMInstructionType.push, MemorySegment.DATA, idx));
                 }
                 else if(ctx.StringLiteral() != null) {
                     int idx = addValueLiteral(ctx.StringLiteral().getText());
-                    codes.add(new IntermediateCode(VMInstructionType.push, MemorySegment.CONSTANT, idx));
+                    codes.add(new IntermediateCode(VMInstructionType.push, MemorySegment.DATA, idx));
                 }
                 else if(ctx.Identifier() != null) {
                     s = currentScope.resolveValueSymbol(ctx.Identifier().getText());
@@ -505,22 +512,6 @@ public class CodeGenVisitor extends StoneLikeBaseVisitor<Object> {
     public Object visitAssignStatement(StoneLikeParser.AssignStatementContext ctx) {
         //好多冗余代码，得简化一下
 
-        //对应于Identifier '=' arrayExpression的情况
-//        if(ctx.leftValue() != null) {
-//            ValueSymbol s = currentScope.resolveValueSymbol(ctx.leftValue().getText());
-//            if(s == null) {
-//                throw new FatalError("使用了未定义的变量:" + ctx.leftValue().getText());
-//            }
-//
-//            int ra = s.relativeMemoryAddress;
-//            visit(ctx.getChild(2));
-//            if(s.scope.getScopeType()== Scope.Type.GLOBAL){
-//                codes.add(new IntermediateCode(VMInstructionType.pop, MemorySegment.GLOBAL, ra));
-//            }else{
-//                codes.add(new IntermediateCode(VMInstructionType.pop, MemorySegment.LOCAL, ra));
-//            }
-//
-//        }
         //leftValue:Identifier '=' expression的情况
         if(ctx.getChild(0).getChildCount() == 1) {
             ValueSymbol s = currentScope.resolveValueSymbol(ctx.leftValue().getText());

@@ -8,10 +8,11 @@ package compiler.project.vm;
  * StoneLike虚拟机指令中可操作的内存段。
  *
  * LOCAL指当前函数的栈帧空间。目前，全局作用域被当作是一个巨大的函数，而不是C语言中那样的一个特殊作用域。
- * STATIC目前被当成一个临时空间，而不是C语言中的全局作用域。
- * ARGUMENT被设计来传递参数，不过之后可能会通过运算栈来传参数，就用不到它了。
- * CONSTANT指可执行文件中的数据段。
+ * TEMP目前被当成一个临时空间，主要用于数组初始化。
+ * DATA指可执行文件中的数据段。
+ * CONSTANT指将操作数直接作为值压入栈。
  * HEAP目前被用于数组寻址。
+ * GLOBAL_HEAP指在全局作用域进行数组寻址，LOCAL_HEAP指在局部作用域进行数组寻址。
  * NULL目前只在pop指令中用到，用于直接从栈上弹出并丢弃一个数。
  */
 public enum MemorySegment {
@@ -19,13 +20,14 @@ public enum MemorySegment {
     GLOBAL("GLOBAL"),
     LOCAL("LOCAL"),
     TEMP("TEMP"),
+    DATA("DATA"),
     CONSTANT("CONSTANT"),
     LOCAL_HEAP("LOCAL_HEAP"),
     GLOBAL_HEAP("GLOBAL_HEAP"),
     NULL("NULL"),
     ;
 
-    private String string;
+    private final String string;
 
     public String getString() {
         return string;

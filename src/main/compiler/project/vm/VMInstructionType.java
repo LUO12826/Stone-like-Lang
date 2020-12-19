@@ -32,7 +32,7 @@ public enum VMInstructionType {
     halt("halt"),   //程序结束
     ;
 
-    private String string;
+    private final String string;
 
     public String getString() {
         return string;

@@ -11,6 +11,8 @@ import java.util.List;
  * @author: 骆荟州
  * @createTime: 2020/12/19 10:39 上午
  * @updateTime:
+ *
+ * StoneLike库函数
  */
 public class StoneLikeLibraryFunction {
     public String name;
