@@ -21,6 +21,8 @@ public class StoneLikeVM {
         StoneLikeRuntimeException(String message) { this.message = message; }
     }
 
+    private int maxSP = 0;
+
     private final static int MEM_SIZE = 65536;
 
     /**栈指针*/
@@ -67,6 +69,9 @@ public class StoneLikeVM {
 
     public void execute() throws StoneLikeVMException {
         while(true) {
+            if(sp > maxSP) {
+                maxSP = sp;
+            }
             currentCode = codes.get(pc);
             pc++;
             switch(currentCode.instructionType) {
@@ -115,15 +120,38 @@ public class StoneLikeVM {
                     executePrint();
                     break;
                 case halt:
-                    System.out.println(memory[sp]);
+                    beforeHalt();
                     return;
             }
 
         }
     }
 
+    private void beforeHalt() {
+        System.out.println();
+        System.out.println("**VM信息：最大sp：" + maxSP);
+        System.out.println("**VM信息：最终sp：" + sp);
+    }
+
     void executePrint() {
-        System.out.println(memory[sp]);
+        if(memory[sp] instanceof Object[]) {
+            printArr((Object[])memory[sp]);
+        }
+        else {
+            System.out.print(memory[sp]);
+        }
+        sp--;
+    }
+
+    private void printArr(Object[] arr) {
+        System.out.print("[");
+        for(int i = 0; i < arr.length; i++) {
+            if(i != 0) {
+                System.out.print(", ");
+            }
+            System.out.print(arr[i]);
+        }
+        System.out.print("]");
     }
 
     void executeArithmetic() throws StoneLikeVMException {
@@ -337,6 +365,8 @@ public class StoneLikeVM {
             pc = (int)memory[frameBottomAddr];
             // 释放栈帧
             frameBottomAddr = (int)memory[frameBottomAddr+1];
+            memory[127] = memory[sp];
+            sp = 127;
         }catch(ClassCastException e) {
             handleRuntimeException(StoneLikeRuntimeException.TypeError);
         }
@@ -348,6 +378,7 @@ public class StoneLikeVM {
 
     void executeJumpEqual() {
         boolean equalOrNot = (double) memory[sp] != 0;
+        sp--;
         if(equalOrNot) {
             pc = currentCode.op1;
         }
@@ -355,6 +386,7 @@ public class StoneLikeVM {
 
     void executeJumpNotEqual() {
         boolean equalOrNot = (double) memory[sp] != 0;
+        sp--;
         if(!equalOrNot) {
             pc = currentCode.op1;
         }

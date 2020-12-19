@@ -59,13 +59,20 @@ public class CodeGenVisitor extends StoneLikeBaseVisitor<Object> {
         return valueLiteralIndex;
     }
 
+    private void importLibrary(StoneLikeLibraryFunction libFunc) {
+        int loc = codes.size();
+        globalScope.defineFunctionSymbol(new FunctionSymbol
+                (libFunc.name, globalScope, libFunc.parameterNum, loc));
+        codes.addAll(libFunc.codes);
+    }
+
     @Override
     public Object visitProgram(StoneLikeParser.ProgramContext ctx) {
         globalScope = new Scope(null);
         currentScope = globalScope;
         IntermediateCode c = new IntermediateCode(VMInstructionType.j);
         codes.add(c);
-
+        importLibrary(StoneLikeStandardLibrary.print);
         // 先编译一遍，生成函数声明
         ctx.children.forEach(child -> {
             if(child.getChild(0) instanceof StoneLikeParser.FunctionDeclarationContext) {
@@ -563,7 +570,6 @@ public class CodeGenVisitor extends StoneLikeBaseVisitor<Object> {
         visit(ctx.expression());
         IntermediateCode c = new IntermediateCode(VMInstructionType.jne);
         codes.add(c);
-        codes.add(new IntermediateCode(VMInstructionType.pop, MemorySegment.NULL));
         visit(ctx.codeBlock());
         IntermediateCode d = new IntermediateCode(VMInstructionType.j);
         codes.add(d);
@@ -578,7 +584,6 @@ public class CodeGenVisitor extends StoneLikeBaseVisitor<Object> {
         visit(ctx.expression());
         IntermediateCode c = new IntermediateCode(VMInstructionType.jne);
         codes.add(c);
-        codes.add(new IntermediateCode(VMInstructionType.pop, MemorySegment.NULL));
         visit(ctx.codeBlock());
         IntermediateCode d = new IntermediateCode(VMInstructionType.j);
         codes.add(d);
