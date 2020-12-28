@@ -6,6 +6,7 @@ import compiler.project.vm.Executable;
 import compiler.project.vm.IntermediateCode;
 import compiler.project.vm.MemorySegment;
 import compiler.project.vm.VMInstructionType;
+import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 import java.io.PrintStream;
@@ -228,6 +229,14 @@ public class CodeGenVisitor extends StoneLikeBaseVisitor<Object> {
 
     @Override
     public Object visitStatement(StoneLikeParser.StatementContext ctx) {
+        ParseTree context = ctx;
+        //不编译悬浮表达式。
+        while(context.getChildCount() == 1) {
+            context = context.getChild(0);
+            if(context instanceof StoneLikeParser.ExpressionContext) {
+                return null;
+            }
+        }
         return super.visitStatement(ctx);
     }
 

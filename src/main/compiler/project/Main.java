@@ -3,8 +3,7 @@ package compiler.project;
 import compiler.project.antlr.*;
 import compiler.project.codegen.CodeGenVisitor;
 import compiler.project.exception.LexerException;
-import compiler.project.exception.StoneLikeLexicalErrorListener;
-import compiler.project.exception.StoneLikeSyntaxErrorListener;
+import compiler.project.gui.MainWindow;
 import compiler.project.io.CodeReader;
 import compiler.project.lexer.Language;
 import compiler.project.lexer.Lexer;
@@ -24,6 +23,11 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
         test4();
+//        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+//            public void run() {
+//                MainWindow.createAndShowGUI();
+//            }
+//        });
     }
 
     static void test4() throws Exception {
@@ -33,20 +37,16 @@ public class Main {
         if (osName.startsWith("Mac OS")) {
             path = "/Users/luohuizhou/Desktop/stone.txt";
         } else if (osName.startsWith("Windows")) {
-            path = "E:\\Francis\\Documents\\JavaWorkplace\\Stone-like-Lang\\src\\main\\compiler\\project\\test\\RealOperation.sto";
+            path = "E:\\Francis\\Documents\\JavaWorkplace\\Stone-like-Lang\\src\\main\\compiler\\project\\test\\ArrayOperation.sto";
         } else {
             path = null;
         }
 
         CharStream s = CharStreams.fromFileName(path);
         StoneLikeLexer lexer = new StoneLikeLexer(s);
-        lexer.removeErrorListeners();
-        lexer.addErrorListener(new StoneLikeLexicalErrorListener());
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         StoneLikeParser parser = new StoneLikeParser(tokens);
         parser.setBuildParseTree(true);
-        parser.removeErrorListeners();
-        parser.addErrorListener(new StoneLikeSyntaxErrorListener());
         StoneLikeParser.ProgramContext tree = parser.program();
         CodeGenVisitor visitor = new CodeGenVisitor();
         visitor.visit(tree);
