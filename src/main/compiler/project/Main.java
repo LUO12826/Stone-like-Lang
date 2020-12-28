@@ -3,6 +3,7 @@ package compiler.project;
 import compiler.project.antlr.*;
 import compiler.project.codegen.CodeGenVisitor;
 import compiler.project.exception.LexerException;
+import compiler.project.gui.MainWindow;
 import compiler.project.io.CodeReader;
 import compiler.project.lexer.Language;
 import compiler.project.lexer.Lexer;
@@ -22,6 +23,11 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
         test4();
+//        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+//            public void run() {
+//                MainWindow.createAndShowGUI();
+//            }
+//        });
     }
 
     static void test4() throws Exception {
