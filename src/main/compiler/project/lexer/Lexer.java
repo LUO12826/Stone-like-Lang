@@ -71,7 +71,7 @@ public class Lexer {
             if (isLetter(c)) {
                 reader.retract();
                 tempWord.setLength(0);
-                throw new LexerException(LexerExceptionType.IllegalIdentifier, line);
+                throw new LexerException(LexerExceptionType.IllegalIdentifier, line, String.valueOf(c));
             }
 
             // 回退
@@ -186,7 +186,7 @@ public class Lexer {
             default:
                 reader.retract();
                 tempWord.setLength(0);
-                throw new LexerException(LexerExceptionType.IllegalCharacter, line);
+                throw new LexerException(LexerExceptionType.IllegalCharacter, line, String.valueOf(c));
         }
 
     }

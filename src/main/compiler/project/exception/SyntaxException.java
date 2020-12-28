@@ -1,20 +1,17 @@
 /**
  * @Author 范承祥
- * @CreateTime 2020/10/31
- * @UpdateTime 2020/10/31
+ * @CreateTime 2020/12/20
+ * @UpdateTime 2020/12/20
  */
 package compiler.project.exception;
 
 import org.antlr.v4.runtime.Token;
 
-/**
- * 词法异常
- */
-public class LexerException extends Exception {
+public class SyntaxException {
     /**
      * 异常类型
      */
-    private LexerExceptionType type;
+    private SyntaxExceptionType type;
 
     /**
      * 异常行号
@@ -38,7 +35,7 @@ public class LexerException extends Exception {
      * @param line 异常行号
      * @parm error 出错字符串
      */
-    public LexerException(LexerExceptionType type, int line) {
+    public SyntaxException(SyntaxExceptionType type, int line) {
         this.type = type;
         this.line = line;
     }
@@ -50,7 +47,7 @@ public class LexerException extends Exception {
      * @param line 异常行号
      * @parm error 出错字符串
      */
-    public LexerException(LexerExceptionType type, int line,String error) {
+    public SyntaxException(SyntaxExceptionType type, int line,String error) {
         this.type = type;
         this.line = line;
         this.error = error;
@@ -63,13 +60,13 @@ public class LexerException extends Exception {
      * @param line 异常行号
      * @param offendingSymbol 出错令牌
      */
-    public LexerException(LexerExceptionType type, int line,Token offendingSymbol) {
+    public SyntaxException(SyntaxExceptionType type, int line,Token offendingSymbol) {
         this.type = type;
         this.line = line;
         this.offendingSymbol = offendingSymbol;
     }
 
-    public LexerExceptionType getType() {
+    public SyntaxExceptionType getType() {
         return type;
     }
 
@@ -83,7 +80,7 @@ public class LexerException extends Exception {
         builder.append("ErrorType: ");
         builder.append(type);
         if(error!=null&&!error.isEmpty()) {
-            builder.append("\nErrorSymbol: ");
+            builder.append("\nErrorSymbol");
             builder.append(error);
         }
         builder.append("\nErrorMessage: ");

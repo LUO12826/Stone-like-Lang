@@ -404,8 +404,11 @@ public class CodeGenVisitor extends StoneLikeBaseVisitor<Object> {
         ValueSymbol s;
         switch(ctx.getChildCount()) {
             case 1:
-                if(ctx.NumberLiteral() != null) {
-                    int idx = addValueLiteral(new Double(ctx.NumberLiteral().getText()));
+                if(ctx.IntegerLiteral() != null) {
+                    int idx = addValueLiteral(new Double(ctx.IntegerLiteral().getText()));
+                    codes.add(new IntermediateCode(VMInstructionType.push, MemorySegment.DATA, idx));
+                }else if(ctx.RealLiteral() != null){
+                    int idx = addValueLiteral(new Double(ctx.RealLiteral().getText()));
                     codes.add(new IntermediateCode(VMInstructionType.push, MemorySegment.DATA, idx));
                 }
                 else if(ctx.StringLiteral() != null) {

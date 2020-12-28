@@ -27,6 +27,8 @@ expression
 
 arrayExpression
     : '[' expression ( ',' expression )* ']'
+    | '[' expression ( ',' expression )* {notifyErrorListeners("Missing ']'");}
+    | expression ( ',' expression )* ']' {notifyErrorListeners("Missing '['");}
     ;
 
 expressionList
@@ -61,7 +63,8 @@ factor
 	: Identifier
 	| Identifier '[' expression ']'
 	| '(' expression ')'
-	| NumberLiteral
+	| IntegerLiteral
+	| RealLiteral
 	| StringLiteral
 	| '-' factor
 	| callStatement
@@ -112,6 +115,8 @@ assignStatement
 leftValue
 	: Identifier
 	| Identifier '[' expression ']'
+	| Identifier '[' expression {notifyErrorListeners("Missing ']'");}
+    | Identifier expression ']' {notifyErrorListeners("Missing '['");}
 	;
 
 whileStatement
@@ -135,8 +140,14 @@ returnStatement
 callStatement
 	: Identifier '(' expressionList ')'
 	| Identifier '(' ')'
+	| Identifier '(' expressionList {notifyErrorListeners("Missing ')'");}
+	| Identifier expressionList ')' {notifyErrorListeners("Missing ')'");}
+	| Identifier '(' {notifyErrorListeners("Missing ')'");}
+    | Identifier ')' {notifyErrorListeners("Missing '('");}
 	;
 
 codeBlock
 	: '{' (statement(';')*)* '}'
+	| '{' (statement(';')*)* {notifyErrorListeners("Missing '}'");}
+	| (statement(';')*)* '}' {notifyErrorListeners("Missing '{'");}
 	;

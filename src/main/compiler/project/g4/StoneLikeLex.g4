@@ -92,7 +92,7 @@ RightParen
 	: ')'
 	;
 	
-LeftBarce
+LeftBrace
 	: '{'
 	;
 
@@ -120,13 +120,21 @@ Dquote
 	: '"'
 	;
 
+Dot
+    : '.'
+    ;
+
 Identifier
 	: Alpha ( Digit | Alpha )*
 	;
 
-NumberLiteral
+IntegerLiteral
 	: Digit ( Digit )*
 	;
+
+RealLiteral
+    : IntegerLiteral ( '.' IntegerLiteral )?
+    ;
 
 StringLiteral
 	: '"' (.)*? '"'
@@ -140,7 +148,7 @@ Digit
 	: [0-9]
 	;
 
-Whitespce
+Whitespace
 	: [ \t\r\n]+ -> skip
 	;
 
