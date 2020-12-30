@@ -23,11 +23,6 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
         test4();
-//        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-//            public void run() {
-//                MainWindow.createAndShowGUI();
-//            }
-//        });
     }
 
     static void test4() throws Exception {
@@ -55,6 +50,7 @@ public class Main {
         if(exe == null) {
             return;
         }
+        //exe.writeToFile("/Users/luohuizhou/Desktop/stone111.txt");
         ps.println("----------------------中间代码-----------------------");
         final int[] i = {0};
         exe.codeSegment.forEach(code -> {
