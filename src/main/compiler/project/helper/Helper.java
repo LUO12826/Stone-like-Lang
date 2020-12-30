@@ -6,7 +6,8 @@ package compiler.project.helper;
  * @updateTime:
  */
 public class Helper {
-    public static String[] blanks = new String[]{"", " ", "  ", "   ", "    ", "     "};
+    public static String[] blanks =
+            new String[]{"", " ", "  ", "   ", "    ", "     ", "      ", "       ", "        ", "         ", "          "};
 
     public static String fillWithBlank(String s, int targetLength) {
         int l = targetLength - s.length();
