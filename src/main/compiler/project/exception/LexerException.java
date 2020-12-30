@@ -80,15 +80,15 @@ public class LexerException extends Exception {
     @Override
     public String toString() {
         StringBuilder builder=new StringBuilder();
-        builder.append("ErrorType: ");
+        builder.append("\n>>>>> ErrorType: ");
         builder.append(type);
         if(error!=null&&!error.isEmpty()) {
-            builder.append("\nErrorSymbol: ");
+            builder.append("\n>>>>> ErrorSymbol: ");
             builder.append(error);
         }
-        builder.append("\nErrorMessage: ");
+        builder.append("\n>>>>> ErrorMessage: ");
         builder.append(type.getMessage());
-        builder.append("\nErrorLine: ");
+        builder.append("\n>>>>> ErrorLine: ");
         builder.append(line);
         builder.append("\n");
         return  builder.toString();

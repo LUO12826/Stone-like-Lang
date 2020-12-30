@@ -5,6 +5,8 @@
  */
 package compiler.project.lexer;
 
+import java.util.Objects;
+
 /**
  * 符号表项
  */
@@ -33,5 +35,18 @@ public class SymbolTableItem {
 
     public void setLine(int line) {
         this.line = line;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SymbolTableItem item = (SymbolTableItem) o;
+        return name.equals(item.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }

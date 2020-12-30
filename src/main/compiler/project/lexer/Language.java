@@ -47,7 +47,7 @@ public class Language {
 
         put("(", TokenType.TokenLeftParen);
         put(")", TokenType.TokenRightParen);
-        put("{", TokenType.TokenLeftBarce);
+        put("{", TokenType.TokenLeftBrace);
         put("}", TokenType.TokenRightBrace);
         put("[", TokenType.TokenLeftBracket);
         put("]", TokenType.TokenRightBracket);
@@ -72,12 +72,42 @@ public class Language {
         }
     }
 
+    public static int addStringLiteral(String str){
+        int index = stringLiteralTable.indexOf(str);
+        if(index!=-1){
+            return index;
+        }
+        stringLiteralTable.add(str);
+        index = stringLiteralTable.size()-1;
+        return index;
+    }
+
+    public static int addNumberLiteral(double num){
+        int index = numberLiteralTable.indexOf(num);
+        if(index!=-1){
+            return index;
+        }
+        numberLiteralTable.add(num);
+        index = numberLiteralTable.size()-1;
+        return index;
+    }
+
+    public static int addSymbolTableItem(SymbolTableItem item){
+        int index=symbolTable.indexOf(item);
+        if(index!=-1){
+            return index;
+        }
+        symbolTable.add(item);
+        index = Language.symbolTable.size() - 1;
+        return index;
+    }
+
     public static void printStringLiteralTable() {
         int size = stringLiteralTable.size();
         System.out.println("---------String Literal Table-----------");
         System.out.println("index\tvalue");
         for (int i = 0; i < size; i++) {
-            System.out.println(i + "\t" + stringLiteralTable.get(i));
+            System.out.printf("%-5d\t%s\n",i, stringLiteralTable.get(i));
         }
     }
 
@@ -86,7 +116,7 @@ public class Language {
         System.out.println("---------Number Literal Table-----------");
         System.out.println("index\tvalue");
         for (int i = 0; i < size; i++) {
-            System.out.println(i + "\t" + numberLiteralTable.get(i));
+            System.out.printf("%-5d\t%s\n",i, numberLiteralTable.get(i));
         }
     }
 
@@ -95,7 +125,7 @@ public class Language {
         System.out.println("---------Symbol Table-----------");
         System.out.println("index\tname\tline");
         for (int i = 0; i < size; i++) {
-            System.out.println(i + "\t" + symbolTable.get(i).getName() + "\t" + symbolTable.get(i).getLine());
+            System.out.printf("%-5d\t%-5s\t%d\n",i,symbolTable.get(i).getName(),symbolTable.get(i).getLine());
         }
     }
 }

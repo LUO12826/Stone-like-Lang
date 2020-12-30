@@ -80,7 +80,7 @@ public class SyntaxException {
         builder.append("ErrorType: ");
         builder.append(type);
         if(error!=null&&!error.isEmpty()) {
-            builder.append("\nErrorSymbol");
+            builder.append("\nErrorSymbol: ");
             builder.append(error);
         }
         builder.append("\nErrorMessage: ");

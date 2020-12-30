@@ -498,7 +498,7 @@ public class StoneLikeParser extends Parser {
 					_errHandler.sync(this);
 					_alt = getInterpreter().adaptivePredict(_input,7,_ctx);
 				}
-				notifyErrorListeners("Missing ']'");
+				notifyErrorListeners("缺失 ']'");
 				}
 				break;
 			case 3:
@@ -524,7 +524,7 @@ public class StoneLikeParser extends Parser {
 				}
 				setState(121);
 				match(RightBracket);
-				notifyErrorListeners("Missing '['");
+				notifyErrorListeners("缺失 '['");
 				}
 				break;
 			}
@@ -953,7 +953,7 @@ public class StoneLikeParser extends Parser {
 		FactorContext _localctx = new FactorContext(_ctx, getState());
 		enterRule(_localctx, 18, RULE_factor);
 		try {
-			setState(187);
+			setState(201);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,16,_ctx) ) {
 			case 1:
@@ -1024,6 +1024,40 @@ public class StoneLikeParser extends Parser {
 				callStatement();
 				}
 				break;
+			case 9:
+				enterOuterAlt(_localctx, 9);
+				{
+				setState(187);
+				match(Identifier);
+				setState(188);
+				match(LeftBracket);
+				setState(189);
+				expression(0);
+				notifyErrorListeners("缺失 ']'");
+				}
+				break;
+			case 10:
+				enterOuterAlt(_localctx, 10);
+				{
+				setState(192);
+				match(Identifier);
+				setState(193);
+				expression(0);
+				setState(194);
+				match(RightBracket);
+				notifyErrorListeners("缺失 '['");
+				}
+				break;
+			case 11:
+				enterOuterAlt(_localctx, 11);
+				{
+				setState(197);
+				match(LeftParen);
+				setState(198);
+				expression(0);
+				notifyErrorListeners("缺失 ')'");
+				}
+				break;
 			}
 		}
 		catch (RecognitionException re) {
@@ -1059,20 +1093,20 @@ public class StoneLikeParser extends Parser {
 		ValueDeclarationContext _localctx = new ValueDeclarationContext(_ctx, getState());
 		enterRule(_localctx, 20, RULE_valueDeclaration);
 		try {
-			setState(191);
+			setState(205);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case Var:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(189);
+				setState(203);
 				variableDeclaration();
 				}
 				break;
 			case Const:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(190);
+				setState(204);
 				constantDeclaration();
 				}
 				break;
@@ -1113,9 +1147,9 @@ public class StoneLikeParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(193);
+			setState(207);
 			match(Var);
-			setState(194);
+			setState(208);
 			initializerList();
 			}
 		}
@@ -1152,9 +1186,9 @@ public class StoneLikeParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(196);
+			setState(210);
 			match(Const);
-			setState(197);
+			setState(211);
 			initializerList();
 			}
 		}
@@ -1195,13 +1229,13 @@ public class StoneLikeParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(199);
+			setState(213);
 			match(Func);
-			setState(200);
+			setState(214);
 			match(Identifier);
-			setState(201);
+			setState(215);
 			parameterClause();
-			setState(202);
+			setState(216);
 			codeBlock();
 			}
 		}
@@ -1245,21 +1279,21 @@ public class StoneLikeParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(204);
+			setState(218);
 			initializer();
-			setState(209);
+			setState(223);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==Comma) {
 				{
 				{
-				setState(205);
+				setState(219);
 				match(Comma);
-				setState(206);
+				setState(220);
 				initializer();
 				}
 				}
-				setState(211);
+				setState(225);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
@@ -1300,28 +1334,28 @@ public class StoneLikeParser extends Parser {
 		InitializerContext _localctx = new InitializerContext(_ctx, getState());
 		enterRule(_localctx, 30, RULE_initializer);
 		try {
-			setState(218);
+			setState(232);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,19,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(212);
+				setState(226);
 				match(Identifier);
-				setState(213);
+				setState(227);
 				match(Assign);
-				setState(214);
+				setState(228);
 				expression(0);
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(215);
+				setState(229);
 				match(Identifier);
-				setState(216);
+				setState(230);
 				match(Assign);
-				setState(217);
+				setState(231);
 				arrayExpression();
 				}
 				break;
@@ -1359,26 +1393,26 @@ public class StoneLikeParser extends Parser {
 		ParameterClauseContext _localctx = new ParameterClauseContext(_ctx, getState());
 		enterRule(_localctx, 32, RULE_parameterClause);
 		try {
-			setState(226);
+			setState(240);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,20,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(220);
+				setState(234);
 				match(LeftParen);
-				setState(221);
+				setState(235);
 				match(RightParen);
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(222);
+				setState(236);
 				match(LeftParen);
-				setState(223);
+				setState(237);
 				parameterList();
-				setState(224);
+				setState(238);
 				match(RightParen);
 				}
 				break;
@@ -1422,21 +1456,21 @@ public class StoneLikeParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(228);
+			setState(242);
 			match(Identifier);
-			setState(233);
+			setState(247);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==Comma) {
 				{
 				{
-				setState(229);
+				setState(243);
 				match(Comma);
-				setState(230);
+				setState(244);
 				match(Identifier);
 				}
 				}
-				setState(235);
+				setState(249);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
@@ -1479,28 +1513,28 @@ public class StoneLikeParser extends Parser {
 		AssignStatementContext _localctx = new AssignStatementContext(_ctx, getState());
 		enterRule(_localctx, 36, RULE_assignStatement);
 		try {
-			setState(244);
+			setState(258);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,22,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(236);
+				setState(250);
 				leftValue();
-				setState(237);
+				setState(251);
 				match(Assign);
-				setState(238);
+				setState(252);
 				expression(0);
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(240);
+				setState(254);
 				leftValue();
-				setState(241);
+				setState(255);
 				match(Assign);
-				setState(242);
+				setState(256);
 				arrayExpression();
 				}
 				break;
@@ -1539,51 +1573,51 @@ public class StoneLikeParser extends Parser {
 		LeftValueContext _localctx = new LeftValueContext(_ctx, getState());
 		enterRule(_localctx, 38, RULE_leftValue);
 		try {
-			setState(262);
+			setState(276);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,23,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(246);
+				setState(260);
 				match(Identifier);
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(247);
+				setState(261);
 				match(Identifier);
-				setState(248);
+				setState(262);
 				match(LeftBracket);
-				setState(249);
+				setState(263);
 				expression(0);
-				setState(250);
+				setState(264);
 				match(RightBracket);
 				}
 				break;
 			case 3:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(252);
+				setState(266);
 				match(Identifier);
-				setState(253);
+				setState(267);
 				match(LeftBracket);
-				setState(254);
+				setState(268);
 				expression(0);
-				notifyErrorListeners("Missing ']'");
+				notifyErrorListeners("缺失 ']'");
 				}
 				break;
 			case 4:
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(257);
+				setState(271);
 				match(Identifier);
-				setState(258);
+				setState(272);
 				expression(0);
-				setState(259);
+				setState(273);
 				match(RightBracket);
-				notifyErrorListeners("Missing '['");
+				notifyErrorListeners("缺失 '['");
 				}
 				break;
 			}
@@ -1624,11 +1658,11 @@ public class StoneLikeParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(264);
+			setState(278);
 			match(While);
-			setState(265);
+			setState(279);
 			expression(0);
-			setState(266);
+			setState(280);
 			codeBlock();
 			}
 		}
@@ -1671,18 +1705,18 @@ public class StoneLikeParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(268);
+			setState(282);
 			match(If);
-			setState(269);
+			setState(283);
 			expression(0);
-			setState(270);
+			setState(284);
 			codeBlock();
-			setState(272);
+			setState(286);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,24,_ctx) ) {
 			case 1:
 				{
-				setState(271);
+				setState(285);
 				elseClause();
 				}
 				break;
@@ -1723,24 +1757,24 @@ public class StoneLikeParser extends Parser {
 		ElseClauseContext _localctx = new ElseClauseContext(_ctx, getState());
 		enterRule(_localctx, 44, RULE_elseClause);
 		try {
-			setState(278);
+			setState(292);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,25,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(274);
+				setState(288);
 				match(Else);
-				setState(275);
+				setState(289);
 				codeBlock();
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(276);
+				setState(290);
 				match(Else);
-				setState(277);
+				setState(291);
 				ifStatement();
 				}
 				break;
@@ -1777,22 +1811,22 @@ public class StoneLikeParser extends Parser {
 		ReturnStatementContext _localctx = new ReturnStatementContext(_ctx, getState());
 		enterRule(_localctx, 46, RULE_returnStatement);
 		try {
-			setState(283);
+			setState(297);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,26,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(280);
+				setState(294);
 				match(Return);
-				setState(281);
+				setState(295);
 				expression(0);
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(282);
+				setState(296);
 				match(Return);
 				}
 				break;
@@ -1831,75 +1865,75 @@ public class StoneLikeParser extends Parser {
 		CallStatementContext _localctx = new CallStatementContext(_ctx, getState());
 		enterRule(_localctx, 48, RULE_callStatement);
 		try {
-			setState(309);
+			setState(323);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,27,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(285);
+				setState(299);
 				match(Identifier);
-				setState(286);
+				setState(300);
 				match(LeftParen);
-				setState(287);
+				setState(301);
 				expressionList();
-				setState(288);
+				setState(302);
 				match(RightParen);
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(290);
+				setState(304);
 				match(Identifier);
-				setState(291);
+				setState(305);
 				match(LeftParen);
-				setState(292);
+				setState(306);
 				match(RightParen);
 				}
 				break;
 			case 3:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(293);
+				setState(307);
 				match(Identifier);
-				setState(294);
+				setState(308);
 				match(LeftParen);
-				setState(295);
+				setState(309);
 				expressionList();
-				notifyErrorListeners("Missing ')'");
+				notifyErrorListeners("缺失 ')'");
 				}
 				break;
 			case 4:
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(298);
+				setState(312);
 				match(Identifier);
-				setState(299);
+				setState(313);
 				expressionList();
-				setState(300);
+				setState(314);
 				match(RightParen);
-				notifyErrorListeners("Missing ')'");
+				notifyErrorListeners("缺失 '('");
 				}
 				break;
 			case 5:
 				enterOuterAlt(_localctx, 5);
 				{
-				setState(303);
+				setState(317);
 				match(Identifier);
-				setState(304);
+				setState(318);
 				match(LeftParen);
-				notifyErrorListeners("Missing ')'");
+				notifyErrorListeners("缺失 ')'");
 				}
 				break;
 			case 6:
 				enterOuterAlt(_localctx, 6);
 				{
-				setState(306);
+				setState(320);
 				match(Identifier);
-				setState(307);
+				setState(321);
 				match(RightParen);
-				notifyErrorListeners("Missing '('");
+				notifyErrorListeners("缺失 '('");
 				}
 				break;
 			}
@@ -1945,120 +1979,120 @@ public class StoneLikeParser extends Parser {
 		int _la;
 		try {
 			int _alt;
-			setState(353);
+			setState(367);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,34,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(311);
+				setState(325);
 				match(LeftBrace);
-				setState(321);
+				setState(335);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << If) | (1L << While) | (1L << Return) | (1L << Var) | (1L << Const) | (1L << Func) | (1L << Sub) | (1L << Not) | (1L << LeftParen) | (1L << Identifier) | (1L << IntegerLiteral) | (1L << RealLiteral) | (1L << StringLiteral))) != 0)) {
 					{
 					{
-					setState(312);
+					setState(326);
 					statement();
-					setState(316);
+					setState(330);
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 					while (_la==Semicolon) {
 						{
 						{
-						setState(313);
+						setState(327);
 						match(Semicolon);
 						}
 						}
-						setState(318);
+						setState(332);
 						_errHandler.sync(this);
 						_la = _input.LA(1);
 					}
 					}
 					}
-					setState(323);
+					setState(337);
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 				}
-				setState(324);
+				setState(338);
 				match(RightBrace);
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(325);
+				setState(339);
 				match(LeftBrace);
-				setState(335);
+				setState(349);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,31,_ctx);
 				while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 					if ( _alt==1 ) {
 						{
 						{
-						setState(326);
+						setState(340);
 						statement();
-						setState(330);
+						setState(344);
 						_errHandler.sync(this);
 						_alt = getInterpreter().adaptivePredict(_input,30,_ctx);
 						while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 							if ( _alt==1 ) {
 								{
 								{
-								setState(327);
+								setState(341);
 								match(Semicolon);
 								}
 								} 
 							}
-							setState(332);
+							setState(346);
 							_errHandler.sync(this);
 							_alt = getInterpreter().adaptivePredict(_input,30,_ctx);
 						}
 						}
 						} 
 					}
-					setState(337);
+					setState(351);
 					_errHandler.sync(this);
 					_alt = getInterpreter().adaptivePredict(_input,31,_ctx);
 				}
-				notifyErrorListeners("Missing '}'");
+				notifyErrorListeners("缺失 '}'");
 				}
 				break;
 			case 3:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(348);
+				setState(362);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << If) | (1L << While) | (1L << Return) | (1L << Var) | (1L << Const) | (1L << Func) | (1L << Sub) | (1L << Not) | (1L << LeftParen) | (1L << Identifier) | (1L << IntegerLiteral) | (1L << RealLiteral) | (1L << StringLiteral))) != 0)) {
 					{
 					{
-					setState(339);
+					setState(353);
 					statement();
-					setState(343);
+					setState(357);
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 					while (_la==Semicolon) {
 						{
 						{
-						setState(340);
+						setState(354);
 						match(Semicolon);
 						}
 						}
-						setState(345);
+						setState(359);
 						_errHandler.sync(this);
 						_la = _input.LA(1);
 					}
 					}
 					}
-					setState(350);
+					setState(364);
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 				}
-				setState(351);
+				setState(365);
 				match(RightBrace);
-				notifyErrorListeners("Missing '{'");
+				notifyErrorListeners("缺失 '{'");
 				}
 				break;
 			}
@@ -2110,7 +2144,7 @@ public class StoneLikeParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3)\u0166\4\2\t\2\4"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3)\u0174\4\2\t\2\4"+
 		"\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t"+
 		"\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
 		"\4\23\t\23\4\24\t\24\4\25\t\25\4\26\t\26\4\27\t\27\4\30\t\30\4\31\t\31"+
@@ -2123,29 +2157,30 @@ public class StoneLikeParser extends Parser {
 		"\u008d\13\6\3\7\3\7\3\7\3\7\3\7\5\7\u0094\n\7\3\b\3\b\3\t\3\t\3\t\3\t"+
 		"\3\t\3\t\7\t\u009e\n\t\f\t\16\t\u00a1\13\t\3\n\3\n\3\n\3\n\3\n\3\n\7\n"+
 		"\u00a9\n\n\f\n\16\n\u00ac\13\n\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13"+
-		"\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\5\13\u00be\n\13\3\f\3\f\5\f\u00c2"+
+		"\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13"+
+		"\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\5\13\u00cc\n\13\3\f\3\f\5\f\u00d0"+
 		"\n\f\3\r\3\r\3\r\3\16\3\16\3\16\3\17\3\17\3\17\3\17\3\17\3\20\3\20\3\20"+
-		"\7\20\u00d2\n\20\f\20\16\20\u00d5\13\20\3\21\3\21\3\21\3\21\3\21\3\21"+
-		"\5\21\u00dd\n\21\3\22\3\22\3\22\3\22\3\22\3\22\5\22\u00e5\n\22\3\23\3"+
-		"\23\3\23\7\23\u00ea\n\23\f\23\16\23\u00ed\13\23\3\24\3\24\3\24\3\24\3"+
-		"\24\3\24\3\24\3\24\5\24\u00f7\n\24\3\25\3\25\3\25\3\25\3\25\3\25\3\25"+
-		"\3\25\3\25\3\25\3\25\3\25\3\25\3\25\3\25\3\25\5\25\u0109\n\25\3\26\3\26"+
-		"\3\26\3\26\3\27\3\27\3\27\3\27\5\27\u0113\n\27\3\30\3\30\3\30\3\30\5\30"+
-		"\u0119\n\30\3\31\3\31\3\31\5\31\u011e\n\31\3\32\3\32\3\32\3\32\3\32\3"+
+		"\7\20\u00e0\n\20\f\20\16\20\u00e3\13\20\3\21\3\21\3\21\3\21\3\21\3\21"+
+		"\5\21\u00eb\n\21\3\22\3\22\3\22\3\22\3\22\3\22\5\22\u00f3\n\22\3\23\3"+
+		"\23\3\23\7\23\u00f8\n\23\f\23\16\23\u00fb\13\23\3\24\3\24\3\24\3\24\3"+
+		"\24\3\24\3\24\3\24\5\24\u0105\n\24\3\25\3\25\3\25\3\25\3\25\3\25\3\25"+
+		"\3\25\3\25\3\25\3\25\3\25\3\25\3\25\3\25\3\25\5\25\u0117\n\25\3\26\3\26"+
+		"\3\26\3\26\3\27\3\27\3\27\3\27\5\27\u0121\n\27\3\30\3\30\3\30\3\30\5\30"+
+		"\u0127\n\30\3\31\3\31\3\31\5\31\u012c\n\31\3\32\3\32\3\32\3\32\3\32\3"+
 		"\32\3\32\3\32\3\32\3\32\3\32\3\32\3\32\3\32\3\32\3\32\3\32\3\32\3\32\3"+
-		"\32\3\32\3\32\3\32\3\32\5\32\u0138\n\32\3\33\3\33\3\33\7\33\u013d\n\33"+
-		"\f\33\16\33\u0140\13\33\7\33\u0142\n\33\f\33\16\33\u0145\13\33\3\33\3"+
-		"\33\3\33\3\33\7\33\u014b\n\33\f\33\16\33\u014e\13\33\7\33\u0150\n\33\f"+
-		"\33\16\33\u0153\13\33\3\33\3\33\3\33\7\33\u0158\n\33\f\33\16\33\u015b"+
-		"\13\33\7\33\u015d\n\33\f\33\16\33\u0160\13\33\3\33\3\33\5\33\u0164\n\33"+
+		"\32\3\32\3\32\3\32\3\32\5\32\u0146\n\32\3\33\3\33\3\33\7\33\u014b\n\33"+
+		"\f\33\16\33\u014e\13\33\7\33\u0150\n\33\f\33\16\33\u0153\13\33\3\33\3"+
+		"\33\3\33\3\33\7\33\u0159\n\33\f\33\16\33\u015c\13\33\7\33\u015e\n\33\f"+
+		"\33\16\33\u0161\13\33\3\33\3\33\3\33\7\33\u0166\n\33\f\33\16\33\u0169"+
+		"\13\33\7\33\u016b\n\33\f\33\16\33\u016e\13\33\3\33\3\33\5\33\u0172\n\33"+
 		"\3\33\2\5\6\20\22\34\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \"$&(*,.\60"+
-		"\62\64\2\5\3\2\17\24\3\2\n\13\3\2\f\r\2\u0182\2?\3\2\2\2\4J\3\2\2\2\6"+
+		"\62\64\2\5\3\2\17\24\3\2\n\13\3\2\f\r\2\u0193\2?\3\2\2\2\4J\3\2\2\2\6"+
 		"P\3\2\2\2\b~\3\2\2\2\n\u0082\3\2\2\2\f\u0093\3\2\2\2\16\u0095\3\2\2\2"+
-		"\20\u0097\3\2\2\2\22\u00a2\3\2\2\2\24\u00bd\3\2\2\2\26\u00c1\3\2\2\2\30"+
-		"\u00c3\3\2\2\2\32\u00c6\3\2\2\2\34\u00c9\3\2\2\2\36\u00ce\3\2\2\2 \u00dc"+
-		"\3\2\2\2\"\u00e4\3\2\2\2$\u00e6\3\2\2\2&\u00f6\3\2\2\2(\u0108\3\2\2\2"+
-		"*\u010a\3\2\2\2,\u010e\3\2\2\2.\u0118\3\2\2\2\60\u011d\3\2\2\2\62\u0137"+
-		"\3\2\2\2\64\u0163\3\2\2\2\66:\5\4\3\2\679\7\36\2\28\67\3\2\2\29<\3\2\2"+
+		"\20\u0097\3\2\2\2\22\u00a2\3\2\2\2\24\u00cb\3\2\2\2\26\u00cf\3\2\2\2\30"+
+		"\u00d1\3\2\2\2\32\u00d4\3\2\2\2\34\u00d7\3\2\2\2\36\u00dc\3\2\2\2 \u00ea"+
+		"\3\2\2\2\"\u00f2\3\2\2\2$\u00f4\3\2\2\2&\u0104\3\2\2\2(\u0116\3\2\2\2"+
+		"*\u0118\3\2\2\2,\u011c\3\2\2\2.\u0126\3\2\2\2\60\u012b\3\2\2\2\62\u0145"+
+		"\3\2\2\2\64\u0171\3\2\2\2\66:\5\4\3\2\679\7\36\2\28\67\3\2\2\29<\3\2\2"+
 		"\2:8\3\2\2\2:;\3\2\2\2;>\3\2\2\2<:\3\2\2\2=\66\3\2\2\2>A\3\2\2\2?=\3\2"+
 		"\2\2?@\3\2\2\2@\3\3\2\2\2A?\3\2\2\2BK\5\62\32\2CK\5\6\4\2DK\5\26\f\2E"+
 		"K\5\34\17\2FK\5&\24\2GK\5*\26\2HK\5,\27\2IK\5\60\31\2JB\3\2\2\2JC\3\2"+
@@ -2173,70 +2208,75 @@ public class StoneLikeParser extends Parser {
 		"\2\u00a2\u00a3\b\n\1\2\u00a3\u00a4\5\24\13\2\u00a4\u00aa\3\2\2\2\u00a5"+
 		"\u00a6\f\4\2\2\u00a6\u00a7\t\4\2\2\u00a7\u00a9\5\24\13\2\u00a8\u00a5\3"+
 		"\2\2\2\u00a9\u00ac\3\2\2\2\u00aa\u00a8\3\2\2\2\u00aa\u00ab\3\2\2\2\u00ab"+
-		"\23\3\2\2\2\u00ac\u00aa\3\2\2\2\u00ad\u00be\7\"\2\2\u00ae\u00af\7\"\2"+
+		"\23\3\2\2\2\u00ac\u00aa\3\2\2\2\u00ad\u00cc\7\"\2\2\u00ae\u00af\7\"\2"+
 		"\2\u00af\u00b0\7\34\2\2\u00b0\u00b1\5\6\4\2\u00b1\u00b2\7\35\2\2\u00b2"+
-		"\u00be\3\2\2\2\u00b3\u00b4\7\30\2\2\u00b4\u00b5\5\6\4\2\u00b5\u00b6\7"+
-		"\31\2\2\u00b6\u00be\3\2\2\2\u00b7\u00be\7#\2\2\u00b8\u00be\7$\2\2\u00b9"+
-		"\u00be\7%\2\2\u00ba\u00bb\7\13\2\2\u00bb\u00be\5\24\13\2\u00bc\u00be\5"+
-		"\62\32\2\u00bd\u00ad\3\2\2\2\u00bd\u00ae\3\2\2\2\u00bd\u00b3\3\2\2\2\u00bd"+
-		"\u00b7\3\2\2\2\u00bd\u00b8\3\2\2\2\u00bd\u00b9\3\2\2\2\u00bd\u00ba\3\2"+
-		"\2\2\u00bd\u00bc\3\2\2\2\u00be\25\3\2\2\2\u00bf\u00c2\5\30\r\2\u00c0\u00c2"+
-		"\5\32\16\2\u00c1\u00bf\3\2\2\2\u00c1\u00c0\3\2\2\2\u00c2\27\3\2\2\2\u00c3"+
-		"\u00c4\7\7\2\2\u00c4\u00c5\5\36\20\2\u00c5\31\3\2\2\2\u00c6\u00c7\7\b"+
-		"\2\2\u00c7\u00c8\5\36\20\2\u00c8\33\3\2\2\2\u00c9\u00ca\7\t\2\2\u00ca"+
-		"\u00cb\7\"\2\2\u00cb\u00cc\5\"\22\2\u00cc\u00cd\5\64\33\2\u00cd\35\3\2"+
-		"\2\2\u00ce\u00d3\5 \21\2\u00cf\u00d0\7\37\2\2\u00d0\u00d2\5 \21\2\u00d1"+
-		"\u00cf\3\2\2\2\u00d2\u00d5\3\2\2\2\u00d3\u00d1\3\2\2\2\u00d3\u00d4\3\2"+
-		"\2\2\u00d4\37\3\2\2\2\u00d5\u00d3\3\2\2\2\u00d6\u00d7\7\"\2\2\u00d7\u00d8"+
-		"\7\16\2\2\u00d8\u00dd\5\6\4\2\u00d9\u00da\7\"\2\2\u00da\u00db\7\16\2\2"+
-		"\u00db\u00dd\5\b\5\2\u00dc\u00d6\3\2\2\2\u00dc\u00d9\3\2\2\2\u00dd!\3"+
-		"\2\2\2\u00de\u00df\7\30\2\2\u00df\u00e5\7\31\2\2\u00e0\u00e1\7\30\2\2"+
-		"\u00e1\u00e2\5$\23\2\u00e2\u00e3\7\31\2\2\u00e3\u00e5\3\2\2\2\u00e4\u00de"+
-		"\3\2\2\2\u00e4\u00e0\3\2\2\2\u00e5#\3\2\2\2\u00e6\u00eb\7\"\2\2\u00e7"+
-		"\u00e8\7\37\2\2\u00e8\u00ea\7\"\2\2\u00e9\u00e7\3\2\2\2\u00ea\u00ed\3"+
-		"\2\2\2\u00eb\u00e9\3\2\2\2\u00eb\u00ec\3\2\2\2\u00ec%\3\2\2\2\u00ed\u00eb"+
-		"\3\2\2\2\u00ee\u00ef\5(\25\2\u00ef\u00f0\7\16\2\2\u00f0\u00f1\5\6\4\2"+
-		"\u00f1\u00f7\3\2\2\2\u00f2\u00f3\5(\25\2\u00f3\u00f4\7\16\2\2\u00f4\u00f5"+
-		"\5\b\5\2\u00f5\u00f7\3\2\2\2\u00f6\u00ee\3\2\2\2\u00f6\u00f2\3\2\2\2\u00f7"+
-		"\'\3\2\2\2\u00f8\u0109\7\"\2\2\u00f9\u00fa\7\"\2\2\u00fa\u00fb\7\34\2"+
-		"\2\u00fb\u00fc\5\6\4\2\u00fc\u00fd\7\35\2\2\u00fd\u0109\3\2\2\2\u00fe"+
-		"\u00ff\7\"\2\2\u00ff\u0100\7\34\2\2\u0100\u0101\5\6\4\2\u0101\u0102\b"+
-		"\25\1\2\u0102\u0109\3\2\2\2\u0103\u0104\7\"\2\2\u0104\u0105\5\6\4\2\u0105"+
-		"\u0106\7\35\2\2\u0106\u0107\b\25\1\2\u0107\u0109\3\2\2\2\u0108\u00f8\3"+
-		"\2\2\2\u0108\u00f9\3\2\2\2\u0108\u00fe\3\2\2\2\u0108\u0103\3\2\2\2\u0109"+
-		")\3\2\2\2\u010a\u010b\7\5\2\2\u010b\u010c\5\6\4\2\u010c\u010d\5\64\33"+
-		"\2\u010d+\3\2\2\2\u010e\u010f\7\3\2\2\u010f\u0110\5\6\4\2\u0110\u0112"+
-		"\5\64\33\2\u0111\u0113\5.\30\2\u0112\u0111\3\2\2\2\u0112\u0113\3\2\2\2"+
-		"\u0113-\3\2\2\2\u0114\u0115\7\4\2\2\u0115\u0119\5\64\33\2\u0116\u0117"+
-		"\7\4\2\2\u0117\u0119\5,\27\2\u0118\u0114\3\2\2\2\u0118\u0116\3\2\2\2\u0119"+
-		"/\3\2\2\2\u011a\u011b\7\6\2\2\u011b\u011e\5\6\4\2\u011c\u011e\7\6\2\2"+
-		"\u011d\u011a\3\2\2\2\u011d\u011c\3\2\2\2\u011e\61\3\2\2\2\u011f\u0120"+
-		"\7\"\2\2\u0120\u0121\7\30\2\2\u0121\u0122\5\n\6\2\u0122\u0123\7\31\2\2"+
-		"\u0123\u0138\3\2\2\2\u0124\u0125\7\"\2\2\u0125\u0126\7\30\2\2\u0126\u0138"+
-		"\7\31\2\2\u0127\u0128\7\"\2\2\u0128\u0129\7\30\2\2\u0129\u012a\5\n\6\2"+
-		"\u012a\u012b\b\32\1\2\u012b\u0138\3\2\2\2\u012c\u012d\7\"\2\2\u012d\u012e"+
-		"\5\n\6\2\u012e\u012f\7\31\2\2\u012f\u0130\b\32\1\2\u0130\u0138\3\2\2\2"+
-		"\u0131\u0132\7\"\2\2\u0132\u0133\7\30\2\2\u0133\u0138\b\32\1\2\u0134\u0135"+
-		"\7\"\2\2\u0135\u0136\7\31\2\2\u0136\u0138\b\32\1\2\u0137\u011f\3\2\2\2"+
-		"\u0137\u0124\3\2\2\2\u0137\u0127\3\2\2\2\u0137\u012c\3\2\2\2\u0137\u0131"+
-		"\3\2\2\2\u0137\u0134\3\2\2\2\u0138\63\3\2\2\2\u0139\u0143\7\32\2\2\u013a"+
-		"\u013e\5\4\3\2\u013b\u013d\7\36\2\2\u013c\u013b\3\2\2\2\u013d\u0140\3"+
-		"\2\2\2\u013e\u013c\3\2\2\2\u013e\u013f\3\2\2\2\u013f\u0142\3\2\2\2\u0140"+
-		"\u013e\3\2\2\2\u0141\u013a\3\2\2\2\u0142\u0145\3\2\2\2\u0143\u0141\3\2"+
-		"\2\2\u0143\u0144\3\2\2\2\u0144\u0146\3\2\2\2\u0145\u0143\3\2\2\2\u0146"+
-		"\u0164\7\33\2\2\u0147\u0151\7\32\2\2\u0148\u014c\5\4\3\2\u0149\u014b\7"+
-		"\36\2\2\u014a\u0149\3\2\2\2\u014b\u014e\3\2\2\2\u014c\u014a\3\2\2\2\u014c"+
-		"\u014d\3\2\2\2\u014d\u0150\3\2\2\2\u014e\u014c\3\2\2\2\u014f\u0148\3\2"+
-		"\2\2\u0150\u0153\3\2\2\2\u0151\u014f\3\2\2\2\u0151\u0152\3\2\2\2\u0152"+
-		"\u0154\3\2\2\2\u0153\u0151\3\2\2\2\u0154\u0164\b\33\1\2\u0155\u0159\5"+
-		"\4\3\2\u0156\u0158\7\36\2\2\u0157\u0156\3\2\2\2\u0158\u015b\3\2\2\2\u0159"+
-		"\u0157\3\2\2\2\u0159\u015a\3\2\2\2\u015a\u015d\3\2\2\2\u015b\u0159\3\2"+
-		"\2\2\u015c\u0155\3\2\2\2\u015d\u0160\3\2\2\2\u015e\u015c\3\2\2\2\u015e"+
-		"\u015f\3\2\2\2\u015f\u0161\3\2\2\2\u0160\u015e\3\2\2\2\u0161\u0162\7\33"+
-		"\2\2\u0162\u0164\b\33\1\2\u0163\u0139\3\2\2\2\u0163\u0147\3\2\2\2\u0163"+
-		"\u015e\3\2\2\2\u0164\65\3\2\2\2%:?JPXZcnx~\u0082\u0087\u008b\u0093\u009f"+
-		"\u00aa\u00bd\u00c1\u00d3\u00dc\u00e4\u00eb\u00f6\u0108\u0112\u0118\u011d"+
-		"\u0137\u013e\u0143\u014c\u0151\u0159\u015e\u0163";
+		"\u00cc\3\2\2\2\u00b3\u00b4\7\30\2\2\u00b4\u00b5\5\6\4\2\u00b5\u00b6\7"+
+		"\31\2\2\u00b6\u00cc\3\2\2\2\u00b7\u00cc\7#\2\2\u00b8\u00cc\7$\2\2\u00b9"+
+		"\u00cc\7%\2\2\u00ba\u00bb\7\13\2\2\u00bb\u00cc\5\24\13\2\u00bc\u00cc\5"+
+		"\62\32\2\u00bd\u00be\7\"\2\2\u00be\u00bf\7\34\2\2\u00bf\u00c0\5\6\4\2"+
+		"\u00c0\u00c1\b\13\1\2\u00c1\u00cc\3\2\2\2\u00c2\u00c3\7\"\2\2\u00c3\u00c4"+
+		"\5\6\4\2\u00c4\u00c5\7\35\2\2\u00c5\u00c6\b\13\1\2\u00c6\u00cc\3\2\2\2"+
+		"\u00c7\u00c8\7\30\2\2\u00c8\u00c9\5\6\4\2\u00c9\u00ca\b\13\1\2\u00ca\u00cc"+
+		"\3\2\2\2\u00cb\u00ad\3\2\2\2\u00cb\u00ae\3\2\2\2\u00cb\u00b3\3\2\2\2\u00cb"+
+		"\u00b7\3\2\2\2\u00cb\u00b8\3\2\2\2\u00cb\u00b9\3\2\2\2\u00cb\u00ba\3\2"+
+		"\2\2\u00cb\u00bc\3\2\2\2\u00cb\u00bd\3\2\2\2\u00cb\u00c2\3\2\2\2\u00cb"+
+		"\u00c7\3\2\2\2\u00cc\25\3\2\2\2\u00cd\u00d0\5\30\r\2\u00ce\u00d0\5\32"+
+		"\16\2\u00cf\u00cd\3\2\2\2\u00cf\u00ce\3\2\2\2\u00d0\27\3\2\2\2\u00d1\u00d2"+
+		"\7\7\2\2\u00d2\u00d3\5\36\20\2\u00d3\31\3\2\2\2\u00d4\u00d5\7\b\2\2\u00d5"+
+		"\u00d6\5\36\20\2\u00d6\33\3\2\2\2\u00d7\u00d8\7\t\2\2\u00d8\u00d9\7\""+
+		"\2\2\u00d9\u00da\5\"\22\2\u00da\u00db\5\64\33\2\u00db\35\3\2\2\2\u00dc"+
+		"\u00e1\5 \21\2\u00dd\u00de\7\37\2\2\u00de\u00e0\5 \21\2\u00df\u00dd\3"+
+		"\2\2\2\u00e0\u00e3\3\2\2\2\u00e1\u00df\3\2\2\2\u00e1\u00e2\3\2\2\2\u00e2"+
+		"\37\3\2\2\2\u00e3\u00e1\3\2\2\2\u00e4\u00e5\7\"\2\2\u00e5\u00e6\7\16\2"+
+		"\2\u00e6\u00eb\5\6\4\2\u00e7\u00e8\7\"\2\2\u00e8\u00e9\7\16\2\2\u00e9"+
+		"\u00eb\5\b\5\2\u00ea\u00e4\3\2\2\2\u00ea\u00e7\3\2\2\2\u00eb!\3\2\2\2"+
+		"\u00ec\u00ed\7\30\2\2\u00ed\u00f3\7\31\2\2\u00ee\u00ef\7\30\2\2\u00ef"+
+		"\u00f0\5$\23\2\u00f0\u00f1\7\31\2\2\u00f1\u00f3\3\2\2\2\u00f2\u00ec\3"+
+		"\2\2\2\u00f2\u00ee\3\2\2\2\u00f3#\3\2\2\2\u00f4\u00f9\7\"\2\2\u00f5\u00f6"+
+		"\7\37\2\2\u00f6\u00f8\7\"\2\2\u00f7\u00f5\3\2\2\2\u00f8\u00fb\3\2\2\2"+
+		"\u00f9\u00f7\3\2\2\2\u00f9\u00fa\3\2\2\2\u00fa%\3\2\2\2\u00fb\u00f9\3"+
+		"\2\2\2\u00fc\u00fd\5(\25\2\u00fd\u00fe\7\16\2\2\u00fe\u00ff\5\6\4\2\u00ff"+
+		"\u0105\3\2\2\2\u0100\u0101\5(\25\2\u0101\u0102\7\16\2\2\u0102\u0103\5"+
+		"\b\5\2\u0103\u0105\3\2\2\2\u0104\u00fc\3\2\2\2\u0104\u0100\3\2\2\2\u0105"+
+		"\'\3\2\2\2\u0106\u0117\7\"\2\2\u0107\u0108\7\"\2\2\u0108\u0109\7\34\2"+
+		"\2\u0109\u010a\5\6\4\2\u010a\u010b\7\35\2\2\u010b\u0117\3\2\2\2\u010c"+
+		"\u010d\7\"\2\2\u010d\u010e\7\34\2\2\u010e\u010f\5\6\4\2\u010f\u0110\b"+
+		"\25\1\2\u0110\u0117\3\2\2\2\u0111\u0112\7\"\2\2\u0112\u0113\5\6\4\2\u0113"+
+		"\u0114\7\35\2\2\u0114\u0115\b\25\1\2\u0115\u0117\3\2\2\2\u0116\u0106\3"+
+		"\2\2\2\u0116\u0107\3\2\2\2\u0116\u010c\3\2\2\2\u0116\u0111\3\2\2\2\u0117"+
+		")\3\2\2\2\u0118\u0119\7\5\2\2\u0119\u011a\5\6\4\2\u011a\u011b\5\64\33"+
+		"\2\u011b+\3\2\2\2\u011c\u011d\7\3\2\2\u011d\u011e\5\6\4\2\u011e\u0120"+
+		"\5\64\33\2\u011f\u0121\5.\30\2\u0120\u011f\3\2\2\2\u0120\u0121\3\2\2\2"+
+		"\u0121-\3\2\2\2\u0122\u0123\7\4\2\2\u0123\u0127\5\64\33\2\u0124\u0125"+
+		"\7\4\2\2\u0125\u0127\5,\27\2\u0126\u0122\3\2\2\2\u0126\u0124\3\2\2\2\u0127"+
+		"/\3\2\2\2\u0128\u0129\7\6\2\2\u0129\u012c\5\6\4\2\u012a\u012c\7\6\2\2"+
+		"\u012b\u0128\3\2\2\2\u012b\u012a\3\2\2\2\u012c\61\3\2\2\2\u012d\u012e"+
+		"\7\"\2\2\u012e\u012f\7\30\2\2\u012f\u0130\5\n\6\2\u0130\u0131\7\31\2\2"+
+		"\u0131\u0146\3\2\2\2\u0132\u0133\7\"\2\2\u0133\u0134\7\30\2\2\u0134\u0146"+
+		"\7\31\2\2\u0135\u0136\7\"\2\2\u0136\u0137\7\30\2\2\u0137\u0138\5\n\6\2"+
+		"\u0138\u0139\b\32\1\2\u0139\u0146\3\2\2\2\u013a\u013b\7\"\2\2\u013b\u013c"+
+		"\5\n\6\2\u013c\u013d\7\31\2\2\u013d\u013e\b\32\1\2\u013e\u0146\3\2\2\2"+
+		"\u013f\u0140\7\"\2\2\u0140\u0141\7\30\2\2\u0141\u0146\b\32\1\2\u0142\u0143"+
+		"\7\"\2\2\u0143\u0144\7\31\2\2\u0144\u0146\b\32\1\2\u0145\u012d\3\2\2\2"+
+		"\u0145\u0132\3\2\2\2\u0145\u0135\3\2\2\2\u0145\u013a\3\2\2\2\u0145\u013f"+
+		"\3\2\2\2\u0145\u0142\3\2\2\2\u0146\63\3\2\2\2\u0147\u0151\7\32\2\2\u0148"+
+		"\u014c\5\4\3\2\u0149\u014b\7\36\2\2\u014a\u0149\3\2\2\2\u014b\u014e\3"+
+		"\2\2\2\u014c\u014a\3\2\2\2\u014c\u014d\3\2\2\2\u014d\u0150\3\2\2\2\u014e"+
+		"\u014c\3\2\2\2\u014f\u0148\3\2\2\2\u0150\u0153\3\2\2\2\u0151\u014f\3\2"+
+		"\2\2\u0151\u0152\3\2\2\2\u0152\u0154\3\2\2\2\u0153\u0151\3\2\2\2\u0154"+
+		"\u0172\7\33\2\2\u0155\u015f\7\32\2\2\u0156\u015a\5\4\3\2\u0157\u0159\7"+
+		"\36\2\2\u0158\u0157\3\2\2\2\u0159\u015c\3\2\2\2\u015a\u0158\3\2\2\2\u015a"+
+		"\u015b\3\2\2\2\u015b\u015e\3\2\2\2\u015c\u015a\3\2\2\2\u015d\u0156\3\2"+
+		"\2\2\u015e\u0161\3\2\2\2\u015f\u015d\3\2\2\2\u015f\u0160\3\2\2\2\u0160"+
+		"\u0162\3\2\2\2\u0161\u015f\3\2\2\2\u0162\u0172\b\33\1\2\u0163\u0167\5"+
+		"\4\3\2\u0164\u0166\7\36\2\2\u0165\u0164\3\2\2\2\u0166\u0169\3\2\2\2\u0167"+
+		"\u0165\3\2\2\2\u0167\u0168\3\2\2\2\u0168\u016b\3\2\2\2\u0169\u0167\3\2"+
+		"\2\2\u016a\u0163\3\2\2\2\u016b\u016e\3\2\2\2\u016c\u016a\3\2\2\2\u016c"+
+		"\u016d\3\2\2\2\u016d\u016f\3\2\2\2\u016e\u016c\3\2\2\2\u016f\u0170\7\33"+
+		"\2\2\u0170\u0172\b\33\1\2\u0171\u0147\3\2\2\2\u0171\u0155\3\2\2\2\u0171"+
+		"\u016c\3\2\2\2\u0172\65\3\2\2\2%:?JPXZcnx~\u0082\u0087\u008b\u0093\u009f"+
+		"\u00aa\u00cb\u00cf\u00e1\u00ea\u00f2\u00f9\u0104\u0116\u0120\u0126\u012b"+
+		"\u0145\u014c\u0151\u015a\u015f\u0167\u016c\u0171";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

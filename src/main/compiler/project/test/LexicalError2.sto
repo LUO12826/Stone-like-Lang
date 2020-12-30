@@ -1,7 +1,10 @@
 var a = -10
+var 123b = 123
+
 if a > 0 {
 	a = a
 }else{
 	a = -a
 }
-a
+
+var c = "1234

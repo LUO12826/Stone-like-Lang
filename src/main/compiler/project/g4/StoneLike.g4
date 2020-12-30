@@ -27,8 +27,8 @@ expression
 
 arrayExpression
     : '[' expression ( ',' expression )* ']'
-    | '[' expression ( ',' expression )* {notifyErrorListeners("Missing ']'");}
-    | expression ( ',' expression )* ']' {notifyErrorListeners("Missing '['");}
+    | '[' expression ( ',' expression )* {notifyErrorListeners("缺失 ']'");}
+    | expression ( ',' expression )* ']' {notifyErrorListeners("缺失 '['");}
     ;
 
 expressionList
@@ -68,6 +68,9 @@ factor
 	| StringLiteral
 	| '-' factor
 	| callStatement
+	| Identifier '[' expression {notifyErrorListeners("缺失 ']'");}
+    | Identifier expression ']' {notifyErrorListeners("缺失 '['");}
+    | '(' expression {notifyErrorListeners("缺失 ')'");}
 	;
 
 
@@ -115,8 +118,8 @@ assignStatement
 leftValue
 	: Identifier
 	| Identifier '[' expression ']'
-	| Identifier '[' expression {notifyErrorListeners("Missing ']'");}
-    | Identifier expression ']' {notifyErrorListeners("Missing '['");}
+	| Identifier '[' expression {notifyErrorListeners("缺失 ']'");}
+    | Identifier expression ']' {notifyErrorListeners("缺失 '['");}
 	;
 
 whileStatement
@@ -140,14 +143,14 @@ returnStatement
 callStatement
 	: Identifier '(' expressionList ')'
 	| Identifier '(' ')'
-	| Identifier '(' expressionList {notifyErrorListeners("Missing ')'");}
-	| Identifier expressionList ')' {notifyErrorListeners("Missing ')'");}
-	| Identifier '(' {notifyErrorListeners("Missing ')'");}
-    | Identifier ')' {notifyErrorListeners("Missing '('");}
+	| Identifier '(' expressionList {notifyErrorListeners("缺失 ')'");}
+	| Identifier expressionList ')' {notifyErrorListeners("缺失 '('");}
+	| Identifier '(' {notifyErrorListeners("缺失 ')'");}
+    | Identifier ')' {notifyErrorListeners("缺失 '('");}
 	;
 
 codeBlock
 	: '{' (statement(';')*)* '}'
-	| '{' (statement(';')*)* {notifyErrorListeners("Missing '}'");}
-	| (statement(';')*)* '}' {notifyErrorListeners("Missing '{'");}
+	| '{' (statement(';')*)* {notifyErrorListeners("缺失 '}'");}
+	| (statement(';')*)* '}' {notifyErrorListeners("缺失 '{'");}
 	;

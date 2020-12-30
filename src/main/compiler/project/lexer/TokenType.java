@@ -32,7 +32,7 @@ public enum TokenType {
 
     TokenLeftParen("("),
     TokenRightParen(")"),
-    TokenLeftBarce("{"),
+    TokenLeftBrace("{"),
     TokenRightBrace("}"),
     TokenLeftBracket("["),
     TokenRightBracket("]"),
