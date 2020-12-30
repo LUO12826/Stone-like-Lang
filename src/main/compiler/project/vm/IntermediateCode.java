@@ -63,4 +63,16 @@ public class IntermediateCode {
         return Helper.fillWithBlank(instructionType.getString(), 6)
                 + "\t" + op1 + "\t" + op2 + "\t" + seg;
     }
+
+    /**
+     * 可以指定输出中每个操作数有多宽。
+     */
+    public String toString(int colWidth) {
+        String seg = segment != null ? segment.getString() : "";
+
+        return Helper.fillWithBlank(instructionType.getString(), colWidth)
+                + Helper.fillWithBlank(String.valueOf(op1), colWidth)
+                + Helper.fillWithBlank(String.valueOf(op2), colWidth)
+                + Helper.fillWithBlank(seg, colWidth);
+    }
 }
