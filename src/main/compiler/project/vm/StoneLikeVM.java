@@ -22,11 +22,13 @@ public class StoneLikeVM {
         StoneLikeRuntimeException(String message) { this.message = message; }
     }
 
+    private boolean printDebugInfo = false;
+
     private int maxSP = 0;
 
     private final static int MEM_SIZE = 65536;
 
-    /**栈指针*/
+    /**运算栈指针*/
     private int sp;
 
     /**程序计数器，指向下一条要执行的代码*/
@@ -129,6 +131,9 @@ public class StoneLikeVM {
     }
 
     private void beforeHalt() {
+        if(!printDebugInfo) {
+            return;
+        }
         System.out.println();
         System.out.println("**VM信息：最大sp：" + maxSP);
         System.out.println("**VM信息：最终sp：" + sp);

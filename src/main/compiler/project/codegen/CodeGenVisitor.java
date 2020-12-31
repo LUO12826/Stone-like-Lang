@@ -1,12 +1,10 @@
 package compiler.project.codegen;
 
-import com.sun.tools.javac.util.FatalError;
 import compiler.project.antlr.*;
 import compiler.project.vm.Executable;
 import compiler.project.vm.IntermediateCode;
 import compiler.project.vm.MemorySegment;
 import compiler.project.vm.VMInstructionType;
-import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 import java.io.PrintStream;
@@ -114,7 +112,7 @@ public class CodeGenVisitor extends StoneLikeBaseVisitor<Object> {
 
             // 判断函数是否已定义
             if(s == null) {
-                throw new FatalError("使用了未定义的函数或参数数量不匹配:" + ctx.Identifier().getText());
+                handleCompileError("使用了未定义的函数或参数数量不匹配:" + ctx.Identifier().getText());
             }
 
         } else {
@@ -125,7 +123,7 @@ public class CodeGenVisitor extends StoneLikeBaseVisitor<Object> {
 
             // 判断函数是否已定义
             if(s == null) {
-                throw new FatalError("使用了未定义的函数或参数数量不匹配:" + ctx.Identifier().getText());
+                handleCompileError("使用了未定义的函数或参数数量不匹配:" + ctx.Identifier().getText());
             }
 
             // 将参数逆序放置栈中
@@ -156,7 +154,7 @@ public class CodeGenVisitor extends StoneLikeBaseVisitor<Object> {
 
         FunctionSignature fs = new FunctionSignature(name, paraNum);
         if(globalScope.functionSymbolRedundant(fs)) {
-            throw new FatalError("重复定义函数。");
+            handleCompileError("重复定义函数。");
         }
         FunctionSymbol s = new FunctionSymbol(name, currentScope, paraNum, codes.size());
         globalScope.defineFunctionSymbol(s);
@@ -424,7 +422,7 @@ public class CodeGenVisitor extends StoneLikeBaseVisitor<Object> {
                 else if(ctx.Identifier() != null) {
                     s = currentScope.resolveValueSymbol(ctx.Identifier().getText());
                     if(s == null) {
-                        throw new FatalError("使用了未定义的变量:" + ctx.Identifier().getText());
+                        handleCompileError("使用了未定义的变量:" + ctx.Identifier().getText());
                     }
                     int ra=s.relativeMemoryAddress;
                     if(s.scope.getScopeType()== Scope.Type.GLOBAL){
@@ -505,8 +503,13 @@ public class CodeGenVisitor extends StoneLikeBaseVisitor<Object> {
         else {
             return null;
         }
-        int ra = currentScope.defineValueSymbol(s).relativeMemoryAddress;
-        codes.add(new IntermediateCode(VMInstructionType.pop, ra));
+        ValueSymbol vs = currentScope.defineValueSymbol(s);
+        int ra = vs.relativeMemoryAddress;
+
+        MemorySegment segment = vs.scope.getScopeType() == Scope.Type.GLOBAL ?
+                MemorySegment.GLOBAL : MemorySegment.LOCAL;
+
+        codes.add(new IntermediateCode(VMInstructionType.pop, segment, ra));
         return null;
     }
 
@@ -525,7 +528,10 @@ public class CodeGenVisitor extends StoneLikeBaseVisitor<Object> {
         if(ctx.getChild(0).getChildCount() == 1) {
             ValueSymbol s = currentScope.resolveValueSymbol(ctx.leftValue().getText());
             if(s == null) {
-                throw new FatalError("使用了未定义的变量:" + ctx.leftValue().getText());
+                handleCompileError("使用了未定义的变量:" + ctx.leftValue().getText());
+            }
+            if(s.isConstant) {
+                handleCompileError("对常量:" + ctx.leftValue().getText() + " 赋值");
             }
             int ra = s.relativeMemoryAddress;
             visit(ctx.getChild(2));
@@ -539,7 +545,7 @@ public class CodeGenVisitor extends StoneLikeBaseVisitor<Object> {
         else {
             ValueSymbol s = currentScope.resolveValueSymbol(ctx.leftValue().getChild(0).getText());
             if(s == null) {
-                throw new FatalError("使用了未定义的变量:" + ctx.leftValue().getText());
+                handleCompileError("使用了未定义的变量:" + ctx.leftValue().getText());
             }
             int ra = s.relativeMemoryAddress;
             visit(ctx.getChild(2));
@@ -598,6 +604,11 @@ public class CodeGenVisitor extends StoneLikeBaseVisitor<Object> {
     @Override
     public Object visitElseClause(StoneLikeParser.ElseClauseContext ctx) {
         return super.visitElseClause(ctx);
+    }
+
+    private void handleCompileError(String message) {
+        ps.println("错误:" + message);
+        compileSucceed = false;
     }
 
 }
