@@ -1,10 +1,19 @@
-var str = "12343jfa
-var a = str
+var a = 4, sum = 0, c = [ 0, 1, 2, 3, 4 ]
 
-/* 
+var d=add(4, sub( 1,c[10 )
+
+var e = a +
+
+while a != 0 {
+    sum = sum + a
+
+    while a != 0 {
+        sum = sum + a
+    }
+
+
+/*
 * Expected Output:
-* ErrorCode: 102,
-* ErrorType: MISS_DQOUTE, 
-* ErrorMessage: "双引号未闭合", 
-* ErrorLine: Line 1.
+*
+* program exit
 */

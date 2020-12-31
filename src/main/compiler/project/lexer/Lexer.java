@@ -54,8 +54,7 @@ public class Lexer {
             SymbolTableItem item = new SymbolTableItem();
             item.setName(word);
             item.setLine(line);
-            Language.symbolTable.add(item);
-            int index = Language.symbolTable.size() - 1;
+            int index = Language.addSymbolTableItem(item);
 
             return new Token(TokenType.TokenID, index);
         } else if (isDigit(c)) {
@@ -69,9 +68,11 @@ public class Lexer {
 
             //判断是否为非法标识符
             if (isLetter(c)) {
+                tempWord.append(c);
+                String error = tempWord.toString();
                 reader.retract();
                 tempWord.setLength(0);
-                throw new LexerException(LexerExceptionType.IllegalIdentifier, line);
+                throw new LexerException(LexerExceptionType.IllegalIdentifier, line, error);
             }
 
             // 回退
@@ -79,8 +80,7 @@ public class Lexer {
 
             // 填充常量表并获取索引
             double number = Double.parseDouble(tempWord.toString());
-            Language.numberLiteralTable.add(number);
-            int index = Language.numberLiteralTable.size() - 1;
+            int index = Language.addNumberLiteral(number);
 
             // 清空临时单词数组
             tempWord.setLength(0);
@@ -136,8 +136,7 @@ public class Lexer {
 
                 // 填充常量表并获取索引
                 String literalString = tempWord.toString();
-                Language.stringLiteralTable.add(literalString);
-                int index = Language.stringLiteralTable.size() - 1;
+                int index = Language.addStringLiteral(literalString);
 
                 // 清空临时单词表
                 tempWord.setLength(0);
@@ -156,7 +155,7 @@ public class Lexer {
             case ')':
                 return new Token(TokenType.TokenRightParen);
             case '{':
-                return new Token(TokenType.TokenLeftBarce);
+                return new Token(TokenType.TokenLeftBrace);
             case '}':
                 return new Token(TokenType.TokenRightBrace);
             case '[':
@@ -186,7 +185,7 @@ public class Lexer {
             default:
                 reader.retract();
                 tempWord.setLength(0);
-                throw new LexerException(LexerExceptionType.IllegalCharacter, line);
+                throw new LexerException(LexerExceptionType.IllegalCharacter, line, String.valueOf(c));
         }
 
     }
