@@ -5,7 +5,9 @@ import compiler.project.vm.Executable;
 import compiler.project.vm.IntermediateCode;
 import compiler.project.vm.MemorySegment;
 import compiler.project.vm.VMInstructionType;
+import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.tree.ParseTree;
+import org.antlr.v4.runtime.tree.TerminalNode;
 
 import java.io.PrintStream;
 import java.util.ArrayList;
@@ -49,12 +51,19 @@ public class CodeGenVisitor extends StoneLikeBaseVisitor<Object> {
     /** 编译是否成功 */
     private boolean compileSucceed = false;
 
+    /** 错误信息列表 */
+    private List<CompileError> errors = new ArrayList<>();
+
     /** 获取可执行文件，包括数据段和代码段 */
     public Executable getExecutable() {
         if(compileSucceed) {
             return new Executable(dataSegment, codes);
         }
         return null;
+    }
+
+    public List<CompileError> getErrors() {
+        return errors;
     }
 
     /** 向数据段中插入内容 */
@@ -79,6 +88,8 @@ public class CodeGenVisitor extends StoneLikeBaseVisitor<Object> {
         IntermediateCode c = new IntermediateCode(VMInstructionType.j);
         codes.add(c);
         importLibrary(StoneLikeStandardLibrary.print);
+        //先设为true，如果有错误会设为false
+        compileSucceed = true;
         // 先编译一遍，生成函数声明
         ctx.children.forEach(child -> {
             if(child.getChild(0) instanceof StoneLikeParser.FunctionDeclarationContext) {
@@ -96,7 +107,6 @@ public class CodeGenVisitor extends StoneLikeBaseVisitor<Object> {
         });
 
         codes.add(new IntermediateCode(VMInstructionType.halt));
-        compileSucceed = true;
         return null;
     }
 
@@ -105,34 +115,25 @@ public class CodeGenVisitor extends StoneLikeBaseVisitor<Object> {
         // 获取函数名
         String name = ctx.Identifier().getText();
         FunctionSymbol s;
-        if(ctx.expressionList() == null) {
-            // 获取参数个数
-            int parameterNumber = 0;
-            s = globalScope.resolveFunctionSymbol(new FunctionSignature(name, parameterNumber));
 
-            // 判断函数是否已定义
-            if(s == null) {
-                handleCompileError("使用了未定义的函数或参数数量不匹配:" + ctx.Identifier().getText());
-            }
+        // 获取参数个数
+        int parameterNumber = ctx.expressionList() == null ?
+                0 : (ctx.expressionList().children.size() + 1) / 2;
 
-        } else {
-            // 获取参数个数
-            int parameterNumber = (ctx.expressionList().children.size() + 1) / 2;
+        s = globalScope.resolveFunctionSymbol(new FunctionSignature(name, parameterNumber));
 
-            s = globalScope.resolveFunctionSymbol(new FunctionSignature(name, parameterNumber));
-
-            // 判断函数是否已定义
-            if(s == null) {
-                handleCompileError("使用了未定义的函数或参数数量不匹配:" + ctx.Identifier().getText());
-            }
-
-            // 将参数逆序放置栈中
+        // 判断函数是否已定义
+        if(s == null) {
+            handleCompileError(ctx.Identifier().getSymbol(), "使用了未定义的函数或参数数量不匹配:" + ctx.Identifier().getText());
+        }
+        // 如果有参数，将参数逆序放置栈中
+        if(ctx.expressionList() != null) {
             int length = ctx.expressionList().children.size();
             for(int i = length - 1; i >= 0; i -= 2) {
                 visit(ctx.expressionList().children.get(i));
             }
         }
-
+        if(s == null) return null;
         // 生成中间代码
         codes.add(new IntermediateCode(VMInstructionType.push, MemorySegment.CONSTANT, s.parameterNum));
         codes.add(new IntermediateCode(VMInstructionType.call, s.codeAddress, currentScope.getValueSymbolNum()));
@@ -154,7 +155,8 @@ public class CodeGenVisitor extends StoneLikeBaseVisitor<Object> {
 
         FunctionSignature fs = new FunctionSignature(name, paraNum);
         if(globalScope.functionSymbolRedundant(fs)) {
-            handleCompileError("重复定义函数。");
+            handleCompileError(ctx.Identifier().getSymbol(), "重复定义函数:" + ctx.Identifier().getText());
+            return null;
         }
         FunctionSymbol s = new FunctionSymbol(name, currentScope, paraNum, codes.size());
         globalScope.defineFunctionSymbol(s);
@@ -425,7 +427,8 @@ public class CodeGenVisitor extends StoneLikeBaseVisitor<Object> {
                 else if(ctx.Identifier() != null) {
                     s = currentScope.resolveValueSymbol(ctx.Identifier().getText());
                     if(s == null) {
-                        handleCompileError("使用了未定义的变量:" + ctx.Identifier().getText());
+                        handleCompileError(ctx.Identifier().getSymbol(), "使用了未定义的变量:" + ctx.Identifier().getText());
+                        return null;
                     }
                     int ra=s.relativeMemoryAddress;
                     if(s.scope.getScopeType()== Scope.Type.GLOBAL){
@@ -446,13 +449,17 @@ public class CodeGenVisitor extends StoneLikeBaseVisitor<Object> {
                 visit(ctx.getChild(1));
                 break;
             case 4:
-                s = currentScope.resolveValueSymbol(ctx.getChild(0).getText());
+                //对应数组下标访问的情况
+                s = currentScope.resolveValueSymbol(ctx.Identifier().getText());
                 if(s == null) {
-                    //err
-                    return null;
+                    handleCompileError(ctx.Identifier().getSymbol(), "使用了未定义的变量:" + ctx.Identifier().getText());
                 }
                 visit(ctx.getChild(2));
-                int ra=s.relativeMemoryAddress;
+
+                if(s == null) return null;
+
+                int ra = s.relativeMemoryAddress;
+
                 if(s.scope.getScopeType()== Scope.Type.GLOBAL){
                     codes.add(new IntermediateCode(VMInstructionType.push, MemorySegment.GLOBAL_HEAP, ra));
                 }else {
@@ -527,37 +534,52 @@ public class CodeGenVisitor extends StoneLikeBaseVisitor<Object> {
     public Object visitAssignStatement(StoneLikeParser.AssignStatementContext ctx) {
         //好多冗余代码，得简化一下
 
+        StoneLikeParser.LeftValueContext context = ctx.leftValue();
         //leftValue:Identifier '=' expression的情况
         if(ctx.getChild(0).getChildCount() == 1) {
-            ValueSymbol s = currentScope.resolveValueSymbol(ctx.leftValue().getText());
+
+            ValueSymbol s = currentScope.resolveValueSymbol(context.getText());
             if(s == null) {
-                handleCompileError("使用了未定义的变量:" + ctx.leftValue().getText());
+                handleCompileError(context.Identifier().getSymbol(), "使用了未定义的变量:" + ctx.leftValue().getText());
             }
-            if(s.isConstant) {
-                handleCompileError("对常量:" + ctx.leftValue().getText() + " 赋值");
+            else if(s.isConstant) {
+                handleCompileError(context.Identifier().getSymbol(), "对常量:" + ctx.leftValue().getText() + " 赋值");
+            }
+            //即使出错，也继续编译
+            visit(ctx.getChild(2));
+            if(s == null) {
+                return null;
             }
             int ra = s.relativeMemoryAddress;
-            visit(ctx.getChild(2));
-            if(s.scope.getScopeType()== Scope.Type.GLOBAL){
-                codes.add(new IntermediateCode(VMInstructionType.pop, MemorySegment.GLOBAL, ra));
-            }else {
-                codes.add(new IntermediateCode(VMInstructionType.pop, MemorySegment.LOCAL, ra));
-            }
+
+            MemorySegment segment = s.scope.getScopeType() == Scope.Type.GLOBAL ?
+                    MemorySegment.GLOBAL : MemorySegment.LOCAL;
+
+            codes.add(new IntermediateCode(VMInstructionType.pop, segment, ra));
+
         }
         //对应于leftValue:Identifier '[' expression ']' '=' expression的情况
         else {
             ValueSymbol s = currentScope.resolveValueSymbol(ctx.leftValue().getChild(0).getText());
             if(s == null) {
-                handleCompileError("使用了未定义的变量:" + ctx.leftValue().getText());
+                int line = context.Identifier().getSymbol().getLine();
+                int col = context.Identifier().getSymbol().getCharPositionInLine();
+                CompileError err = new CompileError(line, col, "使用了未定义的变量:" + ctx.leftValue().getText());
+                handleCompileError(err);
             }
-            int ra = s.relativeMemoryAddress;
+
             visit(ctx.getChild(2));
             visit(ctx.getChild(0));
-            if(s.scope.getScopeType()== Scope.Type.GLOBAL){
-                codes.add(new IntermediateCode(VMInstructionType.pop, MemorySegment.GLOBAL_HEAP, ra));
-            }else {
-                codes.add(new IntermediateCode(VMInstructionType.pop, MemorySegment.LOCAL_HEAP, ra));
+
+            if(s == null) {
+                return null;
             }
+            int ra = s.relativeMemoryAddress;
+
+            MemorySegment segment = s.scope.getScopeType() == Scope.Type.GLOBAL ?
+                    MemorySegment.GLOBAL_HEAP : MemorySegment.LOCAL_HEAP;
+
+            codes.add(new IntermediateCode(VMInstructionType.pop, segment, ra));
         }
         return null;
     }
@@ -609,8 +631,15 @@ public class CodeGenVisitor extends StoneLikeBaseVisitor<Object> {
         return super.visitElseClause(ctx);
     }
 
-    private void handleCompileError(String message) {
-        ps.println("错误:" + message);
+    private void handleCompileError(CompileError err) {
+        errors.add(err);
+        compileSucceed = false;
+    }
+
+    private void handleCompileError(Token symbol, String message) {
+        int length = symbol.getStopIndex() - symbol.getStartIndex() + 1;
+        CompileError err = new CompileError(symbol.getLine(), symbol.getCharPositionInLine(), length, message);
+        errors.add(err);
         compileSucceed = false;
     }
 

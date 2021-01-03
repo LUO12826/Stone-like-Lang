@@ -14,8 +14,6 @@ import compiler.project.vm.*;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
-import sun.reflect.generics.tree.VoidDescriptor;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -182,9 +180,7 @@ public class Main {
         runProgram("/Users/luohuizhou/Desktop/StoneLikeTest/stone.sto");
     }
 
-    static void runProgram(String path) throws Exception {
-
-        String osName = System.getProperty("os.name");
+//    String osName = System.getProperty("os.name");
 //        String path;
 //        if (osName.startsWith("Mac OS")) {
 //            path = "/Users/luohuizhou/Desktop/StoneLikeTest/stone.txt";
@@ -193,6 +189,8 @@ public class Main {
 //        } else {
 //            path = null;
 //        }
+
+    static void runProgram(String path) throws Exception {
 
         CharStream s = CharStreams.fromFileName(path);
         StoneLikeLexer lexer = new StoneLikeLexer(s);
@@ -205,6 +203,10 @@ public class Main {
 
         Executable exe = visitor.getExecutable();
         if(exe == null) {
+            ps.println("----------------------错误-----------------------");
+            visitor.getErrors().forEach(error -> {
+                ps.println(error.toString());
+            });
             return;
         }
 
@@ -214,7 +216,7 @@ public class Main {
         final int[] i = {0};
         exe.codeSegment.forEach(code -> {
             if(code == null) {
-                System.out.println("null");
+                ps.println("null");
                 return;
             }
             System.out.println(i[0] + "   " + code.toString());
