@@ -15,7 +15,7 @@ public class Scope {
         GLOBAL("GLOBAL"),
         LOCAL("LOCAL");
 
-        private String name;
+        private final String name;
 
         public String getName() {
             return name;
@@ -38,7 +38,10 @@ public class Scope {
     /** 本作用域函数符号表 */
     private Map<FunctionSignature, FunctionSymbol> functionSymbols = new HashMap<>();
 
-    /** 值符号 序号 */
+    /** 值符号序号，对应了其在内存中的相对地址。
+     *  由于0、1、2号内存位置分别用于保存pc返回位置、旧栈帧栈底位置、旧运算栈栈顶位置，这里
+     *  从2开始。
+     */
     private int valueSymbolIndex = 2;
 
     public Scope(Scope superScope) {
@@ -52,6 +55,9 @@ public class Scope {
     }
 
     public ValueSymbol defineValueSymbol(ValueSymbol symbol) {
+        if(valueSymbols.containsKey(symbol.name)) {
+            return null;
+        }
         valueSymbols.put(symbol.name, symbol);
         valueSymbolIndex++;
         symbol.scope = this;
@@ -76,13 +82,11 @@ public class Scope {
     }
 
     public boolean valueSymbolRedundant(String name) {
-        ValueSymbol symbol = valueSymbols.get(name);
-        return symbol != null;
+        return valueSymbols.containsKey(name);
     }
 
     public boolean functionSymbolRedundant(FunctionSignature fs) {
-        FunctionSymbol symbol = functionSymbols.get(fs);
-        return symbol != null;
+        return functionSymbols.containsKey(fs);
     }
 
     public void removeValueSymbol(String name) {
@@ -90,8 +94,8 @@ public class Scope {
         valueSymbolIndex--;
     }
 
-    public void removeFunctionSymbol(String name) {
-        functionSymbols.remove(name);
+    public void removeFunctionSymbol(FunctionSignature fs) {
+        functionSymbols.remove(fs);
     }
 
     public ValueSymbol resolveValueSymbol(String name) {

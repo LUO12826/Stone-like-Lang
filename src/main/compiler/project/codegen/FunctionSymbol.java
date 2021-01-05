@@ -1,10 +1,6 @@
 package compiler.project.codegen;
 
-/**
- * @author: 骆荟州
- * @createTime: 2020/12/16 12:24 下午
- * @updateTime:
- */
+
 public class FunctionSymbol extends Symbol {
 
     public int parameterNum;

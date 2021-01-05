@@ -1,12 +1,7 @@
 package compiler.project.codegen;
-
 import java.util.Objects;
 
-/**
- * @author: 骆荟州
- * @createTime: 2020/12/16 11:40 下午
- * @updateTime:
- */
+
 public class FunctionSignature {
 
     public String name;

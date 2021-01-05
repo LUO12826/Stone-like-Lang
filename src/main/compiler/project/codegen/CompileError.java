@@ -1,10 +1,6 @@
 package compiler.project.codegen;
 
-/**
- * @author: 骆荟州
- * @createTime: 2021/1/3 12:53 下午
- * @updateTime:
- */
+
 public class CompileError {
 
     public int line;

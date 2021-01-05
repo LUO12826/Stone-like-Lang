@@ -1,11 +1,6 @@
 package compiler.project.codegen;
 
 
-/**
- * @author: 骆荟州
- * @createTime: 2020/12/16 11:53 上午
- * @updateTime:
- */
 public class ValueSymbol extends Symbol {
 
     public Object value;

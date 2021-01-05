@@ -7,17 +7,10 @@ import compiler.project.vm.MemorySegment;
 import compiler.project.vm.VMInstructionType;
 import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.tree.ParseTree;
-import org.antlr.v4.runtime.tree.TerminalNode;
 
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
-
-/**
- * @author: 骆荟州
- * @createTime: 2020/12/16 11:42 上午
- * @updateTime:
- */
 
 /*
 一些约定:
@@ -99,7 +92,7 @@ public class CodeGenVisitor extends StoneLikeBaseVisitor<Object> {
 
         // 编完函数后的起始地址
         c.op1 = codes.size();
-        // 访问每个非函数声明
+        // 访问每个非函数声明语句
         ctx.children.forEach(child -> {
             if(!(child.getChild(0) instanceof StoneLikeParser.FunctionDeclarationContext)) {
                 visit(child.getChild(0));
@@ -416,7 +409,7 @@ public class CodeGenVisitor extends StoneLikeBaseVisitor<Object> {
                 if(ctx.IntegerLiteral() != null) {
                     int idx = addValueLiteral(new Double(ctx.IntegerLiteral().getText()));
                     codes.add(new IntermediateCode(VMInstructionType.push, MemorySegment.DATA, idx));
-                }else if(ctx.RealLiteral() != null){
+                }else if(ctx.RealLiteral() != null) {
                     int idx = addValueLiteral(new Double(ctx.RealLiteral().getText()));
                     codes.add(new IntermediateCode(VMInstructionType.push, MemorySegment.DATA, idx));
                 }
@@ -431,7 +424,7 @@ public class CodeGenVisitor extends StoneLikeBaseVisitor<Object> {
                         return null;
                     }
                     int ra=s.relativeMemoryAddress;
-                    if(s.scope.getScopeType()== Scope.Type.GLOBAL){
+                    if(s.scope.getScopeType()== Scope.Type.GLOBAL) {
                         codes.add(new IntermediateCode(VMInstructionType.push, MemorySegment.GLOBAL, ra));
                     }else {
                         codes.add(new IntermediateCode(VMInstructionType.push, MemorySegment.LOCAL, ra));
@@ -460,7 +453,7 @@ public class CodeGenVisitor extends StoneLikeBaseVisitor<Object> {
 
                 int ra = s.relativeMemoryAddress;
 
-                if(s.scope.getScopeType()== Scope.Type.GLOBAL){
+                if(s.scope.getScopeType()== Scope.Type.GLOBAL) {
                     codes.add(new IntermediateCode(VMInstructionType.push, MemorySegment.GLOBAL_HEAP, ra));
                 }else {
                     codes.add(new IntermediateCode(VMInstructionType.push, MemorySegment.LOCAL_HEAP, ra));
@@ -503,7 +496,13 @@ public class CodeGenVisitor extends StoneLikeBaseVisitor<Object> {
     public Object visitInitializer(StoneLikeParser.InitializerContext ctx) {
         visit(ctx.getChild(2));
         ValueSymbol s;
-
+        if(currentScope.valueSymbolRedundant(ctx.Identifier().getText())) {
+            int line = ctx.Identifier().getSymbol().getLine();
+            int col = ctx.Identifier().getSymbol().getCharPositionInLine();
+            CompileError err = new CompileError(line, col, "重复定义变量:" + ctx.Identifier().getText());
+            handleCompileError(err);
+            return null;
+        }
         if(inVarDeclareMode) {
             s = new ValueSymbol(ctx.Identifier().getText(), false);
         }
