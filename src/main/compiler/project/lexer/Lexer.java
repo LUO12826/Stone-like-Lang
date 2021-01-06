@@ -75,6 +75,44 @@ public class Lexer {
                 throw new LexerException(LexerExceptionType.IllegalIdentifier, line, error);
             }
 
+            // 判断是否为浮点数
+            if(c == '.'){
+                tempWord.append(c);
+                c = reader.nextChar();
+                if(isDigit(c)){
+                    while (isDigit(c)) {
+                        tempWord.append(c);
+                        c = reader.nextChar();
+                    }
+
+                    //判断是否为非法实数
+                    if (isLetter(c)) {
+                        tempWord.append(c);
+                        String error = tempWord.toString();
+                        reader.retract();
+                        tempWord.setLength(0);
+                        throw new LexerException(LexerExceptionType.IllegalReal, line, error);
+                    }
+
+                    // 回退
+                    reader.retract();
+
+                    // 填充常量表并获取索引
+                    double number = Double.parseDouble(tempWord.toString());
+                    int index = Language.addNumberLiteral(number);
+
+                    // 清空临时单词数组
+                    tempWord.setLength(0);
+
+                    return new Token(TokenType.TokenNumber, index);
+                }
+                tempWord.append(c);
+                String error = tempWord.toString();
+                reader.retract();
+                tempWord.setLength(0);
+                throw new LexerException(LexerExceptionType.IllegalReal, line, error);
+            }
+
             // 回退
             reader.retract();
 

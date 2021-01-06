@@ -35,11 +35,13 @@ public class CodeReader {
 
     public CodeReader(File file) throws Exception {
         this.codeString = FileUtils.readFileToString(file, "UTF-8");
+        this.codeString = removeComment(codeString);
         this.codeLength = codeString.length();
     }
 
     public CodeReader(String code) {
         this.codeString = code;
+        this.codeString = removeComment(codeString);
         this.codeLength = codeString.length();
     }
 
@@ -155,5 +157,15 @@ public class CodeReader {
         line = 1;
         col = 0;
         colNumMap.clear();
+    }
+
+    /**
+     * 移除源代码中的注释
+     * @param origin 源代码
+     * @return 移除注释后的源代码
+     */
+    public String removeComment(String origin){
+        String str=origin.replaceAll("/\\*(.|[\\r\\n])*?\\*/","");
+        return str;
     }
 }

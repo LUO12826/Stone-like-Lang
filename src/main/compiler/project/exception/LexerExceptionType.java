@@ -20,6 +20,11 @@ public enum LexerExceptionType {
     IllegalIdentifier("非法标识符"),
 
     /**
+     * 非法实数类型
+     */
+    IllegalReal("非法浮点数"),
+
+    /**
      * 非法字符类型
      */
     IllegalCharacter("非法字符");

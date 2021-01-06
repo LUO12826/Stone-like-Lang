@@ -133,7 +133,7 @@ IntegerLiteral
 	;
 
 RealLiteral
-    : IntegerLiteral ( '.' IntegerLiteral )?
+    : IntegerLiteral '.' IntegerLiteral
     ;
 
 StringLiteral

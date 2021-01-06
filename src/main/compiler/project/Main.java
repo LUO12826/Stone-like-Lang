@@ -24,11 +24,11 @@ public class Main {
     static PrintStream ps = System.out;
 
     public static void main(String[] args) throws Exception {
-        //lexerNormal();
+        lexerNormal();
         //lexerError();
         //syntaxNormal();
         //syntaxError();
-        simpleProgram();
+        //simpleProgram();
         //quickSort();
     }
 
@@ -37,8 +37,8 @@ public class Main {
      * @throws Exception
      */
     public static void lexerNormal() throws Exception {
-        String filePath = "E:\\Francis\\Documents\\JavaWorkplace\\Stone-like-Lang\\src\\main\\compiler\\project\\test\\ArrayOperation.sto";
-        String resultPath = "E:\\Francis\\Documents\\JavaWorkplace\\Stone-like-Lang\\src\\main\\compiler\\project\\result\\ArrayOperation.out";
+        String filePath = "E:\\Francis\\Documents\\JavaWorkplace\\Stone-like-Lang\\src\\main\\compiler\\project\\test\\RealOperation.sto";
+        String resultPath = "E:\\Francis\\Documents\\JavaWorkplace\\Stone-like-Lang\\src\\main\\compiler\\project\\result\\RealOperation.out";
         lexer(filePath,resultPath);
     }
 
