@@ -50,7 +50,7 @@ public class Lexer {
                 return new Token(Language.keywordMap.get(word));
             }
 
-            // 填充符号表并返回索引
+            // 填充标识符表并返回索引
             SymbolTableItem item = new SymbolTableItem();
             item.setName(word);
             item.setLine(line);
