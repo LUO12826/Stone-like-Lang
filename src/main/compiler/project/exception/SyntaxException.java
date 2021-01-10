@@ -7,6 +7,9 @@ package compiler.project.exception;
 
 import org.antlr.v4.runtime.Token;
 
+/**
+ * 语法错误异常
+ */
 public class SyntaxException {
     /**
      * 异常类型

@@ -5,11 +5,30 @@ package compiler.project.lexer;
  * @createTime: 2020/10/31 3:46 下午
  * @updateTime:
  */
+
+/**
+ * Token类
+ */
 public class Token {
 
+    /**
+     * Token类型
+     */
     public TokenType tokenType;
+
+    /**
+     * 内码值
+     */
     public Object value;
+
+    /**
+     * 行号
+     */
     public int line;
+
+    /**
+     * 列号
+     */
     public int col;
 
 

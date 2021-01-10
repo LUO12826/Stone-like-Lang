@@ -7,7 +7,14 @@ import java.util.*;
  * @createTime: 2020/10/31 3:02 下午
  * @updateTime:
  */
+
+/**
+ * 语言类
+ */
 public class Language {
+    /**
+     * 关键字表
+     */
     public static Set<String> Keywords = new HashSet<String>() {{
         add("func");
         add("if");
@@ -18,6 +25,9 @@ public class Language {
         add("return");
     }};
 
+    /**
+     * 关键字与Token类型映射表
+     */
     public static Map<String, TokenType> keywordMap = new HashMap() {{
         put("func", TokenType.TokenFunc);
         put("if", TokenType.TokenIf);
@@ -28,6 +38,9 @@ public class Language {
         put("return", TokenType.TokenReturn);
     }};
 
+    /**
+     * 符号与Token类型映射表
+     */
     public static Map<String, TokenType> symbolMap = new HashMap<String, TokenType>() {{
 
         put("+", TokenType.TokenAdd);
@@ -60,18 +73,26 @@ public class Language {
     }};
 
 
+    /**
+     * 字符串表
+     */
     public static List<String> stringLiteralTable = new ArrayList<>();
 
+    /**
+     * 常数表
+     */
     public static List<Double> numberLiteralTable = new ArrayList<>();
 
+    /**
+     * 标识符表
+     */
     public static List<SymbolTableItem> symbolTable = new ArrayList<>();
 
-    public static void print(List list) {
-        for (Object obj : list) {
-            System.out.println(obj.toString());
-        }
-    }
-
+    /**
+     * 填充字符串到字符串表中
+     * @param str 字符串
+     * @return 索引
+     */
     public static int addStringLiteral(String str){
         int index = stringLiteralTable.indexOf(str);
         if(index!=-1){
@@ -82,6 +103,11 @@ public class Language {
         return index;
     }
 
+    /**
+     * 填充常数到常数表
+     * @param num 常数
+     * @return 索引
+     */
     public static int addNumberLiteral(double num){
         int index = numberLiteralTable.indexOf(num);
         if(index!=-1){
@@ -92,6 +118,11 @@ public class Language {
         return index;
     }
 
+    /**
+     * 填充标识符到标识符表
+     * @param item 标识符
+     * @return 索引
+     */
     public static int addSymbolTableItem(SymbolTableItem item){
         int index=symbolTable.indexOf(item);
         if(index!=-1){
@@ -102,6 +133,9 @@ public class Language {
         return index;
     }
 
+    /**
+     * 打印字符串表
+     */
     public static void printStringLiteralTable() {
         int size = stringLiteralTable.size();
         System.out.println("---------String Literal Table-----------");
@@ -111,6 +145,9 @@ public class Language {
         }
     }
 
+    /**
+     * 打印常数表
+     */
     public static void printNumberLiteralTable() {
         int size = numberLiteralTable.size();
         System.out.println("---------Number Literal Table-----------");
@@ -120,6 +157,9 @@ public class Language {
         }
     }
 
+    /**
+     * 打印标识符表
+     */
     public static void printSymbolTable() {
         int size = symbolTable.size();
         System.out.println("---------Symbol Table-----------");

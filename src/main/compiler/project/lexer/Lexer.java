@@ -9,20 +9,37 @@ import compiler.project.io.CodeReader;
  * @createTime: 2020/10/31 2:58 下午
  * @updateTime:
  */
+
+/**
+ * 词法分析器
+ */
 public class Lexer {
 
+    /**
+     * 临时单词串
+     */
     private StringBuilder tempWord = new StringBuilder();
 
+    /**
+     * 行号
+     */
     private int line = 1;
 
-    private int col = 0;
-
+    /**
+     * 源代码读入器
+     */
     private CodeReader reader;
+
 
     public Lexer(CodeReader reader) {
         this.reader = reader;
     }
 
+    /**
+     * 获取下一个Token
+     * @return Token
+     * @throws LexerException 词法分析错误异常
+     */
     public Token nextToken() throws LexerException {
         // 获取下一个非空字符
         char c = reader.nextNotSpaceChar();
