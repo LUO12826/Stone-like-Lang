@@ -2,9 +2,9 @@ var a = 3
 while a != 0 {
     a = a - 1
 }
-a
+print(a)
 
-/* 
+/*
 * Expected Output:
 * 2
 * 1

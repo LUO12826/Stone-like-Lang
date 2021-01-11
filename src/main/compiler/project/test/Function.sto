@@ -1,6 +1,6 @@
 var i = 10, j = 15
 var sum = div(10, j)
-sum
+print(sum)
 
 func add(a, b){
     return a + b
@@ -18,7 +18,7 @@ func div(a, b){
     return mul(a, b) / sub(a, b)
 }
 
-/* 
+/*
 * Expected Output:
 * -25
 * program exit

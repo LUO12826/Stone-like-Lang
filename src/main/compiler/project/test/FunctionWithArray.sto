@@ -1,11 +1,11 @@
 var a = [0, 0, 0, 0, 0]
-array(a)
+array(a, 3)
 
-func array(a){
+func array(a, b){
     a[0] = 12 + 3
     a[1] = 12 - 3
     a[2] = 12 * 3
     a[3] = 12 / 3
     a[4] = (a[0] + a[1]) * (a[2] / a[3])
-    a[4]
+    print(a[4] + 3)
 }
