@@ -17,6 +17,9 @@ public class StoneLikeStandardLibrary {
     /** print函数 */
     public static StoneLikeLibraryFunction print;
 
+    /** 无参数print函数，打印换行 */
+    public static StoneLikeLibraryFunction printNoArg;
+
     static {
         print = new StoneLikeLibraryFunction();
         print.name = "print";

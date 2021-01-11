@@ -24,11 +24,11 @@ public class Main {
     static PrintStream ps = System.out;
 
     public static void main(String[] args) throws Exception {
-        lexerNormal();
+        //lexerNormal();
         //lexerError();
         //syntaxNormal();
         //syntaxError();
-        //simpleProgram();
+        simpleProgram();
         //quickSort();
     }
 

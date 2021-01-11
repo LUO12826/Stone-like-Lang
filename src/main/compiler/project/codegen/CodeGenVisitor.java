@@ -175,6 +175,7 @@ public class CodeGenVisitor extends StoneLikeBaseVisitor<Object> {
         }
 
         // 生成返回指令
+        codes.add(new IntermediateCode(VMInstructionType.push, MemorySegment.TEMP, 0));
         codes.add(new IntermediateCode(VMInstructionType.ret));
         // 恢复作用域
         currentScope = temp;
@@ -191,6 +192,9 @@ public class CodeGenVisitor extends StoneLikeBaseVisitor<Object> {
         // 存在返回值将返回值置于栈顶
         if(ctx.expression() != null){
             visit(ctx.expression());
+        }
+        else {
+            codes.add(new IntermediateCode(VMInstructionType.push, MemorySegment.TEMP, 0));
         }
         // 生成返回指令
         codes.add(new IntermediateCode(VMInstructionType.ret));
@@ -279,14 +283,14 @@ public class CodeGenVisitor extends StoneLikeBaseVisitor<Object> {
         int elementNum = ctx.getChildCount() / 2;
         int idx = addValueLiteral(new Object[elementNum]);
         codes.add(new IntermediateCode(VMInstructionType.push, MemorySegment.DATA, idx));
-        codes.add(new IntermediateCode(VMInstructionType.pop, MemorySegment.TEMP, 0));
+        codes.add(new IntermediateCode(VMInstructionType.pop, MemorySegment.TEMP, 1));
         for(int i = 1; i < ctx.getChildCount(); i += 2) {
             visit(ctx.getChild(i));
         }
         for(int i = elementNum - 1; i >= 0; i--) {
-            codes.add(new IntermediateCode(VMInstructionType.pop, MemorySegment.TEMP, 0, i));
+            codes.add(new IntermediateCode(VMInstructionType.pop, MemorySegment.TEMP, 1, i));
         }
-        codes.add(new IntermediateCode(VMInstructionType.push, MemorySegment.TEMP, 0));
+        codes.add(new IntermediateCode(VMInstructionType.push, MemorySegment.TEMP, 1));
         return null;
     }
 
