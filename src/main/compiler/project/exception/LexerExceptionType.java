@@ -6,7 +6,7 @@
 package compiler.project.exception;
 
 /**
- * 异常类型
+ * 词法错误类型
  */
 public enum LexerExceptionType {
     /**

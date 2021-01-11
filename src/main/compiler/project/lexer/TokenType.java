@@ -5,6 +5,10 @@ package compiler.project.lexer;
  * @createTime: 2020/10/30 11:03 下午
  * @updateTime:
  */
+
+/**
+ * Token类型
+ */
 public enum TokenType {
 
     TokenFunc("func"),

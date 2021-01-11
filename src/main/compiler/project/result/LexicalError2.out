@@ -1,0 +1,65 @@
+TokenVar            	null
+TokenID             	0
+TokenAssign         	null
+TokenSub            	null
+TokenNumber         	0
+TokenNewline        	null
+TokenVar            	null
+
+>>>>> ErrorType: IllegalIdentifier
+>>>>> ErrorSymbol: 123b
+>>>>> ErrorMessage: 非法标识符
+>>>>> ErrorLine: 2
+
+TokenVar            	null
+TokenID             	1
+TokenAssign         	null
+TokenNumber         	1
+TokenNewline        	null
+TokenNewline        	null
+TokenIf             	null
+TokenID             	0
+TokenGreater        	null
+TokenNumber         	2
+TokenLeftBrace      	null
+TokenNewline        	null
+TokenID             	0
+TokenAssign         	null
+TokenID             	0
+TokenNewline        	null
+TokenRightBrace     	null
+TokenElse           	null
+TokenLeftBrace      	null
+TokenNewline        	null
+TokenID             	0
+TokenAssign         	null
+TokenSub            	null
+TokenID             	0
+TokenNewline        	null
+TokenRightBrace     	null
+TokenNewline        	null
+TokenNewline        	null
+TokenVar            	null
+TokenID             	2
+TokenAssign         	null
+
+>>>>> ErrorType: NotClosedDoubleQuotation
+>>>>> ErrorMessage: 双引号未闭合
+>>>>> ErrorLine: 10
+
+TokenAssign         	null
+---------Number Literal Table-----------
+index	value
+0    	10.0
+1    	123.0
+2    	0.0
+
+---------String Literal Table-----------
+index	value
+
+---------Symbol Table-----------
+index	name	line
+0    	a    	1
+1    	b    	2
+2    	c    	10
+
