@@ -17,20 +17,20 @@
 ### 项目结构
 
 Stone-like-Lang  
-├──lib: 手动导入的Jar包，用于实现一些功能。  
-└── src  
-	└── main  
-	└── compiler  
-		└── project  
-			├── antlr: ANTLR生成的一些文件。  
-			├── codegen: 与语义分析和中间代码生成相关的代码。  
-			├── exception: 与词法分析和语法分析中错误处理相关的代码。  
-			├── g4: StoneLike g4格式的语法文件。  
-			├── helper: 提供辅助功能的代码。  
-			├── io: 提供文件读入输出相关功能的代码。  
-			├── lexer: 与词法分析有关的代码。  
-			├── result: StoneLike测试代码编译后生成的目标代码。  
-			├── test: StoneLike测试代码。  
-			└── vm: StoneLike虚拟机相关的代码。  
+> ├──lib: 手动导入的Jar包，用于实现一些功能。  
+> └── src  
+>> └── main  
+>> └── compiler  
+>>> └── project  
+>>>> ├── antlr: ANTLR生成的一些文件。  
+>>>> ├── codegen: 与语义分析和中间代码生成相关的代码。  
+>>>> ├── exception: 与词法分析和语法分析中错误处理相关的代码。  
+>>>> ├── g4: StoneLike g4格式的语法文件。  
+>>>> ├── helper: 提供辅助功能的代码。  
+>>>> ├── io: 提供文件读入输出相关功能的代码。  
+>>>> ├── lexer: 与词法分析有关的代码。  
+>>>> ├── result: StoneLike测试代码编译后生成的目标代码。  
+>>>> ├── test: StoneLike测试代码。  
+>>>> └── vm: StoneLike虚拟机相关的代码。  
 
 未列举的目录请忽略。  
