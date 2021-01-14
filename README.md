@@ -60,7 +60,41 @@ else {
     v2 = v2 - v1
 }
 ```
+一个使用类Stone语言编写的快速排序程序如下：
+```swift
+var a = [3,4,1,2,6,7,9,5,8,10,11,16,17,19,22,23,45,18]
+quickSort(a, 18)
+print(a)
 
+func partition(a, s, t) {
+    var i = s, j = t, temp = a[i]
+    while i < j {
+        while j > i && a[j] >= temp {
+            j=j-1
+        }
+        a[i] = a[j]
+        
+        while i < j && a[i] <= temp {
+            i=i+1
+        }
+        a[j] = a[i]
+    }
+    a[i] = temp
+    return i
+}
+
+func sort(a, low, high) {
+    if low < high {
+        var i = partition(a, low, high)
+        sort(a, 0, i - 1)
+        sort(a, i + 1, high)
+    }
+}
+
+func quickSort(a, length) {
+    sort(a, 0, length - 1)
+}
+```
 
 
 ### 项目结构
