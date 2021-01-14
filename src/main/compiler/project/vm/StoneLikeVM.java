@@ -367,7 +367,7 @@ public class StoneLikeVM {
 
             int temp = frameBottomAddr;
             // 分配空间
-            frameBottomAddr += currentCode.op2 + 1;
+            frameBottomAddr += currentCode.op2;
             // 保存返回地址
             memory[frameBottomAddr] = pc;
             // 保存当前函数帧的指针
